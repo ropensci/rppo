@@ -1,6 +1,19 @@
 # ppo-data-r
 R package for accessing PPO data store
 
+# First time, installation:
+```
+install.packages("devtools")
+library("devtools")
+install_github("biocodellc/rppo")
+```
+
+# Thereafter
+```
+library("devtools")
+library("rppo") -- maybe??
+```
+
 # Point-mapping example using a data frame and leaflet
 ```
 require("leaflet")
