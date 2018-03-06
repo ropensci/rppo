@@ -5,7 +5,7 @@
 #' @keywords test
 #' @export
 #' @examples
-#' cat_function()
+#' ppotest()
 
 ppotest <- function(happy=TRUE){
   if(happy==TRUE){

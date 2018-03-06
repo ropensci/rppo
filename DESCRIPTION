@@ -1,6 +1,6 @@
 Package: rppo
 Title: R functions to access Plant Phenology Ontology annotated datasets
-Version: 0.0.0.9000
+Version: 0.1
 Authors@R: person("John", "Deck", email = "jdeck88@gmail.com", role = c("aut", "cre"))
 Description: Access data from the Plant Phenology Ontology data store.
 Depends: R (>= 3.4.3)
