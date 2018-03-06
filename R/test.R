@@ -7,11 +7,6 @@
 #' @examples
 #' ppotest()
 
-ppotest <- function(happy=TRUE){
-  if(happy==TRUE){
-    print("I love cats!")
-  }
-  else {
-    print("I am not a cool person.")
-  }
+ppotest <- function(){
+    print("Welcome to the PPO data access Package.")
 }
