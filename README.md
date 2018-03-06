@@ -8,10 +8,16 @@ library("devtools")
 install_github("biocodellc/rppo")
 ```
 
-# Thereafter
+# Thereafter, get started with the rppo library by specifying the library
 ```
-library("devtools")
-library("rppo") -- maybe??
+library("rppo")
+```
+
+# Development Notes
+```
+devtools::install_github("klutometis/roxygen")  // Install ROxygen for Document Building
+library(roxygen2)     // Use the Oxygen library
+document()            // Document the project
 ```
 
 # Point-mapping example using a data frame and leaflet
