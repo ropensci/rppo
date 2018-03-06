@@ -1,4 +1,4 @@
-# ppo-data-r
+# rppo
 R package for accessing PPO data store
 
 # First time, installation:
@@ -11,13 +11,6 @@ install_github("biocodellc/rppo")
 # Thereafter, get started with the rppo library by specifying the library
 ```
 library("rppo")
-```
-
-# Development Notes
-```
-devtools::install_github("klutometis/roxygen")  // Install ROxygen for Document Building
-library(roxygen2)     // Use the Oxygen library
-document()            // Document the project
 ```
 
 # Point-mapping example using a data frame and leaflet
