@@ -1,4 +1,4 @@
-# ppo-r-interface
+# ppo-data-r
 R package for accessing PPO data store
 
 # Point-mapping example using a data frame and leaflet
