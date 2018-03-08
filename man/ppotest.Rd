@@ -4,10 +4,7 @@
 \alias{ppotest}
 \title{A Test function}
 \usage{
-ppotest(happy = TRUE)
-}
-\arguments{
-\item{state}{Are you happy = true}
+ppotest()
 }
 \description{
 This function is just for testing
