@@ -1,4 +1,6 @@
 # rppo
+[![Build Status](https://travis-ci.org/biocodellc/rppo.svg?branch=master)](https://travis-ci.org/biocodellc/rppo)
+
 R package for accessing PPO data store
 
 # First time, installation:
