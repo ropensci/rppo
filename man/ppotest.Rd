@@ -13,6 +13,6 @@ ppotest(happy = TRUE)
 This function is just for testing
 }
 \examples{
-cat_function()
+ppotest()
 }
 \keyword{test}
