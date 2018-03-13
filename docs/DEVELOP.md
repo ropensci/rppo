@@ -1,19 +1,22 @@
 # Development Notes
 
-# Running the package from source, useful in active development
+# Install package (locally)
+```
+cd <git root>     // Change to root diretory
+r                 // start up R
+> library(devtools)
+> setwd("..")
+> library("rppo")
+```
+
+# Running the package from source (locally)
 ```
 install.packages("R.utils")
 library(R.utils)
 sourceDirectory(".")  // Run the sourceDirectory command each time a change is made to source
 ```
 
-# Running the package from Source, useful to test the package itself before deployment
-```
-cd <git root>     // Change to root diretory
-r                 // start up R
-> install.packages(".",repos=NULL, type="source")
-> library("rppo")
-```
+
 
 # Building Doccumentation
 ```
