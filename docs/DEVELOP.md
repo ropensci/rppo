@@ -4,7 +4,7 @@
 ```
 install.packages("R.utils")
 library(R.utils)
-sourceDirectory("R")  // Run the sourceDirectory command each time a change is made to source
+sourceDirectory(".")  // Run the sourceDirectory command each time a change is made to source
 ```
 
 # Running the package from Source, useful to test the package itself before deployment
