@@ -4,19 +4,19 @@
 The following is an R package for accessing the plant phenology ontology (PPO) global data store. For more information visit 
 the web portal at http://plantphenology.org/ or the github site for processing data at https://github.com/biocodellc/ppo-data-pipeline
 
-# First time, installation:
+# Installation
 ```
 install.packages("devtools")
 library("devtools")
 install_github("biocodellc/rppo")
 ```
 
-# Thereafter, get started with the rppo library by specifying the library
+# Loading the library
 ```
 library("rppo")
 ```
 
-# A simple query to populate a data frame
+# A simple query example to populate a data frame
 ```
 df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110)
 ```
