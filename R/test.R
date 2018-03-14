@@ -7,5 +7,5 @@
 #' ppotest()
 
 ppotest <- function(){
-    print("Welcome to the PPO data access Package. This is also tested with Travis")
+    print("Welcome to the PPO data access Package. This is also tested with Travis.")
 }
