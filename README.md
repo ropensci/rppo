@@ -1,7 +1,8 @@
 # rppo
 [![Build Status](https://travis-ci.org/biocodellc/rppo.svg?branch=master)](https://travis-ci.org/biocodellc/rppo)
 
-R package for accessing PPO data store
+The following is an R package for accessing the plant phenology ontology (PPO) global data store. For more information visit 
+the web portal at http://plantphenology.org/ or the github site for processing data at https://github.com/biocodellc/ppo-data-pipeline
 
 # First time, installation:
 ```
