@@ -15,19 +15,21 @@ install_github("biocodellc/rppo")
 library("rppo")
 ```
 
+# A simple query to populate a data frame
+```
+df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110)
+```
+
 # Point-mapping example using a data frame and leaflet
 ```
-require("leaflet")
+require("leaflet")        // may need to run install.packages('leaflet') on first time
 
-# Create a test data frame (this code to be replaced by a PPO function to return data frame)
-id <- c('1','2','3')
-latitude <- c(45, 46, 44)
-longitude <- c(-121,-120,-122)
-year <- c(2010, 2008, 2007)
-sampleData <- data.frame(id, latitude, longitude, year)
+# run a query to obtain some observations, the following should return around 4,000 records
+df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110)
 
-# add the data to leaflet
-map <- leaflet(sampleData)
+# add the data to leaflet... NOTE: the following is to quickly visualize a small number (<10,000 records)
+# adding more markers to a map than this could cause problems
+map <- leaflet(df)
 # addMarkers automatically looks at latitude/longitude column names from dataframe
 map = addMarkers(map)
 map = addProviderTiles(map, "Esri.NatGeoWorldMap")
