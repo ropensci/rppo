@@ -4,16 +4,16 @@
 \alias{ppo_data}
 \title{Retrieve data from the Global Plant Phenology Ontology Data portal}
 \usage{
-ppo_data(genus = NULL, specificEpithet = NULL, trait = NULL,
+ppo_data(genus = NULL, specificEpithet = NULL, stageID = NULL,
   fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL,
-  bbox = NULL, limit = NULL, offset = NULL, quiet = FALSE)
+  bbox = NULL)
 }
 \arguments{
 \item{genus}{a plant genus name}
 
 \item{specificEpithet}{a plant specific epithet}
 
-\item{trait}{a plant trait}
+\item{stageID}{a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_stages function in this package to get the relevant IDs for present and absent stages}
 
 \item{fromYear}{query for years starting from this year}
 
@@ -25,12 +25,6 @@ ppo_data(genus = NULL, specificEpithet = NULL, trait = NULL,
 
 \item{bbox}{A lat long bounding box. Format is \code{lat,long,lat,long}. Use this website: http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on bottom left to csv and be sure to switch the order from long, lat, long, lat to lat, long, lat, long)
 Just set the format on the bottom left to CSV.}
-
-\item{limit}{A numeric value to limit number of records}
-
-\item{offset}{An offset best used with limit as a way to paginate records}
-
-\item{quiet}{If true, any informative messages will be suppressed}
 }
 \value{
 data.frame
@@ -39,10 +33,8 @@ data.frame
 Retrieve data from the Global Plant Phenology Ontology Data portal
 }
 \examples{
-  
-# data <- ppo_data(genus = "Quercus", yearFrom = 2017)
-# data <- ppo_data(bbox = '37.77,-122.46,37.76,-122.47')
-# fail <- aw_data(scientific_name = "auberti levithorax") # This should fail gracefully
+df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
+df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
 }
 \keyword{data}
 \keyword{download}

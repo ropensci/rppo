@@ -16,10 +16,19 @@ install_github("biocodellc/rppo")
 library("rppo")
 ```
 
+# Query the plant phenology ontology and return a list of present or absent stages
+you can use the stageIDs returned from this function to query stages in the ppo_data function
+```
+presentStages <- ppo_data(TRUE)
+absentStages <- ppo_data(FALSE)
+```
+
+
 # A simple query example to populate a data frame
 ```
-df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110)
+df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,stageID='obo:PPO_0002313')
 ```
+
 
 # Point-mapping example using a data frame and leaflet
 ```

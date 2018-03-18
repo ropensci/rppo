@@ -2,7 +2,7 @@
 #'
 #' @param genus a plant genus name
 #' @param specificEpithet a plant specific epithet
-#' @param trait a plant trait
+#' @param stageID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_stages function in this package to get the relevant IDs for present and absent stages
 #' @param fromYear query for years starting from this year
 #' @param toYear query for years ending at this year
 #' @param fromDay query for days starting from this day
@@ -13,23 +13,22 @@
 #' @keywords data download
 #' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
-#' @importFrom assertthat assert_that
 #' @import httr
 #' @return data.frame
 #' @examples
-#' # df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 1995)
-#' # df <- ppo_data(bbox = '37.77,-122.46,37.76,-122.47')
+#' df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
+#' df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
 
-ppo_data <- function(genus = NULL, specificEpithet = NULL, trait = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL ) {
+ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL ) {
 
   # source Parameter refers to the data source we want to query for
   # here we limit to only USA-NPN and NEON
   sourceParameter = "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
-  sourceArgument = "source=latitude,longitude,year,dayOfYear"
+  sourceArgument = "source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
 
   # Check for minimum arguments to run a query
-  main_args <- z_compact(as.list(c(genus, specificEpithet, trait, bbox)))
+  main_args <- z_compact(as.list(c(genus, specificEpithet, stageID, bbox)))
   date_args <- z_compact(as.list(c(fromYear, toYear, fromDay, toDay)))
   arg_lengths <- c(length(main_args), length(date_args))
 
@@ -37,41 +36,32 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, trait = NULL, fromYea
     stop("Please specify at least 1 query argument")
   }
 
-
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/download/";
-  userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
+  base_url <- "http://api.plantphenology.org/v1/download/";
+  userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, stageID = stageID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
 
   # construct the value following the "q" key
   qArgument <- "q="
-  count = 0;   # counter to tell us if we're after 1st record
+  counter = 0;   # counter to tell us if we're after 1st record
   # loop through all user parameters
   for(key in names(userParams)){
     value<-userParams[key]
     # For multiple arguments, insert AND separator.  Here, we insert html encoding + for spaces
-    if (count > 0) {
+    if (counter > 0) {
       qArgument <- paste(qArgument,"+AND+", sep = "")
     }
 
-    # Format user supplied dates to query
-    if (key == "fromYear" || key == "fromDay") {
-      value <- paste('>=', value, sep="")
-    }
-    if (key == "toYear" || key == "toDay") {
-      value <- paste('<=',value, sep="")
-    }
-    # there is no such system fields as from/toYear or from/toDay, only year
-    # and dayOfYear fields so we assign the key year to go with the modified >= <= range values
-    # above
-    if (key == "fromYear" || key == "toYear") {
-      key = 'year'
-    }
-    if (key == "fromDay" || key == "toDay") {
-      key = 'dayOfYear'
-    }
-
-    # parse bbox argument and construct query by min/max lat/lng
-    if (key == "bbox") {
+    if (key == "fromYear")
+      qArgument <- paste(qArgument,'%2B','year:>=',value, sep = "")
+    else if (key == "fromDay")
+      qArgument <- paste(qArgument,'%2B','dayOfYear:>=',value, sep = "")
+    else if (key == "toYear")
+      qArgument <- paste(qArgument,'%2B','year:<=',value, sep = "")
+    else if (key == "toDay")
+      qArgument <- paste(qArgument,'%2B','dayOfYear:<=',value, sep = "")
+    else if (key == "stageID")
+      qArgument <- paste(qArgument,'%2B','plantStructurePresenceTypes',':"',value,'"', sep = "")
+    else if (key == "bbox") {
       lat1 = as.numeric(unlist(strsplit(bbox, ","))[1])
       lat2 = as.numeric(unlist(strsplit(bbox, ","))[3])
       lng1 = as.numeric(unlist(strsplit(bbox, ","))[2])
@@ -92,13 +82,13 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, trait = NULL, fromYea
       }
       qArgument <- paste(qArgument,'%2B','latitude',':>=',minLat, sep = "")
       qArgument <- paste(qArgument,'+AND+%2B','latitude',':<=',maxLat, sep = "")
-      #qArgument <- paste(qArgument,'+AND+%2B','longitude',':>=',minLng, sep = "")
-      #qArgument <- paste(qArgument,'+AND+%2B','longitude',':<=',maxLng, sep = "")
+      qArgument <- paste(qArgument,'+AND+%2B','longitude',':>=',minLng, sep = "")
+      qArgument <- paste(qArgument,'+AND+%2B','longitude',':<=',maxLng, sep = "")
     } else {
       # Begin arguments using +key:value and html encode the + sign with %2B
       qArgument <- paste(qArgument,'%2B',key,':',value, sep = "")
     }
-    count = count  + 1
+    counter = counter  + 1
   }
 
   # add the source argument
