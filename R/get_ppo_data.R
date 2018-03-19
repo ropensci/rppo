@@ -1,8 +1,15 @@
-#'Retrieve data from the Global Plant Phenology Ontology Data portal
+#' @title Retrieve data from PPO Data portal
+#'
+#' @description
+#' The Global Plant Phenology Data Portal (PPO data portal) is an aggregation of phenology
+#' data from several different data sources.  Currently it contains USA-NPN,
+#' NEON, and PEP725 data sources.  The PPO data portal harvests data using
+#' the ppo-data-pipeline, with code available at \url{https://github.com/biocodellc/ppo-data-pipeline/}.
+#' You may also view PPO data portal products online at \url{http://plantphenology.org/}.
 #'
 #' @param genus a plant genus name
 #' @param specificEpithet a plant specific epithet
-#' @param stageID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_stages function in this package to get the relevant IDs for present and absent stages
+#' @param termID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the get_ppo_terms function in this package to get the relevant IDs for present and absent stages
 #' @param fromYear query for years starting from this year
 #' @param toYear query for years ending at this year
 #' @param fromDay query for days starting from this day
@@ -16,10 +23,10 @@
 #' @import httr
 #' @return data.frame
 #' @examples
-#' df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
-#' df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
+#' df <- get_ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
+#' df <- get_ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
 
-ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL ) {
+get_ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL ) {
 
   # source Parameter refers to the data source we want to query for
   # here we limit to only USA-NPN and NEON
@@ -28,7 +35,7 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromY
   sourceArgument = "source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
 
   # Check for minimum arguments to run a query
-  main_args <- z_compact(as.list(c(genus, specificEpithet, stageID, bbox)))
+  main_args <- z_compact(as.list(c(genus, specificEpithet, termID, bbox)))
   date_args <- z_compact(as.list(c(fromYear, toYear, fromDay, toDay)))
   arg_lengths <- c(length(main_args), length(date_args))
 
@@ -38,7 +45,7 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromY
 
   # set the base_url for making calls
   base_url <- "http://api.plantphenology.org/v1/download/";
-  userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, stageID = stageID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
+  userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, termID = termID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
 
   # construct the value following the "q" key
   qArgument <- "q="
@@ -59,7 +66,7 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromY
       qArgument <- paste(qArgument,'%2B','year:<=',value, sep = "")
     else if (key == "toDay")
       qArgument <- paste(qArgument,'%2B','dayOfYear:<=',value, sep = "")
-    else if (key == "stageID")
+    else if (key == "termID")
       qArgument <- paste(qArgument,'%2B','plantStructurePresenceTypes',':"',value,'"', sep = "")
     else if (key == "bbox") {
       lat1 = as.numeric(unlist(strsplit(bbox, ","))[1])
@@ -126,4 +133,3 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, stageID = NULL, fromY
 }
 
 z_compact <- function(l) Filter(Negate(is.null), l)
-
