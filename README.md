@@ -19,8 +19,8 @@ library("rppo")
 # Query the plant phenology ontology and return a list of present or absent stages
 you can use the stageIDs returned from this function to query stages in the ppo_data function
 ```
-presentStages <- ppo_data(TRUE)
-absentStages <- ppo_data(FALSE)
+presentStages <- ppo_stages(TRUE)
+absentStages <- ppo_stages(FALSE)
 ```
 
 
