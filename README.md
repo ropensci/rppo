@@ -26,7 +26,7 @@ absentStages <- get_ppo_terms(FALSE)
 
 # A simple query example to populate a data frame
 ```
-df <- get_ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,stageID='obo:PPO_0002313')
+df <- get_ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313')
 ```
 
 
