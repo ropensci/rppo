@@ -16,6 +16,15 @@ install_github("biocodellc/rppo")
 library("rppo")
 ```
 
+# Manual 
+The rppo package has been documented using R manual entries.  To learn more about the package and functions in the
+R environment, try the following commands after loading rppo library in the R environment.
+```
+?rppo               # man entry for the package itself
+?ppo_get_terms      # man entry for the ppo_get_terms function
+?ppo_get_data       # man entry for the ppo_get_data function
+```
+
 # Query the plant phenology ontology and return a list of present or absent stages
 you can use the stageIDs returned from this function to query stages in the ppo_data function
 ```
