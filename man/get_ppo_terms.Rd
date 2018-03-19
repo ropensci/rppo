@@ -4,21 +4,23 @@
 \alias{get_ppo_terms}
 \title{Retrieve phenology terms from PPO}
 \usage{
-get_ppo_terms(present = TRUE)
+get_ppo_terms(present = FALSE, absent = FALSE)
 }
 \arguments{
-\item{present}{TRUE or FALSE. Defaults to TRUE. If TRUE then return all "present" phenological stages from the PPO.  If FALSE then return all "absent" phenological stages.}
+\item{present}{If TRUE then return all "present" phenological stages}
+
+\item{absent}{IF TRUE then return all "absent" phenological stages.}
 }
 \value{
 data.frame
 }
 \description{
-The get_ppo_terms function returns phenological present or absent class
-names from the Plant Phenology Ontology.  The returned data frame contains
-the following columns: stageID, label, description, and URI.  Use the stageID
-values in submitting stageID values to the \code{\link{get_ppo_data}} function.  The
+The get_ppo_terms function returns terms from the Plant Phenology Ontology.
+Currently the function only accepts parameters for present or absent terms.
+The response pouplates a data frame with: termID, label, description, and URI.  Use the termID
+values in submitting termID values to the \code{\link{get_ppo_data}} function.  The
 label and description fields are extracted from the ontology OWL file and
-are useful in determining the proper stage to query on.  The URI field contains
+are useful in determining the proper term to query on.  The URI field contains
 a link to the term itself which is useful for determining superclass and
 subclass relationships for each term.
 For more information on the PPO ontology itself, we suggest loading the PPO
@@ -26,5 +28,9 @@ ontology \url{https://github.com/PlantPhenoOntology/ppo} and viewing with
 protege \url{https://protege.stanford.edu/}
 }
 \examples{
-df <- get_ppo_terms(present = TRUE)
+presentTerms <- get_ppo_terms(present = TRUE)
+absentTerms <- get_ppo_terms(absent = TRUE)
+presentAndAbsentTerms <- get_ppo_terms(present = TRUE, absent = TRUE)
 }
+\keyword{lookup}
+\keyword{trait}

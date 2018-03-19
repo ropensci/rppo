@@ -16,6 +16,7 @@
 #' @param toDay query for days ending at this day
 #' @param bbox A lat long bounding box. Format is \code{lat,long,lat,long}. Use this website: http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on bottom left to csv and be sure to switch the order from long, lat, long, lat to lat, long, lat, long)
 #' Just set the format on the bottom left to CSV.
+#' @param limit Limit the resultset to an integer value. Useful for testing.
 #' @export
 #' @keywords data download
 #' @importFrom rjson fromJSON
@@ -26,7 +27,7 @@
 #' df <- get_ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
 #' df <- get_ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
 
-get_ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL ) {
+get_ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL, limit = NULL ) {
 
   # source Parameter refers to the data source we want to query for
   # here we limit to only USA-NPN and NEON
@@ -100,8 +101,14 @@ get_ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fr
 
   # add the source argument
   qArgument <- paste(qArgument,'+AND+',sourceParameter, sep="")
+
   # construct the queryURL
   queryUrl <- paste(base_url,'?',qArgument,'&',sourceArgument, sep="")
+
+  # add the limit
+  if (!is.null(limit)) {
+    queryUrl <- paste(queryUrl,'&limit=',limit, sep="")
+  }
   # print out parameters
   print (paste('sending request to',queryUrl))
   # send GET request to URL we constructed
