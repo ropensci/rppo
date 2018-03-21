@@ -11,8 +11,8 @@
 and information on data processing of PPO data is available at \url{https://github.com/biocodellc/ppo-data-pipeline}
 
 Two functions  are contained in the \pkg{rppo}:
-\code{\link{get_ppo_terms}} allows users to discover present and absent
-phenological stages,  \code{\link{get_ppo_data}} enables users to query the
+\code{\link{ppo_terms}} allows users to discover present and absent
+phenological stages,  \code{\link{ppo_data}} enables users to query the
 PPO data portal.  Both functions return data frames.  The \pkg{rppo} package
 source code is available at \url{https://github.com/biococellc/rppo}.
 }

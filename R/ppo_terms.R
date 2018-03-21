@@ -2,10 +2,10 @@
 #'
 #' @description
 #'
-#' The get_ppo_terms function returns terms from the Plant Phenology Ontology.
+#' The ppo_terms function returns terms from the Plant Phenology Ontology.
 #' Currently the function only accepts parameters for present or absent terms.
 #' The response pouplates a data frame with: termID, label, description, and URI.  Use the termID
-#' values in submitting termID values to the \code{\link{get_ppo_data}} function.  The
+#' values in submitting termID values to the \code{\link{ppo_data}} function.  The
 #' label and description fields are extracted from the ontology OWL file and
 #' are useful in determining the proper term to query on.  The URI field contains
 #' a link to the term itself which is useful for determining superclass and
@@ -22,13 +22,13 @@
 #' @keywords trait lookup
 #' @importFrom rjson fromJSON
 #' @examples
-#' presentTerms <- get_ppo_terms(present = TRUE)
-#' absentTerms <- get_ppo_terms(absent = TRUE)
-#' presentAndAbsentTerms <- get_ppo_terms(present = TRUE, absent = TRUE)
+#' presentTerms <- ppo_terms(present = TRUE)
+#' absentTerms <- ppo_terms(absent = TRUE)
+#' presentAndAbsentTerms <- ppo_terms(present = TRUE, absent = TRUE)
 
 # Fetch phenological terms (stages) from the PPO using the plantphenology.org "ppo" service
 
-get_ppo_terms <- function(present=FALSE, absent=FALSE) {
+ppo_terms <- function(present=FALSE, absent=FALSE) {
 
   # set the base_url for making calls
   base_url <- "http://api.plantphenology.org/v1/ppo/";

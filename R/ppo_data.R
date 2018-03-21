@@ -9,7 +9,7 @@
 #'
 #' @param genus a plant genus name
 #' @param specificEpithet a plant specific epithet
-#' @param termID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the get_ppo_terms function in this package to get the relevant IDs for present and absent stages
+#' @param termID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages
 #' @param fromYear query for years starting from this year
 #' @param toYear query for years ending at this year
 #' @param fromDay query for days starting from this day
@@ -24,10 +24,11 @@
 #' @import httr
 #' @return data.frame
 #' @examples
-#' df <- get_ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
-#' df <- get_ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
+#' df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
+#' df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
+#' df <- ppo_data(fromDay=150, limit = 10)
 
-get_ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL, limit = NULL ) {
+ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL, limit = NULL ) {
 
   # source Parameter refers to the data source we want to query for
   # here we limit to only USA-NPN and NEON
