@@ -31,7 +31,7 @@
 ppo_terms <- function(present=FALSE, absent=FALSE) {
 
   # set the base_url for making calls
-  base_url <- "http://api.plantphenology.org/v1/ppo/";
+  base_url <- "https://www.plantphenology.org/api/v1/ppo/";
 
   # structure base URL so we can call present and absent functions
   if (present && absent) {

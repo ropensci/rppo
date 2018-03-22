@@ -9,7 +9,7 @@
 #'
 #' @param genus a plant genus name
 #' @param specificEpithet a plant specific epithet
-#' @param termID a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages
+#' @param termID a termID from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages
 #' @param fromYear query for years starting from this year
 #' @param toYear query for years ending at this year
 #' @param fromDay query for days starting from this day
@@ -47,7 +47,7 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
   }
 
   # set the base_url for making calls
-  base_url <- "http://api.plantphenology.org/v1/download/";
+  base_url <- "https://www.plantphenology.org/apiv1/download/";
   userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, termID = termID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
 
   # construct the value following the "q" key
