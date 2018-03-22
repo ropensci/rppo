@@ -21,6 +21,7 @@
 #' @keywords data download
 #' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
+#' @importFrom utils read.csv
 #' @import httr
 #' @return data.frame
 #' @examples
