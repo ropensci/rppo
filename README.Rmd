@@ -26,12 +26,20 @@ For more information visit the [PPO global data portal](http://plantphenology.or
 
 ## Installation
 
-You can install rppo from github with:
+The production version of rppo can be installed with (when available on CRAN):
+```{r}
+#install.packages("rppo")
+#library(rppo)
+```
+
+You can install the development version of rppo from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("biocodellc/rppo")
 ```
+
+
 
 ## Example
 
@@ -43,9 +51,14 @@ library(rppo)
 present_terms <- ppo_terms(present=T)
 ```
 
-A simple query example to populate a data frame
+A simple query example. The results of the ppo_data function are returned as a list.  Hence, to retrieve the data portion of the returned results you will need to access the "data" element of the returned list.
 ```{r data example}
-df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313')
+results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
+df <- results$data
+readme <- results$readme
+citation <- results$citation
+
+# use cat(readme) and cat(citation) to view the text output
 ```
 
 

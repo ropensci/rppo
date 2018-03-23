@@ -10,7 +10,14 @@ For more information visit the [PPO global data portal](http://plantphenology.or
 Installation
 ------------
 
-You can install rppo from github with:
+The production version of rppo can be installed with (when available on CRAN):
+
+``` r
+#install.packages("rppo")
+#library(rppo)
+```
+
+You can install the development version of rppo from github with:
 
 ``` r
 # install.packages("devtools")
@@ -25,15 +32,23 @@ Query the plant phenology ontology and return a list of present or absent terms.
 ``` r
 library(rppo)
 present_terms <- ppo_terms(present=T)
-#> [1] "retrieving terms ..."
+#> [1] "uncaught status code  404"
+#> Warning in ppo_terms(present = T): Not Found (HTTP 404).
 ```
 
-A simple query example to populate a data frame
+A simple query example. The results of the ppo\_data function are returned as a list. Hence, to retrieve the data portion of the returned results you will need to access the "data" element of the returned list.
 
 ``` r
-df <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313')
-#> [1] "sending request to http://api.plantphenology.org/v1/download/?q=%2Bgenus:Quercus+AND+%2BplantStructurePresenceTypes:\"obo:PPO_0002313\"+AND+%2Byear:>=2013+AND+%2Byear:<=2013+AND+%2BdayOfYear:>=100+AND+%2BdayOfYear:<=110+AND+source:USA-NPN,NEON&source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
-#> [1] "unzipping response and processing data"
+results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
+#> [1] "sending request to http://api.plantphenology.org/v1/download/?q=%2Bgenus:Quercus+AND+%2BplantStructurePresenceTypes:\"obo:PPO_0002313\"+AND+%2Byear:>=2013+AND+%2Byear:<=2013+AND+%2BdayOfYear:>=100+AND+%2BdayOfYear:<=110+AND+source:USA-NPN,NEON&source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes&limit=10"
+#> [1] "uncaught status code 404"
+#> Warning in ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013,
+#> fromDay = 100, : Not Found (HTTP 404).
+df <- results$data
+readme <- results$readme
+citation <- results$citation
+
+# use cat(readme) and cat(citation) to view the text output
 ```
 
 Citation

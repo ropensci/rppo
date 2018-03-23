@@ -23,11 +23,11 @@
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
 #' @import httr
-#' @return data.frame
+#' @import readr
+#' @return list(data data.frame, readme string, citation string)
 #' @examples
-#' df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
-#' df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
-#' df <- ppo_data(fromDay=150, limit = 10)
+#' results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004, limit=10)
+#' df <- results$data
 
 ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL, limit = NULL ) {
 
@@ -47,7 +47,7 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
   }
 
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/apiv1/download/";
+  base_url <- "https://www.plantphenology.org/api/v2/download/";
   userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, termID = termID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
 
   # construct the value following the "q" key
@@ -127,16 +127,20 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
 
     # save file to disk
     writeBin(bin, tf)
-    # read gzipped file and send to data frame
-    # the first line in the returned file is a description of the query that we ran
-    # the second line in the returned file is the header
-    data <- read.csv(gzfile(tf),skip=1,header=TRUE)
+
+    untar(tf)
+    # assign data.csv file to data frame
+    data <- read.csv('ppo_download/data.csv',header=TRUE)
+    # the readme file contains information about the query and the # of results
+    readme <- read_file('ppo_download/README.txt')
+    citation <- read_file('ppo_download/citation_and_data_use_policies.txt')
+
     unlink(tf)
-    return(data)
+    return(list("data" = data,"readme" = readme, "citation" = citation))
     # Something unexpected happened
   } else {
     print(paste("uncaught status code",results$status_code))
-    warn_for_status(results)
+    httr::warn_for_status(results)
     return(NULL);
   }
 }

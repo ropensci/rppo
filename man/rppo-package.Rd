@@ -19,4 +19,13 @@ source code is available at \url{https://github.com/biococellc/rppo}.
 \author{
 \strong{Maintainer}: John Deck \email{jdeck88@gmail.com}
 
+Authors:
+\itemize{
+  \item Brian Stucky \email{stuckyb@flmnh.ufl.edu}
+  \item Ramona Walls \email{rwalls@cyverse.org}
+  \item Kjell Bolmgren \email{Kjell.Bolmgren@slu.se}
+  \item Ellen Denny \email{ellen@usanpn.org}
+  \item Robert Guralnick \email{rguralnick@flmnh.ufl.edu}
+}
+
 }

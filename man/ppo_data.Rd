@@ -13,7 +13,7 @@ ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
 
 \item{specificEpithet}{a plant specific epithet}
 
-\item{termID}{a plant stage from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages}
+\item{termID}{a termID from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages}
 
 \item{fromYear}{query for years starting from this year}
 
@@ -29,7 +29,7 @@ Just set the format on the bottom left to CSV.}
 \item{limit}{Limit the resultset to an integer value. Useful for testing.}
 }
 \value{
-data.frame
+list(data data.frame, readme string, citation string)
 }
 \description{
 The Global Plant Phenology Data Portal (PPO data portal) is an aggregation of phenology
@@ -39,9 +39,8 @@ the ppo-data-pipeline, with code available at \url{https://github.com/biocodellc
 You may also view PPO data portal products online at \url{http://plantphenology.org/}.
 }
 \examples{
-df <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004)
-df <- ppo_data(bbox='44,-124,46,-122', fromDay = 1, toDay = 60)
-df <- ppo_data(fromDay=150, limit = 10)
+results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004, limit=10)
+df <- results$data
 }
 \keyword{data}
 \keyword{download}
