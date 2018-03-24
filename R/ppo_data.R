@@ -22,6 +22,7 @@
 #' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
+#' @importFrom utils untar
 #' @import httr
 #' @return list(data data.frame, readme string, citation string)
 #' @examples
