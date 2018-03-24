@@ -3,6 +3,7 @@
 export(ppo_data)
 export(ppo_terms)
 import(httr)
+import(readr)
 importFrom(plyr,rbind.fill)
 importFrom(rjson,fromJSON)
 importFrom(utils,read.csv)

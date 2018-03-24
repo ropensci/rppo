@@ -24,6 +24,7 @@
 #' @importFrom utils read.csv
 #' @importFrom utils untar
 #' @import httr
+#' @import readr
 #' @return list(data data.frame, readme string, citation string)
 #' @examples
 #' results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004, limit=10)
@@ -132,8 +133,8 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
     # assign data.csv file to data frame
     data <- read.csv('ppo_download/data.csv',header=TRUE)
     # the readme file contains information about the query and the # of results
-    readme <- read_file('ppo_download/README.txt')
-    citation <- read_file('ppo_download/citation_and_data_use_policies.txt')
+    readme <- readr::read_file('ppo_download/README.txt')
+    citation <- readr::read_file('ppo_download/citation_and_data_use_policies.txt')
 
     unlink(tf)
     return(list("data" = data,"readme" = readme, "citation" = citation))
