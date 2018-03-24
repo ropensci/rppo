@@ -23,7 +23,6 @@
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
 #' @import httr
-#' @import readr
 #' @return list(data data.frame, readme string, citation string)
 #' @examples
 #' results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004, limit=10)
