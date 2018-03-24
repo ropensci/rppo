@@ -19,6 +19,7 @@ LazyData: true
 RoxygenNote: 6.0.1.9000
 Imports:
     rjson,
+    readr,
     plyr,
     leafletR (>= 0.1-1),
     httr

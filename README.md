@@ -56,5 +56,5 @@ Citation
 
 To cite package 'rppo' in publications use:
 
-       'John Deck' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 0.1
+       'John Deck, Brian Stucky, ' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 0.1
        https://github.com/biocodellc/rppo
