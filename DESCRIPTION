@@ -1,7 +1,7 @@
 Package: rppo
 Title: R functions to access Plant Phenology Ontology annotated datasets
 Date: 2018-03-21
-Version: 0.1
+Version: 1.0
 Authors@R: as.person(c(
     "John Deck <jdeck88@gmail.com> [aut, cre]", 
     "Brian Stucky <stuckyb@flmnh.ufl.edu> [aut]",
@@ -23,3 +23,4 @@ Imports:
     plyr,
     leafletR (>= 0.1-1),
     httr
+Suggests: testthat

@@ -15,21 +15,21 @@ ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
 
 \item{termID}{a termID from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages}
 
-\item{fromYear}{query for years starting from this year}
+\item{fromYear}{query for years starting from the specified year}
 
-\item{toYear}{query for years ending at this year}
+\item{toYear}{query for years up to and including the specified year}
 
-\item{fromDay}{query for days starting from this day}
+\item{fromDay}{query for the day of year starting from the specified day}
 
-\item{toDay}{query for days ending at this day}
+\item{toDay}{query for the day of year up to and including the specified day}
 
 \item{bbox}{A lat long bounding box. Format is \code{lat,long,lat,long}. Use this website: http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on bottom left to csv and be sure to switch the order from long, lat, long, lat to lat, long, lat, long)
-Just set the format on the bottom left to CSV.}
+Just set the format on the bottom left to CSV}
 
-\item{limit}{Limit the resultset to an integer value. Useful for testing.}
+\item{limit}{Limit the resultset to the specified number of records}
 }
 \value{
-list(data data.frame, readme string, citation string)
+list (data.frame data, string readme, string citation)
 }
 \description{
 The Global Plant Phenology Data Portal (PPO data portal) is an aggregation of phenology
@@ -39,8 +39,10 @@ the ppo-data-pipeline, with code available at \url{https://github.com/biocodellc
 You may also view PPO data portal products online at \url{http://plantphenology.org/}.
 }
 \examples{
-results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2004, limit=10)
-df <- results$data
+results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2017, limit=10)
+my_data_frame <- results$data
 }
 \keyword{data}
 \keyword{download}
+\keyword{phenology}
+\keyword{plant}

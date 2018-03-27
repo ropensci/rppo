@@ -21,6 +21,7 @@
 #' @export
 #' @keywords trait lookup
 #' @importFrom rjson fromJSON
+#'
 #' @examples
 #' presentTerms <- ppo_terms(present = TRUE)
 #' absentTerms <- ppo_terms(absent = TRUE)
@@ -32,6 +33,7 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
 
   # set the base_url for making calls
   base_url <- "https://www.plantphenology.org/api/v1/ppo/";
+  main_args <- z_compact(as.list(c(present,absent)))
 
   # structure base URL so we can call present and absent functions
   if (present && absent) {
@@ -41,21 +43,18 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
   } else if (absent) {
       base_url <- paste(base_url,'absent/',sep='')
   } else {
-      print("specify at least one parameter to return results")
-      return(NULL);
+      stop("specify at least one parameter to return results")
   }
 
   results <- httr::GET(base_url)
   if (results$status_code == 200) {
-    print ("retrieving terms ...")
+    print ("sending request for terms ...")
     response <- httr::content(results, "text")
     jsonFile <- rjson::fromJSON(response)
     df <- data.frame(do.call("rbind",jsonFile))
-    return(sapply(df,unlist))
+    return(df)
   } else {
-    print(paste("uncaught status code ",results$status_code))
-    warn_for_status(results)
-    return(NULL);
+    stop(paste("uncaught status code ",results$status_code))
   }
 }
 

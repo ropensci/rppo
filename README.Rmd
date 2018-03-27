@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 The global plant phenology data portal (PPO data portal) is an aggregation of 
 plant phenological observations from [USA-NPN](https://www.usanpn.org/usa-national-phenology-network), [NEON](https://www.neonscience.org/), and [PEP725](http://www.pep725.eu/) representing 
-20 million phenological observations.  The PPO data portal utilizes the [Plant
+20 million phenological observations from across North America and Europe.  The PPO data portal utilizes the [Plant
 Phenology Ontology](https://github.com/PlantPhenoOntology/ppo/) to align phenological
 terms and measurements from the various databases. The rppo R package enables programmatic access to all data contained in the PPO data portal. 
 
@@ -63,9 +63,12 @@ citation <- results$citation
 
 
 ## Citation
-To cite package 'rppo' in publications use:
+To cite the 'rppo' R package in publications use:
 
 ```
-   'John Deck, Brian Stucky, ' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 0.1
+   'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
    https://github.com/biocodellc/rppo
 ```
+
+## Code of Conduct
+View our [code of conduct](CONDUCT.md)
