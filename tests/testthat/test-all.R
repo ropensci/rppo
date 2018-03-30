@@ -1,5 +1,4 @@
-library(rppo)
-
+context("PPO data")
 test_that("Check that PPO data is returned correctly from ppo_data function", {
 	# Generate a response to use for testing
 	response <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2017, limit=10)
@@ -23,6 +22,7 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
 	expect_identical(as.character(response$data$genus[1]), "Quercus")
 })
 
+context("PPO terms")
 test_that("Check that PPO term fetching works", {
 
   # Error should be generated here
