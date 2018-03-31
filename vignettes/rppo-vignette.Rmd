@@ -1,0 +1,45 @@
+---
+title: "rppo Vignette"
+author: "John Deck"
+date: "`r Sys.Date()`"
+output: github_document
+vignette: |
+  %\VignetteIndexEntry{rppo Vignette} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "rppo-vignette-"
+)
+library(rppo)
+```
+
+The rppo package contains just two functions.  One to query terms from the PPO and another to query the data.  Following are examples in how to use these functions.
+
+### ppo_terms function
+A critical element of querying the PPO Data Portal is understanding the present and absent value terms contained in the PPO.   The ppo_terms function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the ppo_data function.  The following example returns the present terms into a "present_terms" data frame.
+
+```{r term example, echo=TRUE, message=FALSE, warning=FALSE}
+present_terms <- ppo_terms(present=TRUE)
+```
+
+### ppo_data function
+The ppo_data function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the ppo_data function are returned as a lis with three elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, and 3) a citation string containing information about proper citation. The "df" variable below is populated with results from the data element in the results list.
+
+```{r data example, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
+df <- results$data
+print(df)
+```
+
+The readme string can be accessed by calling the readme list element.  An example of this is shown here:
+```{r readme results example}
+cat(results$readme)
+```
+
+The citation string can be accessed by calling the citation list element.  An example of this is shown here:
+```{r readme citation example}
+cat(results$citation)
+```

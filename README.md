@@ -35,7 +35,7 @@ library(rppo)
 Examples
 --------
 
-The rppo package contains just two functions. One to query terms from the PPO and another to query the data. Following are examples in how to use these functions.
+Instructions on using the rppo package can be found using the [rppo vignette](vignettes/rppo-vignette.utf8.md). The rppo package contains just two functions. One to query terms from the PPO and another to query the data. Following are examples in how to use these functions.
 
 ### ppo\_terms function
 

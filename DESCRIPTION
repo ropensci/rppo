@@ -23,4 +23,7 @@ Imports:
     plyr,
     leafletR (>= 0.1-1),
     httr
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
