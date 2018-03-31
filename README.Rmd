@@ -1,6 +1,8 @@
 ---
 output: github_document
 always_allow_html: yes
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -30,31 +32,41 @@ For more information visit the [PPO global data portal](http://plantphenology.or
 
 The production version of rppo can be installed with (when available on CRAN):
 ```{r}
-#install.packages("rppo")
+#install.packages("rppo")  # this will work once package is available on CRAN
 #library(rppo)
 ```
 
 You can install the development version of rppo from github with:
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("biocodellc/rppo")
 ```
 
 
+Install the library once it has been downloaded from CRAN or github.
 
-## Example
-
-Query the plant phenology ontology and return a list of present or absent terms.
-Use the termIDs returned from this function to query terms in the ppo_data function
-
-```{r term example}
+```{r install library}
 library(rppo)
-present_terms <- ppo_terms(present=T)
 ```
 
-A simple query example. The results of the ppo_data function are returned as a list.  Hence, to retrieve the data portion of the returned results you will need to access the "data" element of the returned list.
-```{r data example}
+
+
+## Examples
+
+The rppo package contains just two functions.  One to query terms from the PPO and another to query the data.  Following are examples in how to use these functions.
+
+### ppo_terms function
+A critical element of querying the PPO Data Portal is understanding the present and absent value terms contained in the PPO.   The ppo_terms function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the ppo_data function.  The following example returns the present terms into a "present_terms" data frame.
+
+```{r term example, echo=TRUE, message=FALSE, warning=FALSE}
+present_terms <- ppo_terms(present=TRUE)
+```
+
+### ppo_data function
+The ppo_data function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the ppo_data function are returned as a lis with three elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, and 3) a citation string containing information about proper citation.
+
+```{r data example, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
 df <- results$data
 readme <- results$readme

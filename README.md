@@ -15,37 +15,44 @@ Installation
 The production version of rppo can be installed with (when available on CRAN):
 
 ``` r
-#install.packages("rppo")
+#install.packages("rppo")  # this will work once package is available on CRAN
 #library(rppo)
 ```
 
 You can install the development version of rppo from github with:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("biocodellc/rppo")
 ```
 
-Example
--------
-
-Query the plant phenology ontology and return a list of present or absent terms. Use the termIDs returned from this function to query terms in the ppo\_data function
+Install the library once it has been downloaded from CRAN or github.
 
 ``` r
 library(rppo)
-present_terms <- ppo_terms(present=T)
-#> [1] "uncaught status code  404"
-#> Warning in ppo_terms(present = T): Not Found (HTTP 404).
 ```
 
-A simple query example. The results of the ppo\_data function are returned as a list. Hence, to retrieve the data portion of the returned results you will need to access the "data" element of the returned list.
+Examples
+--------
+
+The rppo package contains just two functions. One to query terms from the PPO and another to query the data. Following are examples in how to use these functions.
+
+### ppo\_terms function
+
+A critical element of querying the PPO Data Portal is understanding the present and absent value terms contained in the PPO. The ppo\_terms function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term. Use the termIDs returned from this function to query terms in the ppo\_data function. The following example returns the present terms into a "present\_terms" data frame.
+
+``` r
+present_terms <- ppo_terms(present=TRUE)
+#> [1] "sending request for terms ..."
+```
+
+### ppo\_data function
+
+The ppo\_data function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the ppo\_data function are returned as a lis with three elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, and 3) a citation string containing information about proper citation.
 
 ``` r
 results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
-#> [1] "sending request to http://api.plantphenology.org/v1/download/?q=%2Bgenus:Quercus+AND+%2BplantStructurePresenceTypes:\"obo:PPO_0002313\"+AND+%2Byear:>=2013+AND+%2Byear:<=2013+AND+%2BdayOfYear:>=100+AND+%2BdayOfYear:<=110+AND+source:USA-NPN,NEON&source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes&limit=10"
-#> [1] "uncaught status code 404"
-#> Warning in ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013,
-#> fromDay = 100, : Not Found (HTTP 404).
+#> [1] "sending request for data ..."
 df <- results$data
 readme <- results$readme
 citation <- results$citation
