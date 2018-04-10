@@ -1,5 +1,6 @@
 Package: rppo
 Title: R functions to access Plant Phenology Ontology annotated datasets
+URL: https://github.com/biocodellc/rppo
 Version: 1.0
 Authors@R: as.person(c(
     "John Deck <jdeck88@gmail.com> [aut, cre]", 
