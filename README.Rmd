@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 # rppo
 [![Build Status](https://travis-ci.org/biocodellc/rppo.svg?branch=master)](https://travis-ci.org/biocodellc/rppo)
+[![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
 
 
 The global plant phenology data portal (PPO data portal) is an aggregation of 
