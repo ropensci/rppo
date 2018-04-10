@@ -32,7 +32,7 @@
 ppo_terms <- function(present=FALSE, absent=FALSE) {
 
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v1/ppo/";
+  base_url <- "https://www.plantphenology.org/api/v1/ppo/"
   main_args <- z_compact(as.list(c(present,absent)))
 
   # structure base URL so we can call present and absent functions

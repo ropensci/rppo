@@ -30,15 +30,24 @@
 #' results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2017, limit=10)
 #' my_data_frame <- results$data
 
-ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL, bbox = NULL, limit = NULL) {
+ppo_data <- function(
+  genus = NULL,
+  specificEpithet = NULL,
+  termID = NULL,
+  fromYear = NULL,
+  toYear = NULL,
+  fromDay = NULL,
+  toDay = NULL,
+  bbox = NULL,
+  limit = NULL) {
 
   # source Parameter refers to the data source we want to query for
   # here we limit to only USA-NPN and NEON
-  sourceParameter = "source:USA-NPN,NEON"
+  sourceParameter <- "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
-  sourceArgument = "source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
+  sourceArgument <- "source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v2/download/";
+  base_url <- "https://www.plantphenology.org/api/v2/download/"
 
   # Check for minimum arguments to run a query
   main_args <- z_compact(as.list(c(genus, specificEpithet, termID, bbox)))
@@ -47,15 +56,27 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
   if (any(arg_lengths) < 1) {
     stop("Please specify at least 1 query argument")
   }
-  userParams <- z_compact(as.list(c(genus = genus, specificEpithet = specificEpithet, termID = termID, bbox = bbox, fromYear = fromYear, toYear = toYear, fromDay = fromDay, toDay = toDay)))
+  userParams <- z_compact(as.list(
+    c(
+      genus = genus,
+      specificEpithet = specificEpithet,
+      termID = termID,
+      bbox = bbox,
+      fromYear = fromYear,
+      toYear = toYear,
+      fromDay = fromDay,
+      toDay = toDay)
+    ))
 
   # construct the value following the "q" key
   qArgument <- "q="
-  counter = 0;   # counter to tell us if we're after 1st record
+  # counter to tell us if we're after 1st record
+  counter <- 0
   # loop through all user parameters
   for(key in names(userParams)){
     value<-userParams[key]
-    # For multiple arguments, insert AND separator.  Here, we insert html encoding + for spaces
+    # For multiple arguments, insert AND separator.  Here, we insert html
+    # encoding + for spaces
     if (counter > 0) {
       qArgument <- paste(qArgument,"+AND+", sep = "")
     }
@@ -69,35 +90,36 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
     else if (key == "toDay")
       qArgument <- paste(qArgument,'%2B','dayOfYear:<=',value, sep = "")
     else if (key == "termID")
-      qArgument <- paste(qArgument,'%2B','plantStructurePresenceTypes',':"',value,'"', sep = "")
+      qArgument <- paste(
+        qArgument,'%2B','plantStructurePresenceTypes',':"',value,'"', sep = "")
     else if (key == "bbox") {
-      lat1 = as.numeric(unlist(strsplit(bbox, ","))[1])
-      lat2 = as.numeric(unlist(strsplit(bbox, ","))[3])
-      lng1 = as.numeric(unlist(strsplit(bbox, ","))[2])
-      lng2 = as.numeric(unlist(strsplit(bbox, ","))[4])
+      lat1 <- as.numeric(unlist(strsplit(bbox, ","))[1])
+      lat2 <- as.numeric(unlist(strsplit(bbox, ","))[3])
+      lng1 <- as.numeric(unlist(strsplit(bbox, ","))[2])
+      lng2 <- as.numeric(unlist(strsplit(bbox, ","))[4])
       if (lat1 > lat2) {
-        minLat = lat2
-        maxLat = lat1
+        minLat <- lat2
+        maxLat <- lat1
       } else {
-        minLat = lat1
-        maxLat = lat2
+        minLat <- lat1
+        maxLat <- lat2
       }
       if (lng1 > lng2) {
-        minLng = lng2
-        maxLng = lng1
+        minLng <- lng2
+        maxLng <- lng1
       } else {
-        minLng = lng1
-        maxLng = lng2
+        minLng <- lng1
+        maxLng <- lng2
       }
       qArgument <- paste(qArgument,'%2B','latitude',':>=',minLat, sep = "")
-      qArgument <- paste(qArgument,'+AND+%2B','latitude',':<=',maxLat, sep = "")
+      qArgument <- paste(qArgument,'+AND+%2B','latitude',':<-',maxLat, sep = "")
       qArgument <- paste(qArgument,'+AND+%2B','longitude',':>=',minLng, sep = "")
-      qArgument <- paste(qArgument,'+AND+%2B','longitude',':<=',maxLng, sep = "")
+      qArgument <- paste(qArgument,'+AND+%2B','longitude',':<-',maxLng, sep = "")
     } else {
       # Begin arguments using +key:value and html encode the + sign with %2B
       qArgument <- paste(qArgument,'%2B',key,':',value, sep = "")
     }
-    counter = counter  + 1
+    counter <- counter  + 1
   }
 
   # add the source argument
@@ -116,9 +138,10 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
   results <- httr::GET(queryUrl)
   # PPO data portal returns 204 status code when no results have been found
   if (results$status_code == 204) {
-    print ("no results found!");
-    return(NULL);
-    # PPO server returns a 200 status code when results have been found with no server errors
+    print ("no results found!")
+    return(NULL)
+    # PPO server returns a 200 status code when results have been found with
+    # no server errors
   } else if (results$status_code == 200) {
     bin <- httr::content(results, "raw")
     tf <- tempfile()
@@ -142,4 +165,5 @@ ppo_data <- function(genus = NULL, specificEpithet = NULL, termID = NULL, fromYe
     stop(paste("uncaught status code",results$status_code))
   }
 }
+
 

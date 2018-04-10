@@ -16,6 +16,14 @@ phenological stages,  \code{\link{ppo_data}} enables users to query the
 PPO data portal.  Both functions return data frames.  The \pkg{rppo} package
 source code is available at \url{https://github.com/biococellc/rppo}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/biocodellc/rppo}
+  \item Report bugs at \url{https://github.com/biocodellc/rppo/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: John Deck \email{jdeck88@gmail.com}
 

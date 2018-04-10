@@ -11,5 +11,5 @@
 #' source code is available at \url{https://github.com/biococellc/rppo}.
 "_PACKAGE"
 #> [1] "_PACKAGE"
-z_compact <- function(l) Filter(Negate(is.null), l)
 
+z_compact <- function(l) Filter(Negate(is.null), l)
