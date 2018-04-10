@@ -19,12 +19,12 @@
 #' @param limit Limit the resultset to the specified number of records
 #' @export
 #' @keywords data download plant phenology
-#' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
 #' @importFrom utils untar
-#' @import httr
-#' @import readr
+#' @importFrom httr GET
+#' @importFrom httr content
+#' @importFrom readr read_file
 #' @return list (data.frame data, string readme, string citation)
 #' @examples
 #' results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2017, limit=10)

@@ -21,6 +21,8 @@
 #' @export
 #' @keywords trait lookup
 #' @importFrom rjson fromJSON
+#' @importFrom httr GET
+#' @importFrom httr content
 #'
 #' @examples
 #' presentTerms <- ppo_terms(present = TRUE)
