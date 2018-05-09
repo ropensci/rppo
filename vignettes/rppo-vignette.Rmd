@@ -2,9 +2,12 @@
 title: "rppo Vignette"
 author: "John Deck"
 date: "`r Sys.Date()`"
-output: github_document
+output:
+   html_document
 vignette: |
-  %\VignetteIndexEntry{rppo Vignette} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{rppo Vignette} 
+  %\VignetteEngine{knitr::knitr}           
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, echo = FALSE}
@@ -19,19 +22,23 @@ library(rppo)
 The rppo package contains just two functions.  One to query terms from the PPO and another to query the data.  Following are examples in how to use these functions.
 
 ### ppo_terms function
-A critical element of querying the PPO Data Portal is understanding the present and absent value terms contained in the PPO.   The ppo_terms function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the ppo_data function.  The following example returns the present terms into a "present_terms" data frame.
+A critical element of querying the PPO Data Portal is understanding the present and absent value terms contained in the PPO.   The ppo_terms function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the ppo_data function.  The following example returns the present terms into a "present_terms" data frame and a sample slice from the dataframe.
 
 ```{r term example, echo=TRUE, message=FALSE, warning=FALSE}
 present_terms <- ppo_terms(present=TRUE)
+# print the first five rows, with just the termIDs and labels
+print(present_terms[1:5,c("termID","label")])
 ```
 
 ### ppo_data function
-The ppo_data function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the ppo_data function are returned as a lis with three elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, and 3) a citation string containing information about proper citation. The "df" variable below is populated with results from the data element in the results list.
+The ppo_data function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the ppo_data function are returned as a list with four elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, and 3) a citation string containing information about proper citation,
+and 4) a status code returned from the service. The "df" variable below is populated with results from the data element in the results list, with an example
+slice of data showing the first 5 records.
 
 ```{r data example, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
 results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110,termID='obo:PPO_0002313', limit=10)
 df <- results$data
-print(df)
+print(df[1:5,])
 ```
 
 The readme string can be accessed by calling the readme list element.  An example of this is shown here:
@@ -42,4 +49,33 @@ cat(results$readme)
 The citation string can be accessed by calling the citation list element.  An example of this is shown here:
 ```{r readme citation example}
 cat(results$citation)
+```
+
+### Working with terms and data
+The PPO data portal currently does not return data on available traits per
+observation, but does allow queries on trait data.  Until the portal is configured to allow returning traits, we can still work with traits more directly by tying together the trait data functions. In the following example, we loop the output the ppo_terms functions and gather relevant statistics returned by the ppo_data function. 
+
+```{r workting with terms and data example}
+termList <- ppo_terms(absent=TRUE);
+
+# For a subset of absent terms, count the number of times
+# each term is encountered in the first 100 days of the year for genus = Quercus
+for (term in 16:20) {
+  termID<-termList[term,'termID'];
+  label<-termList[term,'label'];
+
+    # Here, we rely on the return value of the number_possible element
+    # from ppo_data list and hence can limit returned rows to 1 only.
+    # This greatly speeds up operations.
+    suppressMessages(
+      results <- ppo_data(
+        genus = "Quercus",
+        fromDay = "1",
+        toDay = "100",
+        termID = termID,
+        limit =1)
+  );
+
+  print(paste(label,results$number_possible))
+}
 ```

@@ -13,7 +13,9 @@ ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
 
 \item{specificEpithet}{a plant specific epithet}
 
-\item{termID}{a termID from the plant phenology ontology, e.g. obo:PPO_0002324.  Use the ppo_terms function in this package to get the relevant IDs for present and absent stages}
+\item{termID}{a termID from the plant phenology ontology, e.g.
+obo:PPO_0002324.  Use the ppo_terms function in this package to get the
+relevant IDs for present and absent stages}
 
 \item{fromYear}{query for years starting from the specified year}
 
@@ -23,8 +25,10 @@ ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
 
 \item{toDay}{query for the day of year up to and including the specified day}
 
-\item{bbox}{A lat long bounding box. Format is \code{lat,long,lat,long}. Use this website: http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on bottom left to csv and be sure to switch the order from long, lat, long, lat to lat, long, lat, long)
-Just set the format on the bottom left to CSV}
+\item{bbox}{A lat long bounding box. Format is \code{lat,long,lat,long}.
+Use this website: http://boundingbox.klokantech.com/ to quickly grab a
+bbox (set format on bottom left to csv and be sure to switch the order from
+long, lat, long, lat to lat, long, lat, long).}
 
 \item{limit}{Limit the resultset to the specified number of records}
 }
@@ -32,14 +36,16 @@ Just set the format on the bottom left to CSV}
 list (data.frame data, string readme, string citation)
 }
 \description{
-The Global Plant Phenology Data Portal (PPO data portal) is an aggregation of phenology
-data from several different data sources.  Currently it contains USA-NPN,
-NEON, and PEP725 data sources.  The PPO data portal harvests data using
-the ppo-data-pipeline, with code available at \url{https://github.com/biocodellc/ppo-data-pipeline/}.
-You may also view PPO data portal products online at \url{http://plantphenology.org/}.
+The Global Plant Phenology Data Portal (PPO data portal) is an aggregation
+of phenology data from several different data sources.  Currently it
+contains USA-NPN, NEON, and PEP725 data sources.  The PPO data portal
+harvests data using the ppo-data-pipeline, with code available at
+\url{https://github.com/biocodellc/ppo-data-pipeline/}.
+You may also view PPO data portal products online at
+\url{http://plantphenology.org/}.
 }
 \examples{
-results <- ppo_data(genus = "Quercus", fromYear = 1979, toYear = 2017, limit=10)
+results <- ppo_data(genus = "Quercus", fromYear=1979, toYear=2017, limit=10)
 my_data_frame <- results$data
 }
 \keyword{data}

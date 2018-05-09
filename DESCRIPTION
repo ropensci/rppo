@@ -1,5 +1,5 @@
 Package: rppo
-Title: R functions to access Plant Phenology Ontology annotated datasets
+Title: R Functions To Access Plant Phenology Ontology Annotated Datasets
 URL: https://github.com/biocodellc/rppo
 BugReports: https://github.com/biocodellc/rppo/issues 
 Version: 1.0
