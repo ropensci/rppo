@@ -12,14 +12,14 @@ Authors@R: as.person(c(
     "Robert Guralnick <rguralnick@flmnh.ufl.edu> [aut]"
   ))
 Maintainer: John Deck <jdeck88@gmail.com>
-Description: Access data from the Plant Phenology Ontology data store.
-Depends: R (>= 3.4.2)
+Description: Enables access data from the Plant Phenology Ontology Data Portal.
+Depends: R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000
 Imports:
-    rjson,
+    jsonlite,
     readr,
     plyr,
     httr

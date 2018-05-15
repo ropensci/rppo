@@ -23,8 +23,8 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
     bbox="38,-119,37,-120")
 
 
-	# there should be four elements in this list
-	expect_true(length(response) == 4)
+	# there should be five elements in this list
+	expect_true(length(response) == 5)
 
 	# Check data types on response
 	expect_is(response$data, "data.frame")

@@ -1,7 +1,8 @@
-#' @title Retrieve phenology terms from PPO
+#' @title Retrieve terms from the Plant Phenology Ontology
 #'
-#' @description
+#' @description Retrieve terms fromthe Plant Phenology Ontology
 #'
+#' @details
 #' The ppo_terms function returns terms from the Plant Phenology Ontology.
 #' Currently the function only accepts parameters for present or absent terms.
 #' The response pouplates a data frame with: termID, label, description, and
@@ -15,12 +16,12 @@
 #' ontology \url{https://github.com/PlantPhenoOntology/ppo} and viewing with
 #' protege \url{https://protege.stanford.edu/}
 #'
-#' @param present If TRUE then return all "present" phenological stages
-#' @param absent IF TRUE then return all "absent" phenological stages.
+#' @param present (boolean) If TRUE then return all "present" phenological stages
+#' @param absent (boolean) IF TRUE then return all "absent" phenological stages.
 #' @return data.frame
 #' @export
 #' @keywords trait lookup
-#' @importFrom rjson fromJSON
+#' @importFrom jsonlite fromJSON
 #' @importFrom httr GET
 #' @importFrom httr content
 #'
@@ -53,7 +54,7 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
   if (results$status_code == 200) {
     message ("sending request for terms ...")
     response <- httr::content(results, "text")
-    jsonFile <- rjson::fromJSON(response)
+    jsonFile <- jsonlite::fromJSON(response,simplifyVector= FALSE)
     df <- data.frame(do.call("rbind",jsonFile))
     return(df)
   } else {

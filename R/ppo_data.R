@@ -1,28 +1,28 @@
-#' @title Retrieve data from PPO Data portal
+#' @title Retrieve data from Plant Phenology Ontology Data Portal
 #'
-#' @description
-#' The Global Plant Phenology Data Portal (PPO data portal) is an aggregation
-#' of phenology data from several different data sources.  Currently it
-#' contains USA-NPN, NEON, and PEP725 data sources.  The PPO data portal
-#' harvests data using the ppo-data-pipeline, with code available at
-#' \url{https://github.com/biocodellc/ppo-data-pipeline/}.
-#' You may also view PPO data portal products online at
-#' \url{http://plantphenology.org/}.
+#' @description Retrieve data from the Planto Phenology Ontology Data Portal
 #'
-#' @param genus a plant genus name
-#' @param specificEpithet a plant specific epithet
-#' @param termID a termID from the plant phenology ontology, e.g.
-#' obo:PPO_0002324.  Use the ppo_terms function in this package to get the
-#' relevant IDs for present and absent stages
-#' @param fromYear query for years starting from the specified year
-#' @param toYear query for years up to and including the specified year
-#' @param fromDay query for the day of year starting from the specified day
-#' @param toDay query for the day of year up to and including the specified day
-#' @param bbox A lat long bounding box. Format is \code{lat,long,lat,long}.
-#' Use this website: http://boundingbox.klokantech.com/ to quickly grab a
-#' bbox (set format on bottom left to csv and be sure to switch the order from
+#' @details
+#' The ppo_data function returns a list containing the following information:
+#' a readme file, citation information, a data frame with data, an integer with
+#' the number of records returned and a status code.  The function is called with
+#' parameters that correspond to values contained in the data itself which act
+#' as a filter on the returned record set.
+#'
+#' @param genus (string) a plant genus name
+#' @param specificEpithet (string) a plant specific epithet
+#' @param termID (string) A single termID from the plant phenology ontology. See the
+#' \code{\link{ppo_terms}} function for more information
+#' @param fromYear (integer) return data from the specified year
+#' @param toYear (integer) return data up to and including the specified year
+#' @param fromDay (integer) return data starting from the specified day
+#' @param toDay (integer) return data up to and including the specified day
+#' @param bbox (string) return data within a bounding box. Format is
+#' \code{lat,long,lat,long} and is structured as a string.  Use this website:
+#' http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on
+#' bottom left to csv and be sure to switch the order from
 #' long, lat, long, lat to lat, long, lat, long).
-#' @param limit Limit the resultset to the specified number of records
+#' @param limit (integer) limit returned data to a specified number of records
 #' @export
 #' @keywords data download plant phenology
 #' @importFrom plyr rbind.fill
@@ -31,10 +31,22 @@
 #' @importFrom httr GET
 #' @importFrom httr content
 #' @importFrom readr read_file
-#' @return list (data.frame data, string readme, string citation)
+#' @importFrom utils capture.output
+
+#' @return A list containing the following components:
+#' `data`            [a data frame containing data]
+#' `readme`          [A string describing information about the return package]
+#' `citation`        [Information on citing the data that has been returned]
+#' `number_possible` [Total possible results. Useful when a limit has been used]
+#' `status_code`     [Status code returned from server.]
+#'
 #' @examples
-#' results <- ppo_data(genus = "Quercus", fromYear=1979, toYear=2017, limit=10)
-#' my_data_frame <- results$data
+#'
+#' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10)
+#'
+#' r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10)
+#'
+#' my_data_frame <- r2$data
 
 ppo_data <- function(
   genus = NULL,
@@ -48,12 +60,10 @@ ppo_data <- function(
   limit = NULL) {
 
   # source Parameter refers to the data source we want to query for
-  # here we limit to only USA-NPN and NEON
-  sourceParameter <-
-    "source:USA-NPN,NEON"
+  sourceParameter <- "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
   sourceArgument <-
-    "source=latitude,longitude,year,dayOfYear,plantStructurePresenceTypes"
+    "source=latitude,longitude,year,dayOfYear,termID"
   # set the base_url for making calls
   base_url <- "https://www.plantphenology.org/api/v2/download/"
 
@@ -105,7 +115,7 @@ ppo_data <- function(
       q <- paste(q,'%2B','dayOfYear:<=',value, sep = "")
     else if (key == "termID")
       q <- paste(
-        q,'%2B','plantStructurePresenceTypes',':"',value,'"', sep = "")
+        q,'%2B','termID',':"',value,'"', sep = "")
     else if (key == "bbox") {
       lat1 <- as.numeric(unlist(strsplit(bbox, ","))[1])
       lat2 <- as.numeric(unlist(strsplit(bbox, ","))[3])

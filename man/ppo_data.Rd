@@ -2,51 +2,61 @@
 % Please edit documentation in R/ppo_data.R
 \name{ppo_data}
 \alias{ppo_data}
-\title{Retrieve data from PPO Data portal}
+\title{Retrieve data from Plant Phenology Ontology Data Portal}
 \usage{
 ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
   fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL,
   bbox = NULL, limit = NULL)
 }
 \arguments{
-\item{genus}{a plant genus name}
+\item{genus}{(string) a plant genus name}
 
-\item{specificEpithet}{a plant specific epithet}
+\item{specificEpithet}{(string) a plant specific epithet}
 
-\item{termID}{a termID from the plant phenology ontology, e.g.
-obo:PPO_0002324.  Use the ppo_terms function in this package to get the
-relevant IDs for present and absent stages}
+\item{termID}{(string) A single termID from the plant phenology ontology. See the
+\code{\link{ppo_terms}} function for more information}
 
-\item{fromYear}{query for years starting from the specified year}
+\item{fromYear}{(integer) return data from the specified year}
 
-\item{toYear}{query for years up to and including the specified year}
+\item{toYear}{(integer) return data up to and including the specified year}
 
-\item{fromDay}{query for the day of year starting from the specified day}
+\item{fromDay}{(integer) return data starting from the specified day}
 
-\item{toDay}{query for the day of year up to and including the specified day}
+\item{toDay}{(integer) return data up to and including the specified day}
 
-\item{bbox}{A lat long bounding box. Format is \code{lat,long,lat,long}.
-Use this website: http://boundingbox.klokantech.com/ to quickly grab a
-bbox (set format on bottom left to csv and be sure to switch the order from
+\item{bbox}{(string) return data within a bounding box. Format is
+\code{lat,long,lat,long} and is structured as a string.  Use this website:
+http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on
+bottom left to csv and be sure to switch the order from
 long, lat, long, lat to lat, long, lat, long).}
 
-\item{limit}{Limit the resultset to the specified number of records}
+\item{limit}{(integer) limit returned data to a specified number of records}
 }
 \value{
-list (data.frame data, string readme, string citation)
+A list containing the following components:
+`data`            [a data frame containing data]
+`readme`          [A string describing information about the return package]
+`citation`        [Information on citing the data that has been returned]
+`number_possible` [Total possible results. Useful when a limit has been used]
+`status_code`     [Status code returned from server.]
 }
 \description{
-The Global Plant Phenology Data Portal (PPO data portal) is an aggregation
-of phenology data from several different data sources.  Currently it
-contains USA-NPN, NEON, and PEP725 data sources.  The PPO data portal
-harvests data using the ppo-data-pipeline, with code available at
-\url{https://github.com/biocodellc/ppo-data-pipeline/}.
-You may also view PPO data portal products online at
-\url{http://plantphenology.org/}.
+Retrieve data from the Planto Phenology Ontology Data Portal
+}
+\details{
+The ppo_data function returns a list containing the following information:
+a readme file, citation information, a data frame with data, an integer with
+the number of records returned and a status code.  The function is called with
+parameters that correspond to values contained in the data itself which act
+as a filter on the returned record set.
 }
 \examples{
-results <- ppo_data(genus = "Quercus", fromYear=1979, toYear=2017, limit=10)
-my_data_frame <- results$data
+
+r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10)
+
+r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10)
+
+my_data_frame <- r2$data
 }
 \keyword{data}
 \keyword{download}
