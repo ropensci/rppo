@@ -13,8 +13,8 @@ ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
 
 \item{specificEpithet}{(string) a plant specific epithet}
 
-\item{termID}{(string) A single termID from the plant phenology ontology. See the
-\code{\link{ppo_terms}} function for more information}
+\item{termID}{(string) A single termID from the plant phenology ontology.
+See the \code{\link{ppo_terms}} function for more information.}
 
 \item{fromYear}{(integer) return data from the specified year}
 
@@ -33,12 +33,14 @@ long, lat, long, lat to lat, long, lat, long).}
 \item{limit}{(integer) limit returned data to a specified number of records}
 }
 \value{
-A list containing the following components:
-`data`            [a data frame containing data]
-`readme`          [A string describing information about the return package]
-`citation`        [Information on citing the data that has been returned]
-`number_possible` [Total possible results. Useful when a limit has been used]
-`status_code`     [Status code returned from server.]
+Return value containing a list with the following components:
+\itemize{
+ \item {`data`: A data frame containing data}
+ \item {`readme`: A string with information about the return package}
+ \item {`citation`: A string with citation information}
+ \item {`number_possible`: An integer with total possible results}
+ \item {`status_code`: An integer with status code returned from server}
+}
 }
 \description{
 Retrieve data from the Planto Phenology Ontology Data Portal

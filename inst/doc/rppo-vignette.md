@@ -1,16 +1,17 @@
 ---
 title: "rppo vignette"
 author: "John Deck"
-date: "2018-05-14"
+date: "2018-05-16"
 output:
  html_document:
     keep_md: yes
 vignette: |
   %\VignetteIndexEntry{rppo Vignette} 
-  %\VignetteEngine{rmarkdown::render}           
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
+#%\VignetteEngine{rmarkdown::render}  
 
 
 The rppo package contains just two functions.  One to query terms from the PPO and another to query the data.  Following are three examples: the first two illustrate each of the functions and the third example illustrates how to use the functions together.
@@ -59,7 +60,7 @@ cat(results$readme)
 #> about the query that was run.  
 #> 
 #> data file = data.csv
-#> date query ran = Mon May 14 2018 11:15:11 GMT-0400 (EDT)
+#> date query ran = Wed May 16 2018 08:39:45 GMT-0400 (EDT)
 #> query = +genus:Quercus AND +plantStructurePresenceTypes:"http://purl.obolibrary.org/obo/PPO_0002313" AND +year:>=2013 AND +year:<=2013 AND +dayOfYear:>=100 AND +dayOfYear:<=110 AND source:USA-NPN,NEON
 #> fields returned = dayOfYear,year,genus,specificEpithet,latitude,longitude,source,eventId
 #> user specified limit = 10
@@ -75,7 +76,7 @@ cat(results$number_possible)
 ```
 
 ### working with terms and data together
-Here we will generate a data frame showing the frequency of "present" and "absent" terms for a particular query.  The query is for genus = "Quercus" and latitude > 47.  For each row in the returned data frame `ppo_data` will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO.  For our example, we will generate a frequency table of the number of times "present" or "absent" term occur in the entire returned dataset.  Note that the termID field returned by `ppo_data` will return both "presence" and "absence" terms in addition to "present" and "absent" terms, while the `ppo_terms` function only returns "present" and "absent" terms.  Thus, our frequency distribution only counts the number of "present" and "absent" terms.  For an in-depth discussion of the difference between "presence" and "present", visit https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full.  Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set. 
+Here we will generate a data frame showing the frequency of "present" and "absent" terms for a particular query.  The query is for genus = "Quercus" and latitude > 47.  For each row in the returned data frame `ppo_data` will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO.  For our example, we will generate a frequency table of the number of times "present" or "absent" term occur in the entire returned dataset.  Note that the termID field returned by `ppo_data` will return "presence" terms in addition to "present" and "absent" terms, while the `ppo_terms` function only returns "present" and "absent" terms.  Thus, our frequency distribution only counts the number of "present" and "absent" terms.  For an in-depth discussion of the difference between "presence" and "present", visit https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full.  Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set. 
 
 
 ```r
@@ -121,7 +122,7 @@ for (term in 1:nrow(termList)) {
     freqFrameTermID = freqFrame[row,'t3']
     freqFrameFrequency = freqFrame[row,'Freq']
     # Populate resultFrame with matching "present" or "absent" labels.
-    # In this step, we will ignore "presence" and "absence" terms
+    # In this step, we will ignore "presence" terms
     # found in the frequency frame since the ppo_terms only returns
     # "present" and "absent" terms. 
     if (freqFrameTermID == termListTermID) {

@@ -11,8 +11,8 @@
 #'
 #' @param genus (string) a plant genus name
 #' @param specificEpithet (string) a plant specific epithet
-#' @param termID (string) A single termID from the plant phenology ontology. See the
-#' \code{\link{ppo_terms}} function for more information
+#' @param termID (string) A single termID from the plant phenology ontology.
+#' See the \code{\link{ppo_terms}} function for more information.
 #' @param fromYear (integer) return data from the specified year
 #' @param toYear (integer) return data up to and including the specified year
 #' @param fromDay (integer) return data starting from the specified day
@@ -33,12 +33,14 @@
 #' @importFrom readr read_file
 #' @importFrom utils capture.output
 
-#' @return A list containing the following components:
-#' `data`            [a data frame containing data]
-#' `readme`          [A string describing information about the return package]
-#' `citation`        [Information on citing the data that has been returned]
-#' `number_possible` [Total possible results. Useful when a limit has been used]
-#' `status_code`     [Status code returned from server.]
+#' @return Return value containing a list with the following components:
+#' \itemize{
+#'  \item {`data`: A data frame containing data}
+#'  \item {`readme`: A string with information about the return package}
+#'  \item {`citation`: A string with citation information}
+#'  \item {`number_possible`: An integer with total possible results}
+#'  \item {`status_code`: An integer with status code returned from server}
+#'}
 #'
 #' @examples
 #'

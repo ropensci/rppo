@@ -19,7 +19,7 @@ Retrieve terms fromthe Plant Phenology Ontology
 }
 \details{
 The ppo_terms function returns terms from the Plant Phenology Ontology.
-Currently the function only accepts parameters for present or absent terms.
+Currently the function only accepts parameters for "present" or "absent" terms.
 The response pouplates a data frame with: termID, label, description, and
 URI.  Use the termID values in submitting termID values to the
 \code{\link{ppo_data}} function.  The label and description fields are
