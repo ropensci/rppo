@@ -11,7 +11,6 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
-#%\VignetteEngine{rmarkdown::render}  
 
 
 The rppo package contains just two functions.  One to query terms from the PPO and another to query the data.  Following are three examples: the first two illustrate each of the functions and the third example illustrates how to use the functions together.
@@ -60,7 +59,7 @@ cat(results$readme)
 #> about the query that was run.  
 #> 
 #> data file = data.csv
-#> date query ran = Wed May 16 2018 08:39:45 GMT-0400 (EDT)
+#> date query ran = Wed May 16 2018 08:58:43 GMT-0400 (EDT)
 #> query = +genus:Quercus AND +plantStructurePresenceTypes:"http://purl.obolibrary.org/obo/PPO_0002313" AND +year:>=2013 AND +year:<=2013 AND +dayOfYear:>=100 AND +dayOfYear:<=110 AND source:USA-NPN,NEON
 #> fields returned = dayOfYear,year,genus,specificEpithet,latitude,longitude,source,eventId
 #> user specified limit = 10
