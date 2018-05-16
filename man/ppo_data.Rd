@@ -2,7 +2,7 @@
 % Please edit documentation in R/ppo_data.R
 \name{ppo_data}
 \alias{ppo_data}
-\title{Retrieve data from Plant Phenology Ontology Data Portal}
+\title{Access Data From the Global Plant Phenology Data Portal}
 \usage{
 ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
   fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL,
@@ -43,7 +43,7 @@ Return value containing a list with the following components:
 }
 }
 \description{
-Retrieve data from the Planto Phenology Ontology Data Portal
+Access data from the global plant phenology data portal
 }
 \details{
 The ppo_data function returns a list containing the following information:

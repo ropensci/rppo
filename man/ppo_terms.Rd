@@ -2,7 +2,7 @@
 % Please edit documentation in R/ppo_terms.R
 \name{ppo_terms}
 \alias{ppo_terms}
-\title{Retrieve terms from the Plant Phenology Ontology}
+\title{Access Terms From the Plant Phenology Ontology}
 \usage{
 ppo_terms(present = FALSE, absent = FALSE)
 }
@@ -15,11 +15,11 @@ ppo_terms(present = FALSE, absent = FALSE)
 data.frame
 }
 \description{
-Retrieve terms fromthe Plant Phenology Ontology
+Retrieve present and absent terms from the Plant Phenology Ontology
 }
 \details{
-The ppo_terms function returns terms from the Plant Phenology Ontology.
-Currently the function only accepts parameters for "present" or "absent" terms.
+The ppo_terms function returns terms from the Plant Phenology Ontology (PPO).
+The function only accepts parameters for "present" or "absent" terms.
 The response pouplates a data frame with: termID, label, description, and
 URI.  Use the termID values in submitting termID values to the
 \code{\link{ppo_data}} function.  The label and description fields are

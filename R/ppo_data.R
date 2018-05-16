@@ -1,6 +1,6 @@
-#' @title Retrieve data from Plant Phenology Ontology Data Portal
+#' @title Access Data From the Global Plant Phenology Data Portal
 #'
-#' @description Retrieve data from the Planto Phenology Ontology Data Portal
+#' @description Access data from the global plant phenology data portal
 #'
 #' @details
 #' The ppo_data function returns a list containing the following information:

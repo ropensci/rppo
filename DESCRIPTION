@@ -1,5 +1,5 @@
 Package: rppo
-Title: R Functions To Access Plant Phenology Ontology Annotated Datasets
+Title: Access the Global Plant Phenology Data Portal
 URL: https://github.com/biocodellc/rppo
 BugReports: https://github.com/biocodellc/rppo/issues 
 Version: 1.0
@@ -12,7 +12,7 @@ Authors@R: as.person(c(
     "Robert Guralnick <rguralnick@flmnh.ufl.edu> [aut]"
   ))
 Maintainer: John Deck <jdeck88@gmail.com>
-Description: Enables access data from the Plant Phenology Ontology Data Portal.
+Description: Enables access to data from the Global Plant Phenology Data Portal.
 Depends: R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8
