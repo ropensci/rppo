@@ -44,6 +44,7 @@ Return value containing a list with the following components:
 }
 \description{
 Access data from the global plant phenology data portal
+(PPO data portal)
 }
 \details{
 The ppo_data function returns a list containing the following information:

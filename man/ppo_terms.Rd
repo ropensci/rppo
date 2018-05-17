@@ -15,7 +15,7 @@ ppo_terms(present = FALSE, absent = FALSE)
 data.frame
 }
 \description{
-Retrieve present and absent terms from the Plant Phenology Ontology
+Access present and absent terms from the Plant Phenology Ontology
 }
 \details{
 The ppo_terms function returns terms from the Plant Phenology Ontology (PPO).
@@ -23,16 +23,19 @@ The function only accepts parameters for "present" or "absent" terms.
 The response pouplates a data frame with: termID, label, description, and
 URI.  Use the termID values in submitting termID values to the
 \code{\link{ppo_data}} function.  The label and description fields are
-extracted from the ontology OWL file and are useful in determining the proper
-term to query on.  The URI field contains a link to the term itself which is
-useful for determining superclass and subclass relationships for each term.
+extracted from the Plant Phenology Ontology and are useful in
+determining the proper term to query on.  The URI field contains a link to
+the term itself which is useful for determining superclass and subclass
+relationships for each term.
 For more information on the PPO ontology itself, we suggest loading the PPO
-ontology \url{https://github.com/PlantPhenoOntology/ppo} and viewing with
+\url{https://github.com/PlantPhenoOntology/ppo} with
 protege \url{https://protege.stanford.edu/}
 }
 \examples{
 presentTerms <- ppo_terms(present = TRUE)
+
 absentTerms <- ppo_terms(absent = TRUE)
+
 presentAndAbsentTerms <- ppo_terms(present = TRUE, absent = TRUE)
 }
 \keyword{lookup}

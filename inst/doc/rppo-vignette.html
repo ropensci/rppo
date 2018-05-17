@@ -11,7 +11,7 @@
 
 <meta name="author" content="John Deck" />
 
-<meta name="date" content="2018-05-16" />
+<meta name="date" content="2018-05-17" />
 
 <title>rppo vignette</title>
 
@@ -121,15 +121,15 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">rppo vignette</h1>
 <h4 class="author"><em>John Deck</em></h4>
-<h4 class="date"><em>2018-05-16</em></h4>
+<h4 class="date"><em>2018-05-17</em></h4>
 
 </div>
 
 
-<p>The rppo package contains just two functions. One to query terms from the PPO and another to query the data. Following are three examples: the first two illustrate each of the functions and the third example illustrates how to use the functions together.</p>
+<p>The rppo package contains just two functions. One to query terms from the Plant Phenology Ontology (PPO) and another to query the data global plant phenology data portal (PPO data portal). Following are three examples which illustrate use of these functions: the first two sections illustrate the <code>ppo_data</code> and <code>ppo_terms</code> functions and the third section illustrates how to use the functions together.</p>
 <div id="ppo_terms-function" class="section level3">
 <h3>ppo_terms function</h3>
-<p>It is frequently useful to look through the list of present and absent terms contained in the PPO. The <code>ppo_terms</code> function returns present terms, absent terms, or both, returning a termID, label, definition and full URI for each term. Use the termIDs returned from this function to query terms in the <code>ppo_data</code> function. The following example returns the present terms into a “present_terms” data frame and a sample slice from the dataframe.</p>
+<p>It is frequently useful to look through the list of present and absent terms contained in the PPO. The <code>ppo_terms</code> function returns present terms, absent terms, or both, with columns containing a termID, label, definition and full URI for each term. Use the termIDs returned from this function to query terms in the <code>ppo_data</code> function. The following example returns the present terms into a “present_terms” data frame and a sample slice from the dataframe.</p>
 <pre class="r"><code>present_terms &lt;- ppo_terms(present = TRUE)
 # print the first five rows, with just the termIDs and labels
 print(present_terms[1:5,c(&quot;termID&quot;,&quot;label&quot;)])
@@ -142,7 +142,8 @@ print(present_terms[1:5,c(&quot;termID&quot;,&quot;label&quot;)])
 </div>
 <div id="ppo_data-function" class="section level3">
 <h3>ppo_data function</h3>
-<p>The <code>ppo_data</code> function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the <code>ppo_data</code> function are returned as a list with four elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, 3) a citation string containing information about proper citation, 4) a number_possible integer indicating the total number of results if a limit has been specified, and 4) a status code returned from the service. The “df” variable below is populated with results from the data element in the results list, with an example slice of data showing the first record.</p>
+<p>The <code>ppo_data</code> function queries the PPO Data Portal, passing values to the database and extracting matching results. The results of the <code>ppo_data</code> function are returned as a list with five elements: 1) a data frame containing data, 2) a readme string containing usage information and some statistics about the query itself, 3) a citation string containing information about proper citation, 4) a number_possible integer indicating the total number of results if a limit has been specified, and 5) a status code returned from the service.</p>
+<p>The “df” variable below is populated with results from the data element in the results list, with an example slice of data showing the first record.</p>
 <pre class="r"><code>results &lt;- ppo_data(genus = &quot;Quercus&quot;, fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110, termID = 'obo:PPO_0002313', limit = 10)
 df &lt;- results$data
 print(df[1:1,])
@@ -161,7 +162,7 @@ print(df[1:1,])
 #&gt; about the query that was run.  
 #&gt; 
 #&gt; data file = data.csv
-#&gt; date query ran = Wed May 16 2018 08:58:43 GMT-0400 (EDT)
+#&gt; date query ran = Thu May 17 2018 09:16:17 GMT-0400 (EDT)
 #&gt; query = +genus:Quercus AND +plantStructurePresenceTypes:&quot;http://purl.obolibrary.org/obo/PPO_0002313&quot; AND +year:&gt;=2013 AND +year:&lt;=2013 AND +dayOfYear:&gt;=100 AND +dayOfYear:&lt;=110 AND source:USA-NPN,NEON
 #&gt; fields returned = dayOfYear,year,genus,specificEpithet,latitude,longitude,source,eventId
 #&gt; user specified limit = 10
@@ -173,7 +174,7 @@ print(df[1:1,])
 </div>
 <div id="working-with-terms-and-data-together" class="section level3">
 <h3>working with terms and data together</h3>
-<p>Here we will generate a data frame showing the frequency of “present” and “absent” terms for a particular query. The query is for genus = “Quercus” and latitude &gt; 47. For each row in the returned data frame <code>ppo_data</code> will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO. For our example, we will generate a frequency table of the number of times “present” or “absent” term occur in the entire returned dataset. Note that the termID field returned by <code>ppo_data</code> will return “presence” terms in addition to “present” and “absent” terms, while the <code>ppo_terms</code> function only returns “present” and “absent” terms. Thus, our frequency distribution only counts the number of “present” and “absent” terms. For an in-depth discussion of the difference between “presence” and “present”, visit <a href="https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full" class="uri">https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full</a>. Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set.</p>
+<p>Here we will generate a data frame showing the frequency of “present” and “absent” terms for a particular query. The query is for genus = “Quercus” and latitude &gt; 47. For each row in the returned data frame <code>ppo_data</code> will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO. For our example, we will generate a frequency table of the number of times “present” or “absent” term occur in the entire returned dataset. Note that the termID field returned by <code>ppo_data</code> will return “presence” terms in addition to “present” and “absent” terms, while the <code>ppo_terms</code> function only returns “present” and “absent” terms. Thus, our frequency distribution only counts the number of “present” and “absent” terms. For an in-depth discussion of the difference between “presence”, “present”, and “absent”, visit <a href="https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full" class="uri">https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full</a>. Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set.</p>
 <pre class="r"><code>###############################################################################
 # Generate a frequency data frame showing the number of times each termID
 # is populated for genus equals &quot;Quercus&quot; above latitude of 47

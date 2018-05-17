@@ -1,6 +1,7 @@
 #' @title Access Data From the Global Plant Phenology Data Portal
 #'
 #' @description Access data from the global plant phenology data portal
+#' (PPO data portal)
 #'
 #' @details
 #' The ppo_data function returns a list containing the following information:
@@ -231,5 +232,4 @@ ppo_data <- function(
       "status_code" = results$status_code))
   }
 }
-
 

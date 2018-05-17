@@ -7,12 +7,12 @@ rppo
 
 The global plant phenology data portal, or [PPO data portal](https://www.plantphenology.org/), is an aggregation of plant phenological observations from [USA-NPN](https://www.usanpn.org/usa-national-phenology-network), [NEON](https://www.neonscience.org/), and [PEP725](http://www.pep725.eu/) representing 20 million phenological observations from across North America and Europe. The PPO data portal utilizes the [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/ppo/) (PPO) to align phenological terms and measurements from the various databases. The rppo R package enables programmatic access to all data contained in the PPO data portal incuding selected classes contained in the PPO itself.
 
-For more information visit how data is assembled for the PPO data portal, visit the [ppo-data-pipeline git repository](https://github.com/biocodellc/ppo-data-pipeline).
+For information on how data is assembled for the PPO data portal, visit the [ppo-data-pipeline git repository](https://github.com/biocodellc/ppo-data-pipeline).
 
 Installation
 ------------
 
-The production version of rppo can be installed with (when available on CRAN):
+The production version of rppo will be accessible on CRAN once it has passed review:
 
 ``` r
 #install.packages("rppo")  # this will work once package is available on CRAN
@@ -35,7 +35,7 @@ library(rppo)
 Examples
 --------
 
-We reccomend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/biocodellc/rppo/blob/master/vignettes/rppo-vignette.html) for a set of well-explained examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`. Following are a couple of brief examples to illustrate how to get started:
+Following are a couple of brief examples to illustrate how to get started with rppo. We reccomend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/biocodellc/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.
 
 ``` r
 # query all results from day 1 through 100 in a particular bounding box, 
