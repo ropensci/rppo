@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 # rppo
 [![Build Status](https://travis-ci.org/biocodellc/rppo.svg?branch=master)](https://travis-ci.org/biocodellc/rppo)
 [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
-[![](https://badges.ropensci.org/<issue_id>_status.svg)](https://github.com/ropensci/onboarding/issues/<207>)
+[![](https://badges.ropensci.org/175_status.svg)](https://github.com/ropensci/onboarding/issues/207)
+
 
 
 
