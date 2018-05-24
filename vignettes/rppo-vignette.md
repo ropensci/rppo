@@ -9,29 +9,6 @@ vignette: |
   %\VignetteIndexEntry{rppo Vignette} 
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
-references:
-- id: stucky2018
-  title: The Plant Phenology Ontology- A New Informatics Resource for Large-Scale
-      Integration of Plant Phenology Data
-  author:
-  - family: Stucky
-    given: Brian
-  - family: Guralnick
-    given: Rob
-  - family: Deck
-    given: John
-  - family: Denny
-    given: Ellen
-  - family: Bolmgren
-    given: Kjell
-  - family: Walls
-    given: Ramona
-  URL: 'https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full'
-  DOI: 10.3389/fpls.2018.00517
-  publisher: Frontiers in Plant Science
-  type: article-journal
-  issued:
-    year: 2018
 ---
 
 
@@ -83,7 +60,7 @@ cat(results$readme)
 #> about the query that was run.  
 #> 
 #> data file = data.csv
-#> date query ran = Wed May 23 2018 20:13:23 GMT-0400 (EDT)
+#> date query ran = Wed May 23 2018 20:22:34 GMT-0400 (EDT)
 #> query = +genus:Quercus AND +plantStructurePresenceTypes:"http://purl.obolibrary.org/obo/PPO_0002313" AND +year:>=2013 AND +year:<=2013 AND +dayOfYear:>=100 AND +dayOfYear:<=110 AND source:USA-NPN,NEON
 #> fields returned = dayOfYear,year,genus,specificEpithet,latitude,longitude,source,eventId
 #> user specified limit = 10
@@ -99,7 +76,7 @@ cat(results$number_possible)
 ```
 
 ### working with terms and data together
-Here we will generate a data frame showing the frequency of "present" and "absent" terms for a particular query.  The query is for genus = "Quercus" and latitude > 47.  For each row in the returned data frame `ppo_data` will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO.  For our example, we will generate a frequency table of the number of times "present" or "absent" term occur in the entire returned dataset.  Note that the termID field returned by `ppo_data` will return "presence" terms in addition to "present" and "absent" terms, while the `ppo_terms` function only returns "present" and "absent" terms.  Thus, our frequency distribution only counts the number of "present" and "absent" terms [For an in-depth discussion of the difference between "presence", "present", and "absent", see @stucky2018].  Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set. 
+Here we will generate a data frame showing the frequency of "present" and "absent" terms for a particular query.  The query is for genus = "Quercus" and latitude > 47.  For each row in the returned data frame `ppo_data` will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO.  For our example, we will generate a frequency table of the number of times "present" or "absent" term occur in the entire returned dataset.  Note that the termID field returned by `ppo_data` will return "presence" terms in addition to "present" and "absent" terms, while the `ppo_terms` function only returns "present" and "absent" terms.  Thus, our frequency distribution only counts the number of "present" and "absent" terms [For an in-depth discussion of the difference between "presence", "present", and "absent", see https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full].  Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set. 
 
 
 ```r
@@ -204,5 +181,3 @@ print(resultFrame)
 #> 45                    abscised fruits or seeds absent       365
 #> 46                     abscised cones or seeds absent       365
 ```
-
-# References
