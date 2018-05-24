@@ -35,7 +35,7 @@ library(rppo)
 Examples
 --------
 
-Following are a couple of brief examples to illustrate how to get started with rppo. We reccomend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/biocodellc/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.
+Following are a couple of brief examples to illustrate how to get started with rppo. We recommend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/biocodellc/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.
 
 ``` r
 # query all results from day 1 through 100 in a particular bounding box, 

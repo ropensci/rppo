@@ -11,7 +11,7 @@
 
 <meta name="author" content="John Deck" />
 
-<meta name="date" content="2018-05-17" />
+<meta name="date" content="2018-05-23" />
 
 <title>rppo vignette</title>
 
@@ -121,7 +121,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">rppo vignette</h1>
 <h4 class="author"><em>John Deck</em></h4>
-<h4 class="date"><em>2018-05-17</em></h4>
+<h4 class="date"><em>2018-05-23</em></h4>
 
 </div>
 
@@ -162,7 +162,7 @@ print(df[1:1,])
 #&gt; about the query that was run.  
 #&gt; 
 #&gt; data file = data.csv
-#&gt; date query ran = Thu May 17 2018 09:16:37 GMT-0400 (EDT)
+#&gt; date query ran = Wed May 23 2018 20:13:23 GMT-0400 (EDT)
 #&gt; query = +genus:Quercus AND +plantStructurePresenceTypes:&quot;http://purl.obolibrary.org/obo/PPO_0002313&quot; AND +year:&gt;=2013 AND +year:&lt;=2013 AND +dayOfYear:&gt;=100 AND +dayOfYear:&lt;=110 AND source:USA-NPN,NEON
 #&gt; fields returned = dayOfYear,year,genus,specificEpithet,latitude,longitude,source,eventId
 #&gt; user specified limit = 10
@@ -174,7 +174,7 @@ print(df[1:1,])
 </div>
 <div id="working-with-terms-and-data-together" class="section level3">
 <h3>working with terms and data together</h3>
-<p>Here we will generate a data frame showing the frequency of “present” and “absent” terms for a particular query. The query is for genus = “Quercus” and latitude &gt; 47. For each row in the returned data frame <code>ppo_data</code> will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO. For our example, we will generate a frequency table of the number of times “present” or “absent” term occur in the entire returned dataset. Note that the termID field returned by <code>ppo_data</code> will return “presence” terms in addition to “present” and “absent” terms, while the <code>ppo_terms</code> function only returns “present” and “absent” terms. Thus, our frequency distribution only counts the number of “present” and “absent” terms. For an in-depth discussion of the difference between “presence”, “present”, and “absent”, visit <a href="https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full" class="uri">https://www.frontiersin.org/articles/10.3389/fpls.2018.00517/full</a>. Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set.</p>
+<p>Here we will generate a data frame showing the frequency of “present” and “absent” terms for a particular query. The query is for genus = “Quercus” and latitude &gt; 47. For each row in the returned data frame <code>ppo_data</code> will typically return multiple terms in the termID field, corresponding to phenological stages as defined by the PPO. For our example, we will generate a frequency table of the number of times “present” or “absent” term occur in the entire returned dataset. Note that the termID field returned by <code>ppo_data</code> will return “presence” terms in addition to “present” and “absent” terms, while the <code>ppo_terms</code> function only returns “present” and “absent” terms. Thus, our frequency distribution only counts the number of “present” and “absent” terms <span class="citation">(For an in-depth discussion of the difference between “presence”, “present”, and “absent”, see Stucky et al. 2018)</span>. Finally, since termIDs are returned as URI identifiers and not easily readable text, this example maps termIDs to labels. The resulting data frame shows two columns: 1) a column of term labels, and 2) a frequency of the number of times this label appeared in the result set.</p>
 <pre class="r"><code>###############################################################################
 # Generate a frequency data frame showing the number of times each termID
 # is populated for genus equals &quot;Quercus&quot; above latitude of 47
@@ -275,6 +275,14 @@ print(resultFrame)
 #&gt; 44                             abscised leaves absent       365
 #&gt; 45                    abscised fruits or seeds absent       365
 #&gt; 46                     abscised cones or seeds absent       365</code></pre>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-stucky2018">
+<p>Stucky, Brian, Rob Guralnick, John Deck, Ellen Denny, Kjell Bolmgren, and Ramona Walls. 2018. “The Plant Phenology Ontology- A New Informatics Resource for Large-Scale Integration of Plant Phenology Data.” Frontiers in Plant Science. doi:<a href="https://doi.org/10.3389/fpls.2018.00517">10.3389/fpls.2018.00517</a>.</p>
+</div>
+</div>
 </div>
 
 

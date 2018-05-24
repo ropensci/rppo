@@ -206,7 +206,7 @@ ppo_data <- function(
         value=TRUE)
       , " = ")
     # convert string version with commas to an integer
-    numPossible <- as.numeric(gsub(",", "", sapply(numPossible, `[`,2)))
+    numPossible <- as.numeric(gsub(",", "", lapply(numPossible, `[`,2)))
     unlink(tf)
     unlink("ppo_download/", recursive=TRUE)
 

@@ -52,9 +52,9 @@ test_that("Check that PPO term fetching works", {
   absentResponse <- ppo_terms(absent = TRUE)
   allResponse <- ppo_terms(absent = TRUE, present=TRUE)
 
-  numPresentClasses = nrow(presentResponse)
-  numAbsentClasses = nrow(absentResponse)
-  numAllClasses = nrow(allResponse)
+  numPresentClasses <- nrow(presentResponse)
+  numAbsentClasses <- nrow(absentResponse)
+  numAllClasses <- nrow(allResponse)
 
    # there should be at least 50 'present' and 'absent' classes
   expect_true(numPresentClasses > 50)
