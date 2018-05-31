@@ -89,3 +89,6 @@ Code of Conduct
 ---------------
 
 View our [code of conduct](CONDUCT.md)
+
+[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+
