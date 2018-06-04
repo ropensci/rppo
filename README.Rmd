@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 # rppo
-[![Build Status](https://travis-ci.org/biocodellc/rppo.svg?branch=master)](https://travis-ci.org/biocodellc/rppo)
+[![Build Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo)
 [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
 [![](https://badges.ropensci.org/175_status.svg)](https://github.com/ropensci/onboarding/issues/207)
 
@@ -44,7 +44,7 @@ You can install the development version of rppo from github with:
 
 ```{r gh-installation, eval = FALSE}
 install.packages("devtools")
-devtools::install_github("biocodellc/rppo")
+devtools::install_github("ropensci/rppo")
 ```
 
 
@@ -56,7 +56,7 @@ library(rppo)
 
 ## Examples
 
-Following are a couple of brief examples to illustrate how to get started with rppo.  We recommend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/biocodellc/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.  
+Following are a couple of brief examples to illustrate how to get started with rppo.  We recommend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.  
 
 ```{r examples}
 # query all results from day 1 through 100 in a particular bounding box, 
@@ -81,7 +81,7 @@ To cite the 'rppo' R package in publications use:
 
 ```
    'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
-   https://github.com/biocodellc/rppo
+   https://github.com/ropensci/rppo
 ```
 
 ## Code of Conduct

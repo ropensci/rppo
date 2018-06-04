@@ -26,13 +26,13 @@ Two functions  are contained in the \pkg{rppo}:
 \code{\link{ppo_terms}} allows users to discover present and absent
 phenological stages while \code{\link{ppo_data}} enables
 users to query the PPO data portal. The \pkg{rppo} package source code is
-available at \url{https://github.com/biococellc/rppo}.
+available at \url{https://github.com/ropensci/rppo}.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/biocodellc/rppo}
-  \item Report bugs at \url{https://github.com/biocodellc/rppo/issues}
+  \item \url{https://github.com/ropensci/rppo}
+  \item Report bugs at \url{https://github.com/ropensci/rppo/issues}
 }
 
 }
