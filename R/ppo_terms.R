@@ -30,15 +30,13 @@
 #' presentTerms <- ppo_terms(present = TRUE)
 #'
 #' absentTerms <- ppo_terms(absent = TRUE)
-#'
-#' presentAndAbsentTerms <- ppo_terms(present = TRUE, absent = TRUE)
 
 # Fetch phenological terms (stages) from the PPO using the plantphenology.org
 # "ppo" service
 ppo_terms <- function(present=FALSE, absent=FALSE) {
 
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v1/ppo/"
+  base_url <- "https://www.plantphenology.org/api/v2/ppo/"
   main_args <-  Filter(Negate(is.null), (as.list(c(present,absent))))
 
   # structure base URL so we can call present and absent functions

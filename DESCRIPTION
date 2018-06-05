@@ -3,14 +3,20 @@ Title: Access the Global Plant Phenology Data Portal
 URL: https://github.com/ropensci/rppo
 BugReports: https://github.com/ropensci/rppo/issues 
 Version: 1.0
-Authors@R: as.person(c(
-    "John Deck <jdeck88@gmail.com> [aut, cre]", 
-    "Brian Stucky <stuckyb@flmnh.ufl.edu> [aut]",
-    "Ramona Walls <rwalls@cyverse.org> [aut]",
-    "Kjell Bolmgren <Kjell.Bolmgren@slu.se> [aut]",
-    "Ellen Denny <ellen@usanpn.org> [aut]",
-    "Robert Guralnick <rguralnick@flmnh.ufl.edu> [aut]"
-  ))
+Authors@R: c(
+    person("John","Deck", email = "jdeck88@gmail.com", 
+      role = c("aut", "cre")), 
+    person("Brian","Stucky",email = "stuckyb@flmnh.ufl.edu",
+      role = "aut"),
+    person("Ramona","Walls", email = "rwalls@cyverse.org", 
+      role = "aut"),
+    person("Kjell", "Bolmgren", email = "Kjell.Bolmgren@slu.se", 
+      role = "aut"),
+    person("Ellen", "Denny", email = "ellen@usanpn.org", 
+      role = "aut"),
+    person("Robert","Guralnick", email = "rguralnick@flmnh.ufl.edu", 
+      role = "aut")
+  )
 Maintainer: John Deck <jdeck88@gmail.com>
 Description: An R interface to the Global Plant Phenology Data Portal,
     which is accessible online at <https://www.plantphenology.org/>.

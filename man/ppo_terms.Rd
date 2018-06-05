@@ -35,8 +35,6 @@ protege \url{https://protege.stanford.edu/}
 presentTerms <- ppo_terms(present = TRUE)
 
 absentTerms <- ppo_terms(absent = TRUE)
-
-presentAndAbsentTerms <- ppo_terms(present = TRUE, absent = TRUE)
 }
 \keyword{lookup}
 \keyword{trait}
