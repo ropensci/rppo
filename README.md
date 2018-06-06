@@ -40,11 +40,6 @@ You can install the development version of rppo from github with:
 ``` r
 install.packages("devtools")
 devtools::install_github("ropensci/rppo")
-```
-
-Install the library once it has been downloaded from CRAN or github.
-
-``` r
 library(rppo)
 ```
 
