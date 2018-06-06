@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
 
 
 
-
 The global plant phenology data portal, or [PPO data portal](https://www.plantphenology.org/), is an aggregation of 
 plant phenological observations from [USA-NPN](https://www.usanpn.org/usa-national-phenology-network), [NEON](https://www.neonscience.org/), and [PEP725](http://www.pep725.eu/) representing 
 20 million phenological observations from across North America and Europe.  The PPO data portal utilizes the [Plant
@@ -34,10 +33,10 @@ For information on how data is assembled for the PPO data portal, visit the
 
 ## Installation
 
-The production version of rppo will be accessible on CRAN once it has passed review:
+The production version of rppo is accessible on CRAN:
 ```{r}
-#install.packages("rppo")  # this will work once package is available on CRAN
-#library(rppo)
+install.packages("rppo")  
+library(rppo)
 ```
 
 You can install the development version of rppo from github with:

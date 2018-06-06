@@ -1,22 +1,38 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-rppo
-====
 
-[![Build Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo) [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master) [![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/onboarding/issues/207)
+# rppo
 
-The global plant phenology data portal, or [PPO data portal](https://www.plantphenology.org/), is an aggregation of plant phenological observations from [USA-NPN](https://www.usanpn.org/usa-national-phenology-network), [NEON](https://www.neonscience.org/), and [PEP725](http://www.pep725.eu/) representing 20 million phenological observations from across North America and Europe. The PPO data portal utilizes the [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/ppo/) (PPO) to align phenological terms and measurements from the various databases. The rppo R package enables programmatic access to all data contained in the PPO data portal incuding selected classes contained in the PPO itself.
+[![Build
+Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo)
+[![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
+[![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/onboarding/issues/207)
 
-For information on how data is assembled for the PPO data portal, visit the [ppo-data-pipeline git repository](https://github.com/biocodellc/ppo-data-pipeline).
+The global plant phenology data portal, or [PPO data
+portal](https://www.plantphenology.org/), is an aggregation of plant
+phenological observations from
+[USA-NPN](https://www.usanpn.org/usa-national-phenology-network),
+[NEON](https://www.neonscience.org/), and
+[PEP725](http://www.pep725.eu/) representing 20 million phenological
+observations from across North America and Europe. The PPO data portal
+utilizes the [Plant Phenology
+Ontology](https://github.com/PlantPhenoOntology/ppo/) (PPO) to align
+phenological terms and measurements from the various databases. The rppo
+R package enables programmatic access to all data contained in the PPO
+data portal incuding selected classes contained in the PPO itself.
 
-Installation
-------------
+For information on how data is assembled for the PPO data portal, visit
+the [ppo-data-pipeline git
+repository](https://github.com/biocodellc/ppo-data-pipeline).
 
-The production version of rppo will be accessible on CRAN once it has passed review:
+## Installation
+
+The production version of rppo is accessible on CRAN:
 
 ``` r
-#install.packages("rppo")  # this will work once package is available on CRAN
-#library(rppo)
+install.packages("rppo")  
+#> installing the source package 'rppo'
+library(rppo)
 ```
 
 You can install the development version of rppo from github with:
@@ -32,10 +48,15 @@ Install the library once it has been downloaded from CRAN or github.
 library(rppo)
 ```
 
-Examples
---------
+## Examples
 
-Following are a couple of brief examples to illustrate how to get started with rppo. We recommend visiting the [rppo vignette](http://htmlpreview.github.io/?https://github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.
+Following are a couple of brief examples to illustrate how to get
+started with rppo. We recommend visiting the [rppo
+vignette](http://htmlpreview.github.io/?https://github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html)
+for a more complete set of examples on using the rppo package, as well
+as viewing man pages for rppo functions in the R environment, using
+`?ppo_data` and
+`?ppo_terms`.
 
 ``` r
 # query all results from day 1 through 100 in a particular bounding box, 
@@ -69,25 +90,27 @@ presentTerms <- ppo_terms(present = TRUE)
 
 # print the 2nd present term returned
 print(presentTerms[2,])
-#>            termID                    label
-#> 2 obo:PPO_0002301 new shoot system present
-#>                                                                                                                                                                    definition
-#> 2 An 'new shoot system presence' (PPO:0002003) trait that is a 'quality of' (RO:0000080) a 'whole plant' (PO:0000003) that has at least one 'new shoot system' (PPO:0001003).
+#>            termID                            label
+#> 2 obo:PPO_0002358 abscised fruits or seeds present
+#>                                                                                                                                                                                                                                                                                                                                  definition
+#> 2 An 'abscised fruit or seed presence' (PPO:0002059) trait that is a 'quality of' (RO:0000080) a 'whole plant' (PO:0000003) from which at least one 'ripe fruit' (PPO:0001045) has been abscised or removed by an herbivore or that has at least one 'ripe fruit' (PPO:0001045) that has abscised at least one 'mature seed' (PPO:0001024).
 #>                                          uri
-#> 2 http://purl.obolibrary.org/obo/PPO_0002301
+#> 2 http://purl.obolibrary.org/obo/PPO_0002358
 ```
 
-Citation
---------
+## Citation
 
-To cite the 'rppo' R package in publications use:
+To cite the ‘rppo’ R package in publications
+use:
 
-       'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
-       https://github.com/ropensci/rppo
+``` 
+   'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
+   https://github.com/ropensci/rppo
+```
 
-Code of Conduct
----------------
+## Code of Conduct
 
-View our [code of conduct](CONDUCT.md)
+View our [code of
+conduct](CONDUCT.md)
 
 [![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
