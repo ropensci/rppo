@@ -1,6 +1,6 @@
 Package: rppo
 Title: Access the Global Plant Phenology Data Portal
-URL: https://github.com/ropensci/rppo
+URL: https://docs.ropensci.org/rppo, https://github.com/ropensci/rppo
 BugReports: https://github.com/ropensci/rppo/issues 
 Version: 1.0
 Authors@R: c(
