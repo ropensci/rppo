@@ -6,14 +6,14 @@
 [![Build
 Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo)
 [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
-[![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/onboarding/issues/207)
+[![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/software-review/issues/207)
 
 The global plant phenology data portal, or [PPO data
 portal](https://www.plantphenology.org/), is an aggregation of plant
 phenological observations from
 [USA-NPN](https://www.usanpn.org/usa-national-phenology-network),
 [NEON](https://www.neonscience.org/), and
-[PEP725](http://www.pep725.eu/) representing 20 million phenological
+[PEP725](https://www.pep725.eu/) representing 20 million phenological
 observations from across North America and Europe. The PPO data portal
 utilizes the [Plant Phenology
 Ontology](https://github.com/PlantPhenoOntology/ppo/) (PPO) to align
@@ -47,7 +47,7 @@ library(rppo)
 
 Following are a couple of brief examples to illustrate how to get
 started with rppo. We recommend visiting the [rppo
-vignette](http://htmlpreview.github.io/?https://github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html)
+vignette](https://htmlpreview.github.io/?https://github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html)
 for a more complete set of examples on using the rppo package, as well
 as viewing man pages for rppo functions in the R environment, using
 `?ppo_data` and
@@ -72,8 +72,8 @@ print(r$data)
 #> 1   NEON
 #> 2   NEON
 #>                                                              eventId
-#> 1 http://n2t.net/ark:/21547/Amn2cd982ca2-6147-4a63-a864-f4e556420562
-#> 2 http://n2t.net/ark:/21547/Amn2d1a3e6de-7885-404f-828f-9ebf63248d68
+#> 1 https://n2t.net/ark:/21547/Amn2cd982ca2-6147-4a63-a864-f4e556420562
+#> 2 https://n2t.net/ark:/21547/Amn2d1a3e6de-7885-404f-828f-9ebf63248d68
 
 # view the number of possible records returned
 print(r$number_possible)
@@ -90,7 +90,7 @@ print(presentTerms[2,])
 #>                                                                                                                                                                                                                                                                                                                                  definition
 #> 2 An 'abscised fruit or seed presence' (PPO:0002059) trait that is a 'quality of' (RO:0000080) a 'whole plant' (PO:0000003) from which at least one 'ripe fruit' (PPO:0001045) has been abscised or removed by an herbivore or that has at least one 'ripe fruit' (PPO:0001045) that has abscised at least one 'mature seed' (PPO:0001024).
 #>                                          uri
-#> 2 http://purl.obolibrary.org/obo/PPO_0002358
+#> 2 https://purl.obolibrary.org/obo/PPO_0002358
 ```
 
 ## Citation
@@ -105,7 +105,6 @@ use:
 
 ## Code of Conduct
 
-View our [code of
-conduct](CONDUCT.md)
+View our [code of conduct](https://github.com/ropensci/rppo/blob/master/CONDUCT.md)
 
-[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
