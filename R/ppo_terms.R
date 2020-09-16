@@ -58,8 +58,9 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
     df <- data.frame(do.call("rbind",jsonFile))
     return(df)
   } else {
-    stop(paste("Ooops!  The server encountered an issue processing your
+    message(paste("The server encountered an issue processing your
                request and returned status code = ",results$status_code,
                ". If the problem persists contact the author."))
+    return(NULL)
   }
 }

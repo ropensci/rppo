@@ -4,9 +4,17 @@
 \alias{ppo_data}
 \title{Access Data From the Global Plant Phenology Data Portal}
 \usage{
-ppo_data(genus = NULL, specificEpithet = NULL, termID = NULL,
-  fromYear = NULL, toYear = NULL, fromDay = NULL, toDay = NULL,
-  bbox = NULL, limit = NULL)
+ppo_data(
+  genus = NULL,
+  specificEpithet = NULL,
+  termID = NULL,
+  fromYear = NULL,
+  toYear = NULL,
+  fromDay = NULL,
+  toDay = NULL,
+  bbox = NULL,
+  limit = NULL
+)
 }
 \arguments{
 \item{genus}{(string) a plant genus name}

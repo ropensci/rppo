@@ -31,6 +31,7 @@ available at \url{https://github.com/ropensci/rppo}.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://docs.ropensci.org/rppo}
   \item \url{https://github.com/ropensci/rppo}
   \item Report bugs at \url{https://github.com/ropensci/rppo/issues}
 }

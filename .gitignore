@@ -4,3 +4,4 @@
 *.RData
 .Ruserdata
 ppo_download/
+*.tar.gz

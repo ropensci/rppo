@@ -221,7 +221,7 @@ ppo_data <- function(
   }
   # Something unexpected happened
   else {
-    message(paste("Ooops!  The server encountered an issue processing your
+    message(paste("The server encountered an issue processing your
                request and returned status code = ",results$status_code,
                   ". If the problem persists contact the author."))
     return(list(
