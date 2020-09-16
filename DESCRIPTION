@@ -2,7 +2,7 @@ Package: rppo
 Title: Access the Global Plant Phenology Data Portal
 URL: https://docs.ropensci.org/rppo, https://github.com/ropensci/rppo
 BugReports: https://github.com/ropensci/rppo/issues 
-Version: 1.0
+Version: 1.0.1
 Authors@R: c(
     person("John","Deck", email = "jdeck88@gmail.com", role = c("aut", "cre")), 
     person("Brian","Stucky", email = "stuckyb@flmnh.ufl.edu", role = "aut"),
