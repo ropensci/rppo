@@ -17,15 +17,7 @@ repository](https://github.com/futres/fovt-data-pipeline).
 
 ## Installation
 
-The production version of rfovt will be accessible on CRAN. (NOTE: it is not YET published there), but the following provided for reference:
-
-``` r
-install.packages("rfovt")  
-#> installing the source package 'rfovt'
-library(rfovt)
-```
-
-You can install the development version of rfutres from github with:
+The production version of rfovt will soon be accessible on CRAN.  Until then, you can install the development version of rfutres from github with:
 
 ``` r
 install.packages("devtools")
