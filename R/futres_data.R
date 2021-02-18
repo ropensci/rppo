@@ -1,10 +1,10 @@
-#' @title Access Data From the Global Plant Phenology Data Portal
+#' @title Access Data From the  FuTRES data portal
 #'
-#' @description Access data from the global plant phenology data portal
-#' (PPO data portal)
+#' @description Access data from FuTRES
+#' (futres data portal)
 #'
 #' @details
-#' The ppo_data function returns a list containing the following information:
+#' The futres_data function returns a list containing the following information:
 #' a readme file, citation information, a data frame with data, an integer with
 #' the number of records returned and a status code.  The function is called with
 #' parameters that correspond to values contained in the data itself which act
@@ -12,12 +12,10 @@
 #'
 #' @param genus (string) a plant genus name
 #' @param specificEpithet (string) a plant specific epithet
-#' @param termID (string) A single termID from the plant phenology ontology.
-#' See the \code{\link{ppo_terms}} function for more information.
+#' @param termID (string) A single termID from the FOVT 
+#' See the \code{\link{futres_terms}} function for more information.
 #' @param fromYear (integer) return data from the specified year
 #' @param toYear (integer) return data up to and including the specified year
-#' @param fromDay (integer) return data starting from the specified day
-#' @param toDay (integer) return data up to and including the specified day
 #' @param bbox (string) return data within a bounding box. Format is
 #' \code{lat,long,lat,long} and is structured as a string.  Use this website:
 #' http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on
@@ -25,7 +23,7 @@
 #' long, lat, long, lat to lat, long, lat, long).
 #' @param limit (integer) limit returned data to a specified number of records
 #' @export
-#' @keywords data download plant phenology
+#' @keywords data download vertebrate traits
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
 #' @importFrom utils untar
@@ -45,30 +43,26 @@
 #'
 #' @examples
 #'
-#' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10)
+#' r1 <- futres_data(genus = "Puma", termID='obo:FOVT_0002313', limit=10)
 #'
-#' r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10)
+#' r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
 #'
 #' my_data_frame <- r2$data
 
-ppo_data <- function(
+futres_data <- function(
   genus = NULL,
   specificEpithet = NULL,
   termID = NULL,
   fromYear = NULL,
   toYear = NULL,
-  fromDay = NULL,
-  toDay = NULL,
   bbox = NULL,
   limit = NULL) {
 
-  # source Parameter refers to the data source we want to query for
-  sourceParameter <- "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
   sourceArgument <-
     "source=latitude,longitude,year,dayOfYear,termID"
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v2/download/"
+  base_url <- "https://www.plantphenology.org/futresapi/v2/download/"
 
   # Check for minimum arguments to run a query
   main_args <- Filter(
@@ -90,9 +84,7 @@ ppo_data <- function(
         termID = termID,
         bbox = bbox,
         fromYear = fromYear,
-        toYear = toYear,
-        fromDay = fromDay,
-        toDay = toDay)
+        toYear = toYear
     )))
 
   # construct the value following the "q" key
@@ -110,12 +102,8 @@ ppo_data <- function(
 
     if (key == "fromYear")
       q <- paste(q,'%2B','year:>=',value, sep = "")
-    else if (key == "fromDay")
-      q <- paste(q,'%2B','dayOfYear:>=',value, sep = "")
     else if (key == "toYear")
       q <- paste(q,'%2B','year:<=',value, sep = "")
-    else if (key == "toDay")
-      q <- paste(q,'%2B','dayOfYear:<=',value, sep = "")
     else if (key == "termID")
       q <- paste(
         q,'%2B','termID',':"',value,'"', sep = "")
@@ -164,9 +152,9 @@ ppo_data <- function(
   message ('sending request for data ...')
   message(queryUrl)
 
-  # send GET request to the PPO data portal
+  # send GET request to the FOVT data portal
   results <- httr::GET(queryUrl)
-  # PPO data portal returns 204 status code when no results have been found
+  # FOVT data portal returns 204 status code when no results have been found
   if (results$status_code == 204) {
     message ("no results found!")
     return(list(
@@ -177,7 +165,7 @@ ppo_data <- function(
       "status_code" = results$status_code)
     )
   }
-  # PPO server returns a 200 status code when results have been found with
+  # FOVT server returns a 200 status code when results have been found with
   # no server errors
   else if (results$status_code == 200) {
     bin <- httr::content(results, "raw")
@@ -189,13 +177,13 @@ ppo_data <- function(
 
     # data.csv contains all data as comma separated values
     data <- read.csv(
-      'ppo_download/data.csv',header=TRUE)
+      'futres_download/data.csv',header=TRUE)
     # README.txt contains information about the query and the # of results
     readme <- readr::read_file(
-      'ppo_download/README.txt')
+      'futres_download/README.txt')
     # citation_and_data_use_policies.txt contains citation information
     citation <- readr::read_file(
-      'ppo_download/citation_and_data_use_policies.txt')
+      'futres_download/citation_and_data_use_policies.txt')
     # grab the number possble from the readme file, using the
     # cat function and capturing output so we can grep results
     # (server does not return a usable count at this time)
@@ -208,7 +196,7 @@ ppo_data <- function(
     # convert string version with commas to an integer
     numPossible <- as.numeric(gsub(",", "", lapply(numPossible, `[`,2)))
     unlink(tf)
-    unlink("ppo_download/", recursive=TRUE)
+    unlink("futres_download/", recursive=TRUE)
 
     return(list(
       "data" = data,

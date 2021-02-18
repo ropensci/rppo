@@ -1,4 +1,3 @@
-# rppo 1.0
+# rfutres 1.0
 ## New Features
- * released to CRAN on May 8th, 2018
-
+* initial release

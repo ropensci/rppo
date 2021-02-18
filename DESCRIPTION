@@ -1,19 +1,17 @@
-Package: rppo
-Title: Access the Global Plant Phenology Data Portal
-URL: https://docs.ropensci.org/rppo/, https://github.com/ropensci/rppo/
-BugReports: https://github.com/ropensci/rppo/issues 
+Package: rfutres
+Title: Access the FuTRES data portal
+URL: https://github.com/futres/rfutres/
+BugReports: https://github.com/futres/rfutres/issues 
 Version: 1.0.1
 Authors@R: c(
+    person("Meghan","Balk", email = "meghan.balk@gmail.com", role = c("aut", "cre")), 
+    person("Neeka","Sewnath", email = "neeka.sewnath@gmail.com", role = c("aut", "cre")), 
     person("John","Deck", email = "jdeck88@gmail.com", role = c("aut", "cre")), 
-    person("Brian","Stucky", email = "stuckyb@flmnh.ufl.edu", role = "aut"),
-    person("Ramona","Walls", email = "rwalls@cyverse.org", role = "aut"),
-    person("Kjell", "Bolmgren", email = "Kjell.Bolmgren@slu.se", role = "aut"),
-    person("Ellen", "Denny", email = "ellen@usanpn.org", role = "aut"),
     person("Robert","Guralnick", email = "rguralnick@flmnh.ufl.edu", role = "aut")
   )
 Maintainer: John Deck <jdeck88@gmail.com>
-Description: An R interface to the Global Plant Phenology Data Portal,
-    which is accessible online at <https://www.plantphenology.org/>.
+Description: An R interface to the FuTRES Data Portal,
+    which is accessible online at <https://www.futres.org/>.
 Depends: R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8

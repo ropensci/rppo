@@ -27,10 +27,7 @@ library(rfutres)
 ## Examples
 
 Following are a couple of brief examples to illustrate how to get
-started with rfutres. We recommend visiting the [rfutres
-vignette](https://htmlpreview.github.io/?https://github.com/futres/rfutres/blob/master/vignettes/rfutres-vignette.html)
-for a more complete set of examples on using the rfutres package, as well
-as viewing man pages for rfutres functions in the R environment, using
+started with rfutres. We recommend visiting the futres man pages in the R environment, using
 `?futres_data` and
 `?futres_traits`.
 

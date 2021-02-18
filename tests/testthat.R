@@ -1,4 +1,4 @@
 library(testthat)
-library(rppo)
+library(rfutres)
 
-test_check("rppo")
+test_check("rfutres")

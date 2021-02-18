@@ -1,9 +1,9 @@
 
-context("Test PPO Data Fetching")
+context("Test FuTRES Data Fetching")
 
 test_that("Check that no results returns status code = 204", {
   # Generate a response to use for testing
-  response <- ppo_data(
+  response <- futres_data(
     genus = "ImpossibleGenusName",
     fromYear = 1979,
     toYear = 2017,
@@ -13,14 +13,11 @@ test_that("Check that no results returns status code = 204", {
   expect_true(response$status_code == 204)
 })
 
-test_that("Check that PPO data is returned correctly from ppo_data function", {
+test_that("Check that FuTRES data is returned correctly from futres_data function", {
   # Generate a response to use for testing
-  response <- ppo_data(
-    genus = "Quercus",
-    fromYear = 1979,
-    toYear = 2017,
-    limit=10,
-    bbox="38,-119,37,-120")
+  response <- futres_data(
+    genus = "Puma",
+    limit=10)
 
 
 	# there should be five elements in this list
@@ -35,36 +32,29 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
 	expect_true(nrow(response$data) == 10)
 
 	# calling function by itself should produce error
-	expect_error(ppo_data())
+	expect_error(futres_data())
 
 	# check the data itself.  we constrained to genus=Quercus so the first
 	# row should be Quercus
-	expect_identical(as.character(response$data$genus[1]), "Quercus")
+	expect_identical(as.character(response$data$genus[1]), "Puma")
 })
 
-context("Test PPO Term Fetching")
-test_that("Check that PPO term fetching works", {
+context("Test FOVT Trait Fetching")
+test_that("Check that FOVT term fetching works", {
 
   # Error should be generated here
-  expect_error(ppo_terms())
+  expect_error(futres_traits())
 
-  presentResponse <- ppo_terms(present = TRUE)
-  absentResponse <- ppo_terms(absent = TRUE)
-  allResponse <- ppo_terms(absent = TRUE, present=TRUE)
+  response <- futres_traits()
 
-  numPresentClasses <- nrow(presentResponse)
-  numAbsentClasses <- nrow(absentResponse)
-  numAllClasses <- nrow(allResponse)
+  numAllClasses <- nrow(response)
 
-   # there should be at least 50 'present' and 'absent' classes
-  expect_true(numPresentClasses > 50)
-  expect_true(numAbsentClasses > 50)
-  # fetching present and absent classes should be ALL classes
-  expect_true(numAllClasses == (numPresentClasses + numAbsentClasses))
+  # fetching all classes should be more than 50
+  expect_true(numAllClasses > 50) 
 
   # check that termIDs are all unique
-  expect_true(length(presentResponse$termID) ==
-                length(unique(presentResponse$termID)))
+  expect_true(length(response$termID) ==
+                length(unique(response$termID)))
 
 })
 
