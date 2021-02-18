@@ -3,21 +3,20 @@
 
 # rfutres
 
-The Functional Trait Resource for Environmental Studies, or [FuTRES](https://www.futres.org/), is an aggregation of vertebrate traits from 
-[Vertnet](http://vertnet.org/) and other datasets that have been harvested as part of the FuTRES project.
-The FuTRES project utilizes the
-utilizes the [FuTRES Ontology for Vertebrate Traits](https://github.com/futres/fovt) (FOVT) to align
+The Functional Trait Resource for Environmental Studies project, or [FuTRES](https://www.futres.org/), aggregates vertebrate traits from 
+[Vertnet](http://vertnet.org/) and other research datasets.
+The FuTRES project utilizes the [FuTRES Ontology for Vertebrate Traits](https://github.com/futres/fovt) (FOVT) to align
 trait terms from the various databases. The rfutres
 R package enables programmatic access to all data contained in the FuTRES
 data portal incuding selected classes contained in the fovt ontology.
 
-For information on how data is assembled for the PPO data portal, visit
+For information on how data is assembled for the FuTRES data portal, visit
 the [fovt-data-pipeline git
 repository](https://github.com/futres/fovt-data-pipeline).
 
 ## Installation
 
-The production version of rfovt will soon be accessible on CRAN.  Until then, you can install the development version of rfutres from github with:
+The production version of rfutres will soon be accessible on CRAN.  Until then, you can install the development version of rfutres from github with:
 
 ``` r
 install.packages("devtools")
