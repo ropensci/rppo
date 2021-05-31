@@ -1,4 +1,4 @@
-# rppo 1.0
+# rppo 1.0.2
 ## New Features
- * released to CRAN on May 8th, 2018
+ * updated release to gracefully check on server status
 

@@ -1,8 +1,11 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* changed code to deliver an informative message instead of an error
-when internet resources are not found
+* updated code to check if a server is responding or not.  Previous versions
+* checked for non-200 status messages.  This release checks if server is even 
+* responding at all.  Currently the server responding to all API calls has
+* completely failed and will be rebuilt by June 7th.  Meanwhile, we are re-releasing
+* the R package here so it fails gracefully.
 
 ## Test environments
 * local OS X install, R 3.5.0
