@@ -87,22 +87,27 @@ resultFrame <- data.frame(
 termList <- ppo_terms(absent = TRUE, present = TRUE);
 
 # loop all "present"" and "absent" terms
-for (term in 1:nrow(termList)) {
-  termListTermID<-termList[term,'termID'];
-  termListLabel<-termList[term,'label'];
-  # loop all rows that have a frequency generated
-  for (row in 1:nrow(freqFrame)) {
-    freqFrameTermID = freqFrame[row,'t3']
-    freqFrameFrequency = freqFrame[row,'Freq']
-    # Populate resultFrame with matching "present" or "absent" labels.
-    # In this step, we will ignore "presence" terms
-    # found in the frequency frame since the ppo_terms only returns
-    # "present" and "absent" terms. 
-    if (freqFrameTermID == termListTermID) {
-      resultFrame[nrow(resultFrame)+1,] <- c(termListLabel,freqFrameFrequency)
+if (!is.null(termList)) {
+  for (term in 1:nrow(termList)) {
+    termListTermID<-termList[term,'termID'];
+    termListLabel<-termList[term,'label'];
+    # loop all rows that have a frequency generated
+    for (row in 1:nrow(freqFrame)) {
+      freqFrameTermID = freqFrame[row,'t3']
+      freqFrameFrequency = freqFrame[row,'Freq']
+      # Populate resultFrame with matching "present" or "absent" labels.
+      # In this step, we will ignore "presence" terms
+      # found in the frequency frame since the ppo_terms only returns
+      # "present" and "absent" terms. 
+      if (freqFrameTermID == termListTermID) {
+        resultFrame[nrow(resultFrame)+1,] <- c(termListLabel,freqFrameFrequency)
+      }
     }
   }
+} else {
+  message("termList is null, likely due to a server response issue")
 }
+
 
 # print results, showing term labels and a frequency count
 print(resultFrame)

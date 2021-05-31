@@ -61,7 +61,8 @@ ppo_data <- function(
   toDay = NULL,
   bbox = NULL,
   limit = NULL) {
-
+  # declare queryURL 
+  queryURL <- NULL
   # source Parameter refers to the data source we want to query for
   sourceParameter <- "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
@@ -165,71 +166,82 @@ ppo_data <- function(
   message(queryUrl)
 
   # send GET request to the PPO data portal
-  results <- httr::GET(queryUrl)
-  # PPO data portal returns 204 status code when no results have been found
-  if (results$status_code == 204) {
-    message ("no results found!")
-    return(list(
+  results = tryCatch({
+      results <- httr::GET(queryURL)
+      return(results)
+  }, error = function(e) {
+      return(NULL)
+  })
+  # first check if we found anything at the addressed we searched for
+  if (is.null(results)) {
+      message(paste("The server is not responding.  If the problem persists contact the author."))
+      return(NULL)
+  } else {
+
+    # PPO data portal returns 204 status code when no results have been found
+    if (results$status_code == 204) {
+      message ("no results found!")
+      return(list(
       "data" = NULL,
       "readme" = NULL,
       "citation" = NULL,
       "number_possible" = 0,
       "status_code" = results$status_code)
-    )
-  }
-  # PPO server returns a 200 status code when results have been found with
-  # no server errors
-  else if (results$status_code == 200) {
-    bin <- httr::content(results, "raw")
-    tf <- tempfile()
+      )
+    }
+    # PPO server returns a 200 status code when results have been found with
+    # no server errors
+    else if (results$status_code == 200) {
+      bin <- httr::content(results, "raw")
+      tf <- tempfile()
 
-    # save file to disk
-    writeBin(bin, tf)
-    untar(tf)
+      # save file to disk
+      writeBin(bin, tf)
+      untar(tf)
 
-    # data.csv contains all data as comma separated values
-    data <- read.csv(
-      'ppo_download/data.csv',header=TRUE)
-    # README.txt contains information about the query and the # of results
-    readme <- readr::read_file(
-      'ppo_download/README.txt')
-    # citation_and_data_use_policies.txt contains citation information
-    citation <- readr::read_file(
-      'ppo_download/citation_and_data_use_policies.txt')
-    # grab the number possble from the readme file, using the
-    # cat function and capturing output so we can grep results
-    # (server does not return a usable count at this time)
-    numPossible <- strsplit(
-      grep(
-        "total results possible",
-        capture.output(cat(readme)),
-        value=TRUE)
-      , " = ")
-    # convert string version with commas to an integer
-    numPossible <- as.numeric(gsub(",", "", lapply(numPossible, `[`,2)))
-    unlink(tf)
-    unlink("ppo_download/", recursive=TRUE)
+      # data.csv contains all data as comma separated values
+      data <- read.csv(
+        'ppo_download/data.csv',header=TRUE)
+      # README.txt contains information about the query and the # of results
+      readme <- readr::read_file(
+        'ppo_download/README.txt')
+      # citation_and_data_use_policies.txt contains citation information
+      citation <- readr::read_file(
+        'ppo_download/citation_and_data_use_policies.txt')
+      # grab the number possble from the readme file, using the
+      # cat function and capturing output so we can grep results
+      # (server does not return a usable count at this time)
+      numPossible <- strsplit(
+        grep(
+          "total results possible",
+          capture.output(cat(readme)),
+          value=TRUE)
+        ," = ")
+      # convert string version with commas to an integer
+      numPossible <- as.numeric(gsub(",", "", lapply(numPossible, `[`,2)))
+      unlink(tf)
+      unlink("ppo_download/", recursive=TRUE)
 
-    return(list(
+      return(list(
       "data" = data,
       "readme" = readme,
       "citation" = citation,
       "number_possible" = numPossible,
       "status_code" = results$status_code)
-    )
-
-  }
-  # Something unexpected happened
-  else {
-    message(paste("The server encountered an issue processing your
+      )
+    }
+    # Something unexpected happened
+    else {
+      message(paste("The server encountered an issue processing your
                request and returned status code = ",results$status_code,
                   ". If the problem persists contact the author."))
-    return(list(
-      "data"= NULL,
-      "readme" = NULL,
-      "citation" = NULL,
-      "number_possible" = NULL,
-      "status_code" = results$status_code))
+      return(list(
+        "data"= NULL,
+        "readme" = NULL,
+        "citation" = NULL,
+        "number_possible" = NULL,
+        "status_code" = results$status_code))
+    }
   }
 }
 

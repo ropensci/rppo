@@ -49,18 +49,29 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
   } else {
     stop("specify at least one parameter to return results")
   }
-
-  results <- httr::GET(base_url)
-  if (results$status_code == 200) {
-    message ("sending request for terms ...")
-    response <- httr::content(results, "text")
-    jsonFile <- jsonlite::fromJSON(response,simplifyVector= FALSE)
-    df <- data.frame(do.call("rbind",jsonFile))
-    return(df)
+  results = tryCatch({
+      results <- httr::GET(base_url)
+      return(results)
+  }, error = function(e) {
+      return(NULL)
+  })
+  # first check if we found anything at the addressed we searched for
+  if (is.null(results)) {
+      message(paste("The server is not responding.  If the problem persists contact the author."))
+      return(NULL)
   } else {
-    message(paste("The server encountered an issue processing your
+    if ( results$status_code == 200) {
+          message ("sending request for terms ...")
+          response <- httr::content(results, "text")
+          jsonFile <- jsonlite::fromJSON(response,simplifyVector= FALSE)
+          df <- data.frame(do.call("rbind",jsonFile))
+          return(df)
+    } else {
+          message(paste("The server encountered an issue processing your
                request and returned status code = ",results$status_code,
                ". If the problem persists contact the author."))
-    return(NULL)
+        return(NULL)
+    }
   }
+
 }
