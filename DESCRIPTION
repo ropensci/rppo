@@ -12,8 +12,7 @@ Authors@R: c(
     person("Robert","Guralnick", email = "rguralnick@flmnh.ufl.edu", role = "aut")
   )
 Maintainer: John Deck <jdeck88@gmail.com>
-Description: An R interface to the Global Plant Phenology Data Portal,
-    which is accessible online at <https://www.plantphenology.org/>.
+Description: An R interface to the Global Plant Phenology Data Portal    
 Depends: R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8

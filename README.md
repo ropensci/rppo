@@ -8,8 +8,7 @@ Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-c
 [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
 [![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/software-review/issues/207)
 
-The global plant phenology data portal, or [PPO data
-portal](https://www.plantphenology.org/), is an aggregation of plant
+The global plant phenology data portal, is an aggregation of plant
 phenological observations from
 [USA-NPN](https://www.usanpn.org/usa-national-phenology-network),
 [NEON](https://www.neonscience.org/), and
