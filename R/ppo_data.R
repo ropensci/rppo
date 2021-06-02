@@ -24,6 +24,7 @@
 #' bottom left to csv and be sure to switch the order from
 #' long, lat, long, lat to lat, long, lat, long).
 #' @param limit (integer) limit returned data to a specified number of records
+#' @param timeLimit (integer) set the limit ofthe amount of time to wait for a response
 #' @export
 #' @keywords data download plant phenology
 #' @importFrom plyr rbind.fill
@@ -45,9 +46,9 @@
 #'
 #' @examples
 #'
-#' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10)
+#' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
 #'
-#' r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10)
+#' r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10, timeLimit = 4)
 #'
 #' my_data_frame <- r2$data
 
@@ -60,7 +61,8 @@ ppo_data <- function(
   fromDay = NULL,
   toDay = NULL,
   bbox = NULL,
-  limit = NULL) {
+  limit = NULL,
+  timeLimit = 60) {
   # declare queryURL 
   queryURL <- NULL
   # source Parameter refers to the data source we want to query for
@@ -167,7 +169,7 @@ ppo_data <- function(
 
   # send GET request to the PPO data portal
   results = tryCatch({
-      results <- httr::GET(queryURL)
+      results <- httr::GET(queryURL, httr::timeout(timeLimit))
       return(results)
   }, error = function(e) {
       return(NULL)

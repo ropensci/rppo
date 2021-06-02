@@ -4,12 +4,14 @@
 \alias{ppo_terms}
 \title{Access Terms From the Plant Phenology Ontology}
 \usage{
-ppo_terms(present = FALSE, absent = FALSE)
+ppo_terms(present = FALSE, absent = FALSE, timeLimit = 2)
 }
 \arguments{
 \item{present}{(boolean) If TRUE then return all "present" phenological stages}
 
 \item{absent}{(boolean) IF TRUE then return all "absent" phenological stages.}
+
+\item{timeLimit}{(integer) set the limit ofthe amount of time to wait for a response}
 }
 \value{
 data.frame
@@ -32,9 +34,9 @@ For more information on the PPO ontology itself, we suggest loading the PPO
 protege \url{https://protege.stanford.edu/}
 }
 \examples{
-presentTerms <- ppo_terms(present = TRUE)
+presentTerms <- ppo_terms(present = TRUE, timeLimit = 1)
 
-absentTerms <- ppo_terms(absent = TRUE)
+absentTerms <- ppo_terms(absent = TRUE, timeLimit = 1)
 }
 \keyword{lookup}
 \keyword{trait}

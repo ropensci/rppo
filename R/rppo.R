@@ -5,8 +5,7 @@
 #' (PPO)
 #'
 #' @details \pkg{rppo} enables users to query the global plant phenology
-#' data portal (PPO data portal), which is visible online at
-#' \url{https://plantphenology.org/}. The PPO data portal is an aggregation
+#' data portal (PPO data portal). The PPO data portal is an aggregation
 #' of phenology data from several different data sources.  Currently it
 #' contains USA-NPN, NEON, and PEP725 data sources.  The PPO data portal
 #' harvests data using the ppo-data-pipeline, with code available at

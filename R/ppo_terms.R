@@ -19,6 +19,7 @@
 #'
 #' @param present (boolean) If TRUE then return all "present" phenological stages
 #' @param absent (boolean) IF TRUE then return all "absent" phenological stages.
+#' @param timeLimit (integer) set the limit ofthe amount of time to wait for a response
 #' @return data.frame
 #' @export
 #' @keywords trait lookup
@@ -27,14 +28,13 @@
 #' @importFrom httr content
 #'
 #' @examples
-#' presentTerms <- ppo_terms(present = TRUE)
+#' presentTerms <- ppo_terms(present = TRUE, timeLimit = 1)
 #'
-#' absentTerms <- ppo_terms(absent = TRUE)
+#' absentTerms <- ppo_terms(absent = TRUE, timeLimit = 1)
 
 # Fetch phenological terms (stages) from the PPO using the plantphenology.org
 # "ppo" service
-ppo_terms <- function(present=FALSE, absent=FALSE) {
-
+ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 2) {
   # set the base_url for making calls
   base_url <- "https://www.plantphenology.org/api/v2/ppo/"
   main_args <-  Filter(Negate(is.null), (as.list(c(present,absent))))
@@ -50,14 +50,14 @@ ppo_terms <- function(present=FALSE, absent=FALSE) {
     stop("specify at least one parameter to return results")
   }
   results = tryCatch({
-      results <- httr::GET(base_url)
+      results <- httr::GET(base_url, httr::timeout(timeLimit))
       return(results)
   }, error = function(e) {
       return(NULL)
   })
   # first check if we found anything at the addressed we searched for
   if (is.null(results)) {
-      message(paste("The server is not responding.  If the problem persists contact the author."))
+      message(paste("The server is not responding.  If the problem persists contact the author.  You may also try increasing the timeLimit parameter."))
       return(NULL)
   } else {
     if ( results$status_code == 200) {

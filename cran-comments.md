@@ -6,6 +6,7 @@ This is a resubmission. In this version I have:
 * responding at all.  Currently the server responding to all API calls has
 * completely failed and will be rebuilt by June 7th.  Meanwhile, we are re-releasing
 * the R package here so it fails gracefully.
+* Please NOTE that the WIN package provides a note about the spelling of the word "phenology", which is actually correct.
 
 ## Test environments
 * local OS X install, R 3.5.0

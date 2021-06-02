@@ -21,7 +21,7 @@ It is frequently useful to look through the list of present and absent terms con
 
 
 ```r
-present_terms <- ppo_terms(present = TRUE)
+present_terms <- ppo_terms(present = TRUE, timeLimit = 3)
 # print the first five rows, with just the termIDs and labels
 print(present_terms[1:5,c("termID","label")])
 #>            termID                                              label
@@ -38,7 +38,7 @@ The `ppo_data` function queries the PPO Data Portal, passing values to the datab
 The "df" variable below is populated with results from the data element in the results list, with an example slice of data showing the first record.
 
 ```r
-results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110, termID = 'obo:PPO_0002313', limit = 10)
+results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110, termID = 'obo:PPO_0002313', limit = 10, timeLimit = 2)
 df <- results$data
 print(df[1:1,])
 #>   dayOfYear year   genus specificEpithet latitude longitude
@@ -88,7 +88,7 @@ Here we will generate a data frame showing the frequency of "present" and "absen
 ###############################################################################
 df <- ppo_data(
   genus = "Quercus", 
-  bbox="47,-180,90,180")
+  bbox="47,-180,90,180", timeLimit = 2)
 #> sending request for data ...
 #> https://www.plantphenology.org/api/v2/download/?q=%2Bgenus:Quercus+AND+%2Blatitude:>=47+AND+%2Blatitude:<=90+AND+%2Blongitude:>=-180+AND+%2Blongitude:<=180+AND+source:USA-NPN,NEON&source=latitude,longitude,year,dayOfYear,termID
 # return just the termID column
@@ -110,7 +110,7 @@ resultFrame <- data.frame(
 # Replace termIDs with labels in frequency frame
 ###############################################################################
 # fetch "present" and "absent" terms using `ppo_terms`
-termList <- ppo_terms(absent = TRUE, present = TRUE);
+termList <- ppo_terms(absent = TRUE, present = TRUE, timeLimit =2);
 #> sending request for terms ...
 
 # loop all "present"" and "absent" terms

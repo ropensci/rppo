@@ -55,7 +55,7 @@ as viewing man pages for rppo functions in the R environment, using
 ``` r
 # query all results from day 1 through 100 in a particular bounding box, 
 # limited to 2 records
-r <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=2)
+r <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=2, timeLimit=4)
 #> sending request for data ...
 #> https://www.plantphenology.org/api/v2/download/?q=%2Blatitude:>=37+AND+%2Blatitude:<=38+AND+%2Blongitude:>=-120+AND+%2Blongitude:<=-119+AND+%2BdayOfYear:>=1+AND+%2BdayOfYear:<=100+AND+source:USA-NPN,NEON&source=latitude,longitude,year,dayOfYear,termID&limit=2
 
@@ -79,7 +79,7 @@ print(r$number_possible)
 #> [1] 7251
 
 # return a data frame of present
-presentTerms <- ppo_terms(present = TRUE)
+presentTerms <- ppo_terms(present = TRUE, timeLimit=3)
 #> sending request for terms ...
 
 # print the 2nd present term returned

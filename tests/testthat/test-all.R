@@ -24,7 +24,7 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
     fromYear = 1979,
     toYear = 2017,
     limit=10,
-    bbox="38,-119,37,-120")
+    bbox="38,-119,37,-120", timeLimit = 5)
 
   if (is.null(response)) {
     message("unable to run tests while server is not responding")
@@ -55,9 +55,9 @@ test_that("Check that PPO term fetching works", {
   # Error should be generated here
   expect_error(ppo_terms())
 
-  presentResponse <- ppo_terms(present = TRUE)
-  absentResponse <- ppo_terms(absent = TRUE)
-  allResponse <- ppo_terms(absent = TRUE, present=TRUE)
+  presentResponse <- ppo_terms(present = TRUE, timeLimit = 3)
+  absentResponse <- ppo_terms(absent = TRUE, timeLimit = 3)
+  allResponse <- ppo_terms(absent = TRUE, present=TRUE, timeLimit = 3)
 
   if (is.null(presentResponse) || is.null(absentResponse) || is.null(allResponse)) {
         message("unable to run tests while server is not responding")

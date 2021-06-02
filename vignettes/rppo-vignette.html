@@ -205,7 +205,7 @@ resultFrame &lt;- data.frame(
 # Replace termIDs with labels in frequency frame
 ###############################################################################
 # fetch &quot;present&quot; and &quot;absent&quot; terms using `ppo_terms`
-termList &lt;- ppo_terms(absent = TRUE, present = TRUE);
+termList &lt;- ppo_terms(absent = TRUE, present = TRUE, timeLimit = 3);
 #&gt; sending request for terms ...
 
 # loop all &quot;present&quot;&quot; and &quot;absent&quot; terms

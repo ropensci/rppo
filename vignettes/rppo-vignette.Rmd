@@ -27,7 +27,7 @@ The rppo package contains just two functions.  One to query terms from the Plant
 It is frequently useful to look through the list of present and absent terms contained in the PPO.   The `ppo_terms` function returns present terms, absent terms, or both, with columns containing a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the `ppo_data` function.  The following example returns the present terms into a "present_terms" data frame and a sample slice from the dataframe.
 
 ```{r term example, echo=TRUE, message=FALSE, warning=FALSE}
-present_terms <- ppo_terms(present = TRUE)
+present_terms <- ppo_terms(present = TRUE, timeLimit = 2)
 # print the first five rows, with just the termIDs and labels
 print(present_terms[1:5,c("termID","label")])
 ```
@@ -37,7 +37,7 @@ The `ppo_data` function queries the PPO Data Portal, passing values to the datab
 
 The "df" variable below is populated with results from the data element in the results list, with an example slice of data showing the first record.
 ```{r data example, echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
-results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110, termID = 'obo:PPO_0002313', limit = 10)
+results <- ppo_data(genus = "Quercus", fromYear = 2013, toYear = 2013, fromDay = 100, toDay = 110, termID = 'obo:PPO_0002313', limit = 10, timeLimit = 2)
 df <- results$data
 print(df[1:1,])
 ```
@@ -64,7 +64,7 @@ Here we will generate a data frame showing the frequency of "present" and "absen
 ###############################################################################
 df <- ppo_data(
   genus = "Quercus", 
-  bbox="47,-180,90,180")
+  bbox="47,-180,90,180", timeLimit = 2)
 # return just the termID column
 t1 <- df$data[,c('termID')]
 # paste each cell into one string
@@ -84,7 +84,7 @@ resultFrame <- data.frame(
 # Replace termIDs with labels in frequency frame
 ###############################################################################
 # fetch "present" and "absent" terms using `ppo_terms`
-termList <- ppo_terms(absent = TRUE, present = TRUE);
+termList <- ppo_terms(absent = TRUE, present = TRUE, timeLimit = 2);
 
 # loop all "present"" and "absent" terms
 if (!is.null(termList)) {
@@ -105,7 +105,7 @@ if (!is.null(termList)) {
     }
   }
 } else {
-  message("termList is null, likely due to a server response issue")
+  message("termList is null, likely due to a server response issue.  Try increasing the timeLimit or try again later. If the problem persists email the authors.")
 }
 
 
