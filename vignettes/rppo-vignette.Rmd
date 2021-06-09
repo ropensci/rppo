@@ -27,7 +27,7 @@ The rppo package contains just two functions.  One to query terms from the Plant
 It is frequently useful to look through the list of present and absent terms contained in the PPO.   The `ppo_terms` function returns present terms, absent terms, or both, with columns containing a termID, label, definition and full URI for each term.  Use the termIDs returned from this function to query terms in the `ppo_data` function.  The following example returns the present terms into a "present_terms" data frame and a sample slice from the dataframe.
 
 ```{r term example, echo=TRUE, message=FALSE, warning=FALSE}
-present_terms <- ppo_terms(present = TRUE, timeLimit = 2)
+present_terms <- ppo_terms(present = TRUE)
 # print the first five rows, with just the termIDs and labels
 print(present_terms[1:5,c("termID","label")])
 ```
@@ -64,7 +64,7 @@ Here we will generate a data frame showing the frequency of "present" and "absen
 ###############################################################################
 df <- ppo_data(
   genus = "Quercus", 
-  bbox="47,-180,90,180", timeLimit = 2)
+  bbox="47,-180,90,180", timeLimit = 4)
 # return just the termID column
 t1 <- df$data[,c('termID')]
 # paste each cell into one string

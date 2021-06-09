@@ -34,7 +34,8 @@
 
 # Fetch phenological terms (stages) from the PPO using the plantphenology.org
 # "ppo" service
-ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 2) {
+ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 4) {
+  
   # set the base_url for making calls
   base_url <- "https://www.plantphenology.org/api/v2/ppo/"
   main_args <-  Filter(Negate(is.null), (as.list(c(present,absent))))
@@ -49,10 +50,10 @@ ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 2) {
   } else {
     stop("specify at least one parameter to return results")
   }
-  results = tryCatch({
-      results <- httr::GET(base_url, httr::timeout(timeLimit))
-      return(results)
-  }, error = function(e) {
+  
+  results = tryCatch({      
+      results <- httr::GET(base_url, httr::timeout(timeLimit))      
+  }, error = function(e) {      
       return(NULL)
   })
   # first check if we found anything at the addressed we searched for

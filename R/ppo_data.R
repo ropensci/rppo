@@ -63,8 +63,8 @@ ppo_data <- function(
   bbox = NULL,
   limit = NULL,
   timeLimit = 60) {
-  # declare queryURL 
-  queryURL <- NULL
+  # declare queryUrl 
+  queryUrl <- NULL
   # source Parameter refers to the data source we want to query for
   sourceParameter <- "source:USA-NPN,NEON"
   # source Argument refers to the fields we want returned
@@ -141,10 +141,10 @@ ppo_data <- function(
         minLng <- lng1
         maxLng <- lng2
       }
-      q <- paste(q, '%2B', 'latitude', ':>=', minLat, sep = "")
-      q <- paste(q, '+AND+%2B', 'latitude', ':<=', maxLat, sep = "")
-      q <- paste(q, '+AND+%2B', 'longitude', ':>=', minLng, sep = "")
-      q <- paste(q, '+AND+%2B', 'longitude', ':<=', maxLng, sep = "")
+      q <- paste(q, '%2B', 'latitude', '%3A%3E%3D', minLat, sep = "")
+      q <- paste(q, '+AND+%2B', 'latitude', '%3A%3C%3D', maxLat, sep = "")
+      q <- paste(q, '+AND+%2B', 'longitude', '%3A%3E%3D', minLng, sep = "")
+      q <- paste(q, '+AND+%2B', 'longitude', '%3A%3C%3D', maxLng, sep = "")
     }
     # Begin arguments using +key:value and html encode the + sign with %2B
     else {
@@ -156,7 +156,7 @@ ppo_data <- function(
   # add the source argument
   q <- paste(q, '+AND+', sourceParameter, sep="")
 
-  # construct the queryURL
+  # construct the queryUrl
   queryUrl <- paste(base_url, '?', q, '&', sourceArgument, sep="")
 
   # add the limit
@@ -169,11 +169,11 @@ ppo_data <- function(
 
   # send GET request to the PPO data portal
   results = tryCatch({
-      results <- httr::GET(queryURL, httr::timeout(timeLimit))
-      return(results)
+      results <- httr::GET(queryUrl, httr::timeout(timeLimit))
   }, error = function(e) {
       return(NULL)
   })
+  
   # first check if we found anything at the addressed we searched for
   if (is.null(results)) {
       message(paste("The server is not responding.  If the problem persists contact the author."))

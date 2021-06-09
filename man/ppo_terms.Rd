@@ -4,7 +4,7 @@
 \alias{ppo_terms}
 \title{Access Terms From the Plant Phenology Ontology}
 \usage{
-ppo_terms(present = FALSE, absent = FALSE, timeLimit = 2)
+ppo_terms(present = FALSE, absent = FALSE, timeLimit = 4)
 }
 \arguments{
 \item{present}{(boolean) If TRUE then return all "present" phenological stages}
