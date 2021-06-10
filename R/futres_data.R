@@ -43,7 +43,7 @@
 #'
 #' @examples
 #'
-#' r1 <- futres_data(genus = "Puma", termID='obo:FOVT_0002313', limit=10)
+#' r1 <- futres_data(genus = "Puma", limit=10)
 #'
 #' r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
 #'
@@ -70,7 +70,7 @@ futres_data <- function(
     (as.list(c(genus, specificEpithet, termID, bbox))))
   date_args <-  Filter(
     Negate(is.null),
-    (as.list(c(fromYear, toYear, fromDay, toDay))))
+    (as.list(c(fromYear, toYear))))
   arg_lengths <- c(length(main_args), length(date_args))
   if (any(arg_lengths) < 1) {
     stop("Please specify at least 1 query argument")
@@ -139,7 +139,7 @@ futres_data <- function(
   }
 
   # add the source argument
-  q <- paste(q, '+AND+', sourceParameter, sep="")
+  #q <- paste(q, '+AND+', sourceParameter, sep="")
 
   # construct the queryURL
   queryUrl <- paste(base_url, '?', q, '&', sourceArgument, sep="")
@@ -180,10 +180,10 @@ futres_data <- function(
       'futres_download/data.csv',header=TRUE)
     # README.txt contains information about the query and the # of results
     readme <- readr::read_file(
-      'futres_download/README.txt')
+      'futres_download/FUTRES_README.txt')
     # citation_and_data_use_policies.txt contains citation information
     citation <- readr::read_file(
-      'futres_download/citation_and_data_use_policies.txt')
+      'futres_download/futres_citation_and_data_use_policies.txt')
     # grab the number possble from the readme file, using the
     # cat function and capturing output so we can grep results
     # (server does not return a usable count at this time)

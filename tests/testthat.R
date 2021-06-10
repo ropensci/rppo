@@ -1,4 +1,4 @@
 library(testthat)
 library(rfutres)
 
-test_check("rfutres")
+#test_check("rfutres")

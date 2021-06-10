@@ -2,7 +2,7 @@
 % Please edit documentation in R/futres_data.R
 \name{futres_data}
 \alias{futres_data}
-\title{Access Data From the FuTRES Data Portal}
+\title{Access Data From the  FuTRES data portal}
 \usage{
 futres_data(
   genus = NULL,
@@ -10,27 +10,21 @@ futres_data(
   termID = NULL,
   fromYear = NULL,
   toYear = NULL,
-  fromDay = NULL,
-  toDay = NULL,
   bbox = NULL,
   limit = NULL
 )
 }
 \arguments{
-\item{genus}{(string) a genus name}
+\item{genus}{(string) a plant genus name}
 
-\item{specificEpithet}{(string) a specific epithet}
+\item{specificEpithet}{(string) a plant specific epithet}
 
-\item{termID}{(string) A single termID from the FuTRES Ontology for Vertebrate Traits 
+\item{termID}{(string) A single termID from the FOVT 
 See the \code{\link{futres_terms}} function for more information.}
 
 \item{fromYear}{(integer) return data from the specified year}
 
 \item{toYear}{(integer) return data up to and including the specified year}
-
-\item{fromDay}{(integer) return data starting from the specified day}
-
-\item{toDay}{(integer) return data up to and including the specified day}
 
 \item{bbox}{(string) return data within a bounding box. Format is
 \code{lat,long,lat,long} and is structured as a string.  Use this website:
@@ -52,6 +46,7 @@ Return value containing a list with the following components:
 }
 \description{
 Access data from FuTRES
+(futres data portal)
 }
 \details{
 The futres_data function returns a list containing the following information:
@@ -62,13 +57,13 @@ as a filter on the returned record set.
 }
 \examples{
 
-r1 <- futres_data(genus = "Puma", termID='obo:FOVT_0002313', limit=10)
+r1 <- futres_data(genus = "Puma", limit=10)
 
-r2 <- futres_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10)
+r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
 
 my_data_frame <- r2$data
 }
 \keyword{data}
 \keyword{download}
-\keyword{vertebrate}
 \keyword{traits}
+\keyword{vertebrate}
