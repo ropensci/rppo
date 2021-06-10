@@ -5,8 +5,8 @@ BugReports: https://github.com/futres/rfutres/issues
 Version: 1.0.1
 Authors@R: c(
     person("Meghan","Balk", email = "meghan.balk@gmail.com", role = c("aut", "cre")), 
-    person("Neeka","Sewnath", email = "neeka.sewnath@gmail.com", role = c("aut", "cre")), 
-    person("John","Deck", email = "jdeck88@gmail.com", role = c("aut", "cre")), 
+    person("Neeka","Sewnath", email = "neeka.sewnath@gmail.com", role = c("aut")), 
+    person("John","Deck", email = "jdeck88@gmail.com", role = c("aut")), 
     person("Robert","Guralnick", email = "rguralnick@flmnh.ufl.edu", role = "aut")
   )
 Maintainer: John Deck <jdeck88@gmail.com>
