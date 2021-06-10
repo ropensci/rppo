@@ -85,7 +85,7 @@ futres_data <- function(
         bbox = bbox,
         fromYear = fromYear,
         toYear = toYear
-    )))
+    ))))
 
   # construct the value following the "q" key
   q <- "q="
