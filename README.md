@@ -62,7 +62,7 @@ To cite the ‘rfutres’ R package in publications
 use:
 
 ``` 
-   'Meghan Balk, John Deck, Neeka Sewnath,Robert Guralnick' (2021). rfutres: An interface to the Functional Trait Resource for Environmental Studies and associated data store.  R package version 1.0
+   'Meghan Balk, John Deck, Neeka Sewnath, Robert Guralnick' (2021). rfutres: An interface to the Functional Trait Resource for Environmental Studies and associated data store.  R package version 1.0
    https://github.com/rfutres/rfutres
 ```
 
