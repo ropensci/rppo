@@ -60,7 +60,7 @@ futres_data <- function(
 
   # source Argument refers to the fields we want returned
   sourceArgument <-
-    "source=latitude,longitude,year,dayOfYear,termID"
+    "source=latitude,longitude,yearCollected,termID"
   # set the base_url for making calls
   base_url <- "https://www.plantphenology.org/futresapi/v2/download/"
 
