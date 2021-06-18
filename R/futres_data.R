@@ -101,9 +101,9 @@ futres_data <- function(
     }
 
     if (key == "fromYear")
-      q <- paste(q,'%2B','year:>=',value, sep = "")
+      q <- paste(q,'%2B','yearCollected:>=',value, sep = "")
     else if (key == "toYear")
-      q <- paste(q,'%2B','year:<=',value, sep = "")
+      q <- paste(q,'%2B','yearCollected:<=',value, sep = "")
     else if (key == "termID")
       q <- paste(
         q,'%2B','termID',':"',value,'"', sep = "")
