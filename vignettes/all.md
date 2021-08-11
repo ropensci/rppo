@@ -1,3 +1,5 @@
+# # futres_data() tutorial
+
 The futres_data function returns a list containing the following information: a readme file, citation information, a data frame with data, an integer with the number of records returned and status code. The function is called with parameters that correspond to values contained in the data itself which act as a filter on the returned record set.
 
 Below are examples of querying data with different filters in order to return a record set appropriate for various research questions. 
@@ -35,6 +37,8 @@ geom_density(aes(x = measurementType == "mass", fill = "state"))
 ```
 
 # Between Species
+
+Here we investigate a singular trait amomgst multuple species in an order.  
 
 ```r
 artiodactyla <- futres_data(order = "Artiodactlidae")
