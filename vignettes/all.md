@@ -1,10 +1,10 @@
-# # futres_data() tutorial
+# rFuTRES tutorial
 
 The futres_data function returns a list containing the following information: a readme file, citation information, a data frame with data, an integer with the number of records returned and status code. The function is called with parameters that correspond to values contained in the data itself which act as a filter on the returned record set.
 
 Below are examples of querying data with different filters in order to return a record set appropriate for various research questions. 
 
-# Place
+## Place
 
 The 'country' argument allows users to specify record sets from specific countries. 
 
@@ -19,7 +19,7 @@ group_by(state)
 
 ```
 
-# Time
+## Time
 
 The 'fromYear' and 'toYear' arguments allow users to specify a custom time range when curating a record set. 
 
@@ -36,7 +36,7 @@ geom_density(aes(x = measurementType == "mass", fill = "state"))
 
 ```
 
-# Between Species
+## Between Species
 
 Here we investigate a singular trait amomgst multuple species in an order.  
 
@@ -48,7 +48,7 @@ geom_density(aes(x = measurementType == "mass", fill = "binomial"))
 
 ```
 
-# Across Traits
+## Across Traits
 
 Here we demonstrate a means of exploring trait relationships within a custom record set using futres_data().
 
