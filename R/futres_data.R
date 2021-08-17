@@ -12,7 +12,7 @@
 #'
 #' @param genus (string) a plant genus name
 #' @param specificEpithet (string) a plant specific epithet
-#' @param termID (string) A single termID from the FOVT 
+#' @param termID (string) A single termID from the FOVT
 #' See the \code{\link{futres_terms}} function for more information.
 #' @param fromYear (integer) return data from the specified year
 #' @param toYear (integer) return data up to and including the specified year
@@ -130,14 +130,14 @@ futres_data <- function(
         minLng <- lng1
         maxLng <- lng2
       }
-      q <- paste(q, '%2B', 'latitude', ':>=', minLat, sep = "")
-      q <- paste(q, '+AND+%2B', 'latitude', ':<=', maxLat, sep = "")
-      q <- paste(q, '+AND+%2B', 'longitude', ':>=', minLng, sep = "")
-      q <- paste(q, '+AND+%2B', 'longitude', ':<=', maxLng, sep = "")
+      q <- paste(q, '%2B', 'decimalLatitude', ':>=', minLat, sep = "")
+      q <- paste(q, '+AND+%2B', 'decimalLatitude', ':<=', maxLat, sep = "")
+      q <- paste(q, '+AND+%2B', 'decimalLongitude', ':>=', minLng, sep = "")
+      q <- paste(q, '+AND+%2B', 'decimalLongitude', ':<=', maxLng, sep = "")
     }
     # Begin arguments using +key:value and html encode the + sign with %2B
     else {
-      q <- paste(q, '%2B', key, ':', value, sep = "")
+      q <- paste(q, '%2B', key, ':', gsub(" ","+",value), sep = "")
     }
     counter <- counter  + 1
   }
