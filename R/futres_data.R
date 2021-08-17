@@ -55,6 +55,8 @@ futres_data <- function(
   termID = NULL,
   fromYear = NULL,
   toYear = NULL,
+  country = NULL,
+  scientificName = NULL,
   bbox = NULL,
   limit = NULL) {
 
@@ -84,7 +86,9 @@ futres_data <- function(
         termID = termID,
         bbox = bbox,
         fromYear = fromYear,
-        toYear = toYear
+        toYear = toYear,
+        country = country,
+        scientificName = scientificName
     ))))
 
   # construct the value following the "q" key
