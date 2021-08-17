@@ -69,7 +69,7 @@ futres_data <- function(
   # Check for minimum arguments to run a query
   main_args <- Filter(
     Negate(is.null),
-    (as.list(c(genus, specificEpithet, termID, bbox))))
+    (as.list(c(genus, specificEpithet, termID, bbox, country, scientificName))))
   date_args <-  Filter(
     Negate(is.null),
     (as.list(c(fromYear, toYear))))
