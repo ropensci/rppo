@@ -148,7 +148,7 @@ ppo_data <- function(
     }
     # Begin arguments using +key:value and html encode the + sign with %2B
     else {
-      q <- paste(q, '%2B', key, ':', value, sep = "")
+      q <- paste(q, '%2B', key, ':', gsub(" ","+",value), sep = "")
     }
     counter <- counter  + 1
   }
