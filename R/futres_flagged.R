@@ -1,3 +1,4 @@
+
 #create function to flag
 
 #pass to fuction my_data_frame or r2$data (from previous futres_data() function:
@@ -9,82 +10,91 @@
 #'
 #' my_data_frame <- r2$data
 
+source(../maha.R)
+
 outlier_flagging <- function(
   data,
-  scientificName = NULL,
-  #sp = NULL, #vector of scientific name
-  measurementType = NULL,
-  #trait = NULL, #trait type
-  lifeStage = NULL,
-  #age = NULL, #value under "lifeStage"
-  measurementValue){
-  rownames(data) <- seq(1, nrow(data),1)
-  sub <-subset(data, subset = data[,"scientificName"] == sp[i] &
-                data[,"measurementType"] == trait & 
-                data[,"lifeStage"] == age, 
+  scientificName,
+  sp,
+  measurementType,
+  trait,
+  lifeStage,
+  age,
+  measurementValue)
+
+
+for(i in 1:length(sp)){
+  sub <- subset(df.test, subset = df.test[,"scientificName"] == sp[i] & 
+                df.test[,"measurementType"] == "{body length}" & 
+                df.test[,"lifeStage"] == "adult", 
                 select = "measurementValue") %>%
+         mutate_at("measurementValue", as.numeric) %>%
          drop_na()
-  if(isTRUE(nrow(sub) >= 10)){
+  if(isTRUE(nrow(sub) == 0)){
+    next
+  }
+  else if(isTRUE(length(unique(sub$measurementValue)) == 1)){
+    next
+  }
+  else if(isTRUE(nrow(sub) >= 10)){
     outlier <- maha(sub, cutoff = 0.95, rnames = FALSE)
     index <- names(outlier[[2]])
     if(isTRUE(length(index) != 0)){
-      data[index,"measurementStatus"] <- "outlier"
+      df.test[index,"measurementStatus"] <- "outlier"
     }
   }
   else if(isTRUE(nrow(sub) <= 10)){
-      data$measurementStatus[data$scientificName == sp[i]] <- "too few records"
-    }
+    df.test$measurementStatus[df.test$scientificName == sp[i]] <- "too few records"
+  }
   else{
     next
   }
 }
+    
+    
 
-
-flagging_data <- function(
-  data,
-  scientificName = NULL,
-  #sp = NULL, #a vector of species names,
-  lifeStage = NULL,
-  #age = NULL, #value under "lifeStage"
-  measurementMethod = NULL,
-  #method = NULL, #values in measurementMethdon,
-  meausrementType = NULL,
-  #trait = NULL, #value of measurementType)
-
-
-  data$normality <- ""
-  sub <- subset(data, subset = c(data[,"scientificName" == sp[i]] &
-                                    data[,"measurementStatus" !%in% status] &
-                                    data[,"lifeStage" == age] &
-                                    data[,"measurementMethod" !%in% method]))
+flagging_data <- 
+  
+for(i in 1:length(sp)){
+  sub <- subset(df.norm, subset = c(df.norm[,"scientificName"] == sp[i] &
+                                    df.norm$measurementStatus != "outlier" &
+                                    df.norm$measurementStatus != "too few records" &
+                                    df.norm$lifeStage == "adult" &
+                                    df.norm$measurementMethod != "Extracted with Traiter ; estimated value" &
+                                    df.norm$measurementMethod != "Extracted with Traiter ; estimated value; inferred value"))
   sub <- sub %>%
     drop_na(measurementValue)
-  if(isTRUE(length(unique(sub$measurementValue[sub[measurementType == trait])) < 3)){
-    data$normality[data[,"scientificName" == sp[i]] & 
-                   data[,"measurementType" == trait] &
-                   data[,"measurementStatus" !%in% status] &
-                   data[,"lifeStage" == age] &
-                   data[,"measurementMethod" !%in% method] <- "too few records"
+  if(isTRUE(length(unique(sub$measurementValue[sub$measurementType == "body mass"])) < 3)){
+    df.norm$normality[df.norm$scientificName == sp[i] & 
+                      df.norm$measurementType == "body mass" &
+                      df.norm$measurementStatus != "outlier" &
+                      df.norm$measurementStatus != "too few records" &
+                      df.norm$lifeStage == "adult" &
+                      df.norm$measurementMethod != "Extracted with Traiter ; estimated value" &
+                      df.norm$measurementMethod != "Extracted with Traiter ; estimated value; inferred value"] <- "too few records"
   }
-  else if(isTRUE(length(unique(sub[,measurementValue][sub[,measurementType == trait]])) >= 3)){
-    normal.mass <- shapiro.test(sub[,measurementValue][sub[,measurementType == trait]])
+  else if(isTRUE(length(unique(sub$measurementValue[sub$measurementType == "body mass"])) >= 3)){
+    normal.mass <- shapiro.test(sub$measurementValue[sub$measurementType == "body mass"])
        if(isTRUE(normal.mass[[2]] < 0.5)){
-        data$normality[data[,"measurementType" == trait] & 
-                       data[,"scientificName" == sp] &
-                       data[,"measurementStatus" !%in% status] &
-                       data[,"lifeStage" == age] &
-                       data[,"measurementMethod" !%in% method] <- "non-normal"
+        df.norm$normality[df.norm$measurementType == "body mass" & 
+                          df.norm$scientificName == sp[i] &
+                          df.norm$measurementStatus != "outlier" &
+                          df.norm$measurementStatus != "too few records" &
+                          df.norm$lifeStage == "adult" &
+                          df.norm$measurementMethod != "Extracted with Traiter ; estimated value" &
+                          df.norm$measurementMethod != "Extracted with Traiter ; estimated value; inferred value"] <- "non-normal"
       }
       else if(isTRUE(normal.mass[[2]] >= 0.5)){
-        data$normality[data[,"measurementType" == trait] & 
-                       data[,"scientificName" == sp] &
-                       data[,"measurementStatus" !%in% status] &
-                       data[,"lifeStage" == age] &
-                       data[,"measurementMethod" !%in% method] <- "normal"
+        df.norm$normality[df.norm$measurementType == "body mass" & 
+                          df.norm$scientificName == sp[i] &
+                          df.norm$measurementStatus != "outlier" &
+                          df.norm$measurementStatus != "too few records" &
+                          df.norm$lifeStage == "adult" &
+                          df.norm$measurementMethod != "Extracted with Traiter ; estimated value" &
+                          df.norm$measurementMethod != "Extracted with Traiter ; estimated value; inferred value"] <- "normal"
       }
   }
   else{
     next
   }
-}
-
+}  
