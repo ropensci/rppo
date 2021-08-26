@@ -22,8 +22,9 @@ for(i in 1:length(sp)){
                    data$measurementType == trait &                   
                    data$lifeStage == "adult" |
                    data$ageValue >= age] <- nrow(sub)
-                   
-data$measurementStatus[data$sample.size < n.limit] <- "too few records"
 }
+  
+data$measurementStatus[data$sample.size < n.limit] <- "too few records"
+
 return(data)
 }
