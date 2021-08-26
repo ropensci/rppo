@@ -1,7 +1,10 @@
+## tests if data is normal and then if data is within some standard deviation of it
+
 normal.data <- function(
   data,
   stage,
   age,
+  sigma
   )
   {
  
@@ -74,6 +77,70 @@ for(i in 1:length(sp)){
   else{
     next
   }
+}
+           
+data$upper.limit.norm <- ""
+data$lower.limit.norm <- ""
+data$mean <- ""
+data$sigma <- ""
+                       
+for(i in 1:length(sp){
+  data$mean[data$scientificName == sp[i] &
+            !(data$measurementStatus %in% status) &
+            !(data$measurementMethod %in% method) &
+            data$lifeStage == stage |
+            data$ageValue == age &
+            data$measurementType == trait)] <- mean(data$measurementValue[data$scientificName == sp[i] &
+                                                                          !(data$measurementStatus %in% status) &
+                                                                          !(data$measurementMethod %in% method) &
+                                                                          data$lifeStage == stage |
+                                                                          data$ageValue == age &
+                                                                          data$measurementType == trait)]
+  data$sigma[data$scientificName == sp[i] &
+             !(data$measurementStatus %in% status) &
+             !(data$measurementMethod %in% method) &
+             data$lifeStage == stage |
+             data$ageValue == age &
+             data$measurementType == trait)] <- sd(data$measurementValue[data$scientificName == sp[i] &
+                                                                         !(data$measurementStatus %in% status) &
+                                                                         !(data$measurementMethod %in% method) &
+                                                                         data$lifeStage == stage |
+                                                                         data$ageValue == age &
+                                                                         data$measurementType == trait)]
+                                                   
+  data$upper.limit.norm[data$scientificName == sp[i] &
+                        !(data$measurementStatus %in% status) &
+                        !(data$measurementMethod %in% method) &
+                        data$lifeStage == stage |
+                        data$ageValue == age &
+                        data$measurementType == trait)] <- data$mean[data$scientificName == sp[i] &
+                                                                     !(data$measurementStatus %in% status) &
+                                                                     !(data$measurementMethod %in% method) &
+                                                                     data$lifeStage == stage |
+                                                                     data$ageValue == age &
+                                                                     data$measurementType == trait)] + (sigma*data$sigma[data$scientificName == sp[i] &
+                                                                                                                         !(data$measurementStatus %in% status) &
+                                                                                                                         !(data$measurementMethod %in% method) &
+                                                                                                                         data$lifeStage == stage |
+                                                                                                                         data$ageValue == age &
+                                                                                                                         data$measurementType == trait)]  
+                                                                                                        
+  data$lower.limit.norm[data$scientificName == sp[i] &
+                        !(data$measurementStatus %in% status) &
+                        !(data$measurementMethod %in% method) &
+                        data$lifeStage == stage |
+                        data$ageValue == age &
+                        data$measurementType == trait)] <- data$mean[data$scientificName == sp[i] &
+                                                                     !(data$measurementStatus %in% status) &
+                                                                     !(data$measurementMethod %in% method) &
+                                                                     data$lifeStage == stage |
+                                                                     data$ageValue == age &
+                                                                     data$measurementType == trait)] - (sigma*data$sigma[data$scientificName == sp[i] &
+                                                                                                                         !(data$measurementStatus %in% status) &
+                                                                                                                         !(data$measurementMethod %in% method) &
+                                                                                                                         data$lifeStage == stage |
+                                                                                                                         data$ageValue == age &
+                                                                                                                         data$measurementType == trait)]  
 }
   return(data)
 }
