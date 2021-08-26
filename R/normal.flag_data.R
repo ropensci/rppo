@@ -1,4 +1,4 @@
-normal_data <- function(
+normal.data <- function(
   data,
   stage,
   age,
