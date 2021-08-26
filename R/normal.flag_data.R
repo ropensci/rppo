@@ -1,6 +1,6 @@
 ## tests if data is normal and then if data is within some standard deviation of it
 
-normal.data <- function(
+normal.flag <- function(
   data,
   stage,
   age,
@@ -12,7 +12,30 @@ sp <- unique(data$scientificName)
 data$normality <- ""
 method <- c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value")
 status <- c("outlier", "too few records")
- 
+data$index <- rownames(data)
+data$sample.size <- ""
+  
+for(i in 1:length(sp)){
+sub <- subset(data, subset = data$scientificName == sp[i] &
+                             data$measurementType == trait &
+                             !(data$measurementStatus %in% status) &
+                             data$lifeStage == "adult" |
+                             !(data$measurementMethod %in% method &
+                             data$ageValue >= age))
+  
+sub$measurmeentValue <- as.numeric(sub$measurementValue) 
+sub <- !is.na(sub)
+   
+data$sample.size[data$scientificName == sp[i] &
+                 data$measurementType == trait &                   
+                 data$lifeStage == "adult" |
+                 !(data$measurementMethod %in% method &
+                 !(data$measurementStatus %in% status) &
+                 data$ageValue >= age] <- nrow(sub)
+}
+  
+data$measurementStatus[data$sample.size < n.limit] <- "too few records"
+
 for(i in 1:length(sp)){
   sub <- subset(df.norm, subset = data$scientificName == sp[i] &
                                   !(data$measurementStatus %in% status) &
@@ -142,5 +165,23 @@ for(i in 1:length(sp){
                                                                                                                          data$ageValue == age &
                                                                                                                          data$measurementType == trait)]  
 }
+ 
+for(i in 1:length(sp.limits)){
+  sub <- data[data$scientificName == sp[i] & 
+              data$measurementType == trait &
+              !(data$measurementStatus %in% status),]
+  for(j in 1:nrow(sub)){
+    if(isTRUE(sub$measurementValue[j] <= sub$lower.limit.norm[1])){
+      data$measurementStatus[data$index == sub$index[j]] <- "possibly not adult"
+    }
+    else if(isTRUE(sub$measurementValue[j] >= sub$upper.limit.mass[1])){
+      data$measurementStatus[data$index == sub$index[j]] <- "possibly outlier"
+    }
+    else{
+      data$measurementStatus[data$index == sub$index[j]] <- "possibly adult"
+    }
+  }
+} 
+                                                                                                        
   return(data)
 }
