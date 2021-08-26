@@ -2,7 +2,8 @@ quantiles.flag <- function(
   data,
   stage,
   age,
-  quant
+  quant,
+  n.limit
   )
   {
  
@@ -49,7 +50,7 @@ for(i in 1:length(sp)){
                    !(data$measurementMethod %in% method] <- quantile(sub$measurementValue, probs = seq(0,1,.05))[[q$index[q$percent = quant]]
 }
 
-data$measurementStatus[data$sample.size < 10] <- "too few records"
+data$measurementStatus[data$sample.size < n.limit] <- "too few records"
 data$index <- rownames(data)
 
 for(i in 1:length(sp)){
@@ -61,7 +62,7 @@ for(i in 1:length(sp)){
       data$measurementStatus[data$index == sub$index[j]] <- "possibly not adult"
     }
     else if(isTRUE(sub$measurementValue[j] >= sub$upper.limit.mass[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "possibly not adult"
+      data$measurementStatus[data$index == sub$index[j]] <- "possibly outlier"
     }
     else{
       data$measurementStatus[data$index == sub$index[j]] <- "possibly adult"
