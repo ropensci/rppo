@@ -11,7 +11,7 @@ method <- c("Extracted with Traiter ; estimated value", "Extracted with Traiter 
 status <- c("outlier", "too few records")
  
 for(i in 1:length(sp)){
-  sub <- subset(df.norm, subset = data[,"scientificName"] == sp[i] &
+  sub <- subset(df.norm, subset = data$scientificName == sp[i] &
                                   !(data$measurementStatus %in% status) &
                                   data$lifeStage == "adult" |
                                   data$ageValue >= age &
