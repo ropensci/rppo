@@ -31,7 +31,8 @@ for(i in 1:length(sp.transform)){
     data$normality[data$scientificName == sp.transform[i] & 
                    data$measurementType == trait & 
                    !(data$measurementStatus %in% status) &
-                   data$lifeStage == age &
+                   data$lifeStage == age |
+                   data$ageValue >= age &
                    !(data$measurementMethod %in% method) &
                    data$normality == "non-normal"] <- "too few records"
   }
@@ -43,7 +44,8 @@ for(i in 1:length(sp.transform)){
       data$normality[data$scientificName == sp.transform[i] & 
                      data$measurementType == trait & 
                      !(data$measurementStatus %in% status) &
-                     data$lifeStage == age &
+                     data$lifeStage == age &|
+                     data$ageValue >= age &
                      !(data$measurementMethod %in% method) &
                      data$normality == "non-normal"] <- "log normal"
     }
@@ -51,7 +53,8 @@ for(i in 1:length(sp.transform)){
       data$normality[data$scientificName == sp.transform[i] & 
                      data$measurementType == trait & 
                      !(data$measurementStatus %in% status) &
-                     data$lifeStage == age &
+                     data$lifeStage == age &|
+                     data$ageValue >= age &
                      !(data$measurementMethod %in% method) &
                      data$normality == "non-normal"] <- "non-normal (even logged)"
     }
@@ -63,7 +66,8 @@ for(i in 1:length(sp.transform)){
       data$normality[data$scientificName == sp.transform[i] & 
                      data$measurementType == trait & 
                      !(data$measurementStatus %in% status) &
-                     data$lifeStage == age &
+                     data$lifeStage == age &|
+                     data$ageValue >= age &
                      !(data$measurementMethod %in% method) &
                      data$normality == "non-normal"] <- "log normal"
     }
@@ -71,7 +75,8 @@ for(i in 1:length(sp.transform)){
       data$normality[data$scientificName == sp.transform[i] & 
                      data$measurementType == trait & 
                      !(data$measurementStatus %in% status) &
-                     data$lifeStage == age &
+                     data$lifeStage == age &|
+                     data$ageValue >= age &
                      !(data$measurementMethod %in% method) &
                      data$normality == "non-normal"] <- "non-normal (even logged)"
     }
