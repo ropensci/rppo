@@ -31,6 +31,9 @@ sp <- unique(data$scientificName)
   if(!isTRUE(data$sample.size)){
     data$sample.size <- ""
     }
+  if(!isTRUE(data$measurementStatus)){
+    data$measurementStatus <- ""
+    }
   
 data$logMeasurementValue <- log10(data$measurementValue) #creating logged values
 data[!is.finite(data$logMeasurementValue),] <- NA #removing -Inf values
