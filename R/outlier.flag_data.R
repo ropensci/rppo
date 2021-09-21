@@ -1,6 +1,3 @@
-
-#create function to flag
-
 #pass to fuction my_data_frame or r2$data (from previous futres_data() function:
 #' @examples
 #'
@@ -10,17 +7,24 @@
 #'
 #' my_data_frame <- r2$data
 
+## use Mahalanobis Distance test to 
 
 outlier.flag <- function(
   #assume column names match template
   data, #a dataframe
   trait, #measurementType of interest
   stage, #specific or group of lifeStages of interest; make "unknown" or "Not Collected"
-  age) #age to be over or equal to; make "NA"
+  age, #age to be over or equal to; make "NA"
+  n.limit = 10 #limit for number of samples for testing outliers
+) 
 {
   
 source(../maha.R)  
-data$measurementStatus <- ""
+  
+if(!isTRUE(data$measurementStatus)){
+    data$measurementStatus <- ""
+  }
+
 sp <- unique(data[,"scientificName"])
 rownames(data) <- seq(1, nrow(data),1)
 
@@ -37,18 +41,17 @@ for(i in 1:length(sp)){
   if(isTRUE(nrow(sub) == 0)){
     next
   }
-  else if(isTRUE(length(unique(sub$measurementValue)) == 1)){
-    df.test$measurementStatus[df.test$scientificName == sp[i]] <- "too few records"
+  else if(isTRUE(length(unique(sub$measurementValue)) <= n.limit | 
+                 nrow(sub) <= n.limit)){
+    data$measurementStatus[data$scientificName == sp[i] &
+                           data$measurementType == trait] <- "too few records"
   }
-  else if(isTRUE(nrow(sub) >= 10)){
-    outlier <- maha(sub, cutoff = 0.95, rnames = FALSE)
+  else if(isTRUE(nrow(sub) >= n.limit)){
+    outlier <- maha(sub, cutoff = 0.95, rnames = FALSE) #do the test
     index <- names(outlier[[2]])
     if(isTRUE(length(index) != 0)){
-      df.test[index,"measurementStatus"] <- "outlier"
+      data[index,"measurementStatus"] <- "outlier"
     }
-  }
-  else if(isTRUE(nrow(sub) <= 10)){
-    df.test$measurementStatus[df.test$scientificName == sp[i]] <- "too few records"
   }
   else{
     next
