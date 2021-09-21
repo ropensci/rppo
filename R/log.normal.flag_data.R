@@ -3,7 +3,7 @@
 # test for normality
 normal.data <- function(
   data, #dataset to be added
-  stage, #lifeStave to inclue
+  stage, #lifeStave to include
   age, #in lieu of lifeStage, age values to include
   n.limit = 3, # minimum number of samples wanted to test for normality; default is 3
   method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
