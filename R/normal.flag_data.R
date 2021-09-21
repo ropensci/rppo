@@ -1,3 +1,12 @@
+#pass to fuction my_data_frame or r2$data (from previous futres_data() function:
+#' @examples
+#'
+#' r1 <- futres_data(genus = "Puma", limit=10)
+#'
+#' r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
+#'
+#' my_data_frame <- r2$data
+
 ## test if data is normally distributed or not, and if so, create upper and lower limits and label those outside of limits as possible outliers
 
 #test for normality
