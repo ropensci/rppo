@@ -1,4 +1,4 @@
-## test if data is normally distributed or not, and if so, create upper and lower limits and label those outside of limits as possible outliers
+## test if logged data is normally distributed or not, and if so, create upper and lower limits and label those outside of limits as possible outliers
 
 # test for normality
 normal.data <- function(
