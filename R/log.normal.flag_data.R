@@ -13,10 +13,15 @@ normal.data <- function(
   {
  
 sp <- unique(data$scientificName)
-data$normality <- "" #create new column
-data$index <- rownames(data) #creating an index
-data$sample.size <- "" #important to know
-
+  
+#create column
+  if(!isTRUE(data$normality)){
+    data$normality <- ""
+    }
+  if(!isTRUE(data$sample.size)){
+    data$sample.size <- ""
+    }
+  
 data$logMeasurementValue <- log10(data$measurementValue) #creating logged values
 data[!is.finite(data$logMeasurementValue),] <- NA #removing -Inf values
 
