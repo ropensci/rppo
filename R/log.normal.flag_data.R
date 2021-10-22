@@ -16,7 +16,7 @@ normal.data <- function(
   age, #in lieu of lifeStage, age values to include
   n.limit = 3, # minimum number of samples wanted to test for normality; default is 3
   method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
-  status <- c("outlier", "too few records"), #data we don't want to include in the test
+  status = c("outlier", "too few records"), #data we don't want to include in the test
   sigma, #value for how many standard deviations from the mean to calculate upper and lower limits
   trait #trait of interest
   )
