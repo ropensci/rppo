@@ -17,13 +17,13 @@ normal.flag <- function(
   sigma, #value for how many standard deviations from the mean to calculate upper and lower limits
   n.limit = 3, #minimum number of samples wanted to test for normality (must be greater than 3); default is three
   method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
-  status = c("outlier", "too few records") #data we don't want to include in the test
+  status = c("outlier", "too few records"), #data we don't want to include in the test
   trait #trait of interest
   )
   {
  
 sp <- unique(data$scientificName)
-if(!isTRUE(data$normality){
+if(!isTRUE(data$normality)){
     data$normality <- ""
   }
 if(!isTRUE(data$sample.size)){
@@ -99,18 +99,18 @@ for(i in 1:length(sp)){
 }
            
 #create new columns if they don't currently exist
-  if(!(isTRUE(data$upperLimit)){
+  if(!(isTRUE(data$upperLimit))){
     data$upperLimit <- ""
     data$lowerLimit <- ""
     data$upperLimitMethod <- ""
     data$lowerLimitMethod <- ""
-  })
-  if(!(isTRUE(data$meanValue)){
+  }
+  if(!(isTRUE(data$meanValue))){
     data$meanValue <- ""
     data$sdValue <- ""
-  })
+  }
                        
-for(i in 1:length(sp){
+for(i in 1:length(sp)){
   sub <- subset(data, subset = data$scientificName == sp[i] &
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |

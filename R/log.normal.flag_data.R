@@ -5,7 +5,7 @@
 #'
 #' r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
 #'
-#' my_data_frame <- r2$data
+#' my_data_frame <- r2$data 
 
 ## test if logged data is normally distributed or not, and, if so, create upper and lower limits and label those outside of limits as possible outliers
 
@@ -72,7 +72,7 @@ for(i in 1:length(sp)){
    sub <- sub[!is.na(sub$logMeasurementValue),]
    
   if(isTRUE(length(sub$logMeasurementValue) < n.limit | 
-            length(unique(sub$logMeasurementValue)) < n.limit){ #if it is less than the sample size limit, then flag as "too few records"
+            length(unique(sub$logMeasurementValue))) < n.limit){ #if it is less than the sample size limit, then flag as "too few records"
     data$normality[data$scientificName == sp[i] & 
                    data$measurementType == trait] <- "too few records"
   }
@@ -107,18 +107,18 @@ for(i in 1:length(sp)){
 }
 
 #create new columns if they don't currently exist
-  if(!(isTRUE(data$upperLimit)){
+  if(!(isTRUE(data$upperLimit))){
     data$upperLimit <- ""
     data$lowerLimit <- ""
     data$upperLimitMethod <- ""
     data$lowerLimitMethod <- ""
-  })
-  if(!(isTRUE(data$meanValue)){
+  }
+  if(!(isTRUE(data$meanValue))){
     data$meanValue <- ""
     data$sdValue <- ""
-  })
+  }
        
-for(i in 1:length(sp){
+for(i in 1:length(sp)){
   sub <- subset(data, subset = data$scientificName == sp[i] &
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |

@@ -29,7 +29,7 @@ for(i in 1:length(sp)){
   sub <- subset(data, subset = data$scientificName == sp[i] &
                                data$measurementType == trait &
                                data$lifeStage == stage |
-                               data$ageValue >= age))
+                               data$ageValue >= age)
   
   sub$measurmeentValue <- as.numeric(sub$measurementValue) 
   sub <- !is.na(sub)
