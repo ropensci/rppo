@@ -35,6 +35,10 @@ started with rfutres. We recommend visiting the futres man pages in the R enviro
 # query all results from day 1 through 100 in a particular bounding box, 
 # limited to 2 records
 r <- futres_data(fromYear = 2000, toYear = 2010, limit=2)
+
+# query all data from futres
+r_all <- futres_data()
+
 #> sending request for data ...
 # TODO: change request syntax and print
 
