@@ -72,7 +72,7 @@ for(i in 1:length(sp)){
    sub <- sub[!is.na(sub$logMeasurementValue),]
    
   if(isTRUE(length(sub$logMeasurementValue) < n.limit | 
-            length(unique(sub$logMeasurementValue)){ #if it is less than the sample size limit, then flag as "too few records"
+            length(unique(sub$logMeasurementValue)) < n.limit){ #if it is less than the sample size limit, then flag as "too few records"
     data$normality[data$scientificName == sp[i] & 
                    data$measurementType == trait] <- "too few records"
   }
