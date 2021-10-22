@@ -53,7 +53,7 @@ for(i in 1:length(sp)){
                    data$measurementType == trait &                   
                    data$lifeStage == stage |
                    data$ageValue >= age &
-                   !(data$measurementMethod %in% method &
+                   !(data$measurementMethod %in% method) &
                    !(data$measurementStatus %in% status)] <- nrow(sub)
 }
   
