@@ -60,6 +60,9 @@ r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit
 r_all_futres <- futres_data()
 
 my_data_frame <- r2$data
+
+r_all <- futres_query_all()
+r_all_data <- r_all$data
 }
 \keyword{data}
 \keyword{download}
