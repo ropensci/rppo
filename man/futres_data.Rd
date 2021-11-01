@@ -61,11 +61,7 @@ as a filter on the returned record set.
 
 r1 <- futres_data(genus = "Puma", limit=10)
 
-r2 <- futres_data(fromYear = 2009, toYear  = 2018, bbox="37,-120,38,-119", limit=10)
-
-r_all_futres <- futres_data()
-
-my_data_frame <- r2$data
+print(r1$data)
 }
 \keyword{data}
 \keyword{download}

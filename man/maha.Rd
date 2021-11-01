@@ -28,9 +28,9 @@ maha computes Mahalanibis distance an observation and based on the Chi square cu
 }
 \examples{
 #Create dataset
-X=iris[,1:4]
+#X=iris[,1:4]
 #Outlier detection
-maha(X,cutoff=0.9)
+#maha(X,cutoff=0.9)
 }
 \references{
 Barnett, V. 1978. The study of outliers: purpose and model. Applied Statistics, 27(3), 242–250.
