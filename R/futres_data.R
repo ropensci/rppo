@@ -50,11 +50,52 @@
 #' r_all_futres <- futres_data()
 #'
 #' my_data_frame <- r2$data
+# Accessor function
+futres_data <- function(genus = NULL,
+                        specificEpithet = NULL,
+                        termID = NULL,
+                        fromYear = NULL,
+                        toYear = NULL,
+                        country = NULL,
+                        scientificName = NULL,
+                        bbox = NULL,
+                        limit = NULL) {
+  # Check for minimum arguments to run a query
+  main_args <- Filter(Negate(is.null),
+                      (as.list(
+                        c(genus, specificEpithet, termID, bbox, country, scientificName)
+                      )))
+  date_args <-  Filter(Negate(is.null),
+                       (as.list(c(fromYear, toYear))))
+  arg_lengths <- c(length(main_args), length(date_args))
+  if (any(arg_lengths) < 1) {
+    return (futres_query_all())
+  } else {
+    # if any query parameters were passed in then call the following
+    # function which fetches data from elasticsearch
+    return (
+      futres_query_partial(
+        genus,
+        specificEpithet,
+        termID,
+        fromYear,
+        toYear,
+        country,
+        scientificName,
+        bbox,
+        limit
+      )
+    )
+  }
+
+}
+
 
 # set the base_url for making calls
 base_url_all <-
   "https://biscicol.org/futresapi/downloadable/futres.zip"
 base_url_partial <- "https://biscicol.org/futresapi/v3/download/"
+
 
 # Query all FuTRES data
 futres_query_all <- function() {
@@ -240,43 +281,3 @@ futres_query <- function(queryUrl) {
     )
   }
 }
-# Accessor function
-futres_data <- function(genus = NULL,
-                        specificEpithet = NULL,
-                        termID = NULL,
-                        fromYear = NULL,
-                        toYear = NULL,
-                        country = NULL,
-                        scientificName = NULL,
-                        bbox = NULL,
-                        limit = NULL) {
-  # Check for minimum arguments to run a query
-  main_args <- Filter(Negate(is.null),
-                      (as.list(
-                        c(genus, specificEpithet, termID, bbox, country, scientificName)
-                      )))
-  date_args <-  Filter(Negate(is.null),
-                       (as.list(c(fromYear, toYear))))
-  arg_lengths <- c(length(main_args), length(date_args))
-  if (any(arg_lengths) < 1) {
-    return (futres_query_all())
-  } else {
-    # if any query parameters were passed in then call the following
-    # function which fetches data from elasticsearch
-    return (
-      futres_query_partial(
-        genus,
-        specificEpithet,
-        termID,
-        fromYear,
-        toYear,
-        country,
-        scientificName,
-        bbox,
-        limit
-      )
-    )
-  }
-
-}
-
