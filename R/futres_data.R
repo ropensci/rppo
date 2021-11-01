@@ -50,9 +50,6 @@
 #' r_all_futres <- futres_data()
 #'
 #' my_data_frame <- r2$data
-#'
-#' r_all <- futres_query_all()
-#' r_all_data <- r_all$data
 
 # set the base_url for making calls
 base_url_all <-
