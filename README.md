@@ -19,6 +19,7 @@ repository](https://github.com/futres/fovt-data-pipeline).
 The production version of rfutres will soon be accessible on CRAN.  Until then, you can install the development version of rfutres from github with:
 
 ``` r
+#if having issues, try setwd(".")
 library("devtools")
 # if you don't have devtools, you can install with install.packages("devtools" first
 devtools::install_github("futres/rfutres")
