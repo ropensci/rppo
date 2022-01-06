@@ -66,12 +66,12 @@ ppo_data <- function(
   # declare queryUrl 
   queryUrl <- NULL
   # source Parameter refers to the data source we want to query for
-  sourceParameter <- "source:USA-NPN,NEON"
+  sourceParameter <- "source:USA-NPN"
   # source Argument refers to the fields we want returned
   sourceArgument <-
     "source=latitude,longitude,year,dayOfYear,termID"
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v2/download/"
+  base_url <- "https://www.plantphenology.org/api/v3/download/_search"
 
   # Check for minimum arguments to run a query
   main_args <- Filter(
@@ -199,17 +199,18 @@ ppo_data <- function(
 
       # save file to disk
       writeBin(bin, tf)
-      untar(tf)
+      untar(tf,exdir="./ppo_download")
 
       # data.csv contains all data as comma separated values
-      data <- read.csv(
-        'ppo_download/data.csv',header=TRUE)
+      data <- read.csv( 'ppo_download/data.csv',header=TRUE)
+      #data <- read.csv( paste(tf,'data.csv',sep="/"),header=TRUE)
       # README.txt contains information about the query and the # of results
-      readme <- readr::read_file(
-        'ppo_download/README.txt')
+      readme <- readr::read_file( 'ppo_download/README.txt')
+      #readme <- readr::read_file(paste(tf,'/README.txt'),sep="/")
       # citation_and_data_use_policies.txt contains citation information
-      citation <- readr::read_file(
-        'ppo_download/citation_and_data_use_policies.txt')
+      citation <- readr::read_file( 'ppo_download/citation_and_data_use_policies.txt')
+      #citation <- readr::read_file(paste(tf,'/citation_and_data_use_policies.txt',sep="/"))
+
       # grab the number possble from the readme file, using the
       # cat function and capturing output so we can grep results
       # (server does not return a usable count at this time)
