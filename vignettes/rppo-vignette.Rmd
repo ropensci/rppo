@@ -64,7 +64,7 @@ Here we will generate a data frame showing the frequency of "present" and "absen
 ###############################################################################
 df <- ppo_data(
   genus = "Quercus", 
-  bbox="47,-180,90,180", timeLimit = 4)
+  limit="10", timeLimit = 4)
 # return just the termID column
 t1 <- df$data[,c('termID')]
 # paste each cell into one string
