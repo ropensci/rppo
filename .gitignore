@@ -5,3 +5,6 @@
 .Ruserdata
 ppo_download/
 *.tar.gz
+README.txt
+citation_and_data_use_policies.txt
+data.csv
