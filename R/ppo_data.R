@@ -29,7 +29,7 @@
 #' @keywords data download plant phenology
 #' @importFrom plyr rbind.fill
 #' @importFrom utils read.csv
-#' @importFrom utils untar
+#' @importFrom utils unzip
 #' @importFrom httr GET
 #' @importFrom httr content
 #' @importFrom readr read_file
@@ -199,7 +199,7 @@ ppo_data <- function(
 
       # save file to disk
       writeBin(bin, tf)
-      untar(tf,exdir="./ppo_download")
+      unzip(tf,exdir="./ppo_download")
 
       # data.csv contains all data as comma separated values
       data <- read.csv( 'ppo_download/data.csv',header=TRUE)
