@@ -6,7 +6,7 @@ normal.data <- function(
   stage, #lifeStave to include
   age, #in lieu of lifeStage, age values to include
   n.limit = 3, # minimum number of samples wanted to test for normality; default is 3
-  method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
+  #method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
   status = c("outlier", "too few records"), #data we don't want to include in the test
   sigma, #value for how many standard deviations from the mean to calculate upper and lower limits
   trait #trait of interest
@@ -34,8 +34,8 @@ for(i in 1:length(sp)){
                                data$measurementType == trait &
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |
-                               data$ageValue >= age &
-                               !(data$measurementMethod %in% method))
+                               #!(data$measurementMethod %in% method) &
+                               data$ageValue >= age)
   
   sub$measurementValue <- as.numeric(sub$measurementValue) 
   sub <- sub[!is.na(sub$measurementValue),]
@@ -44,7 +44,7 @@ for(i in 1:length(sp)){
                    data$measurementType == trait &                   
                    data$lifeStage == stage |
                    data$ageValue >= age &
-                   !(data$measurementMethod %in% method) &
+                   #!(data$measurementMethod %in% method) &
                    !(data$measurementStatus %in% status)] <- nrow(sub)
 }
   
@@ -56,8 +56,8 @@ for(i in 1:length(sp)){
                                 data$measurementType == trait &
                                 !(data$measurementStatus %in% status) &
                                 data$lifeStage == stage |
-                                data$ageValue >= age &
-                                !(data$measurementMethod %in% method))
+                                #!(data$measurementMethod %in% method) &
+                                data$ageValue >= age)
   
    sub$measurmeentValue <- as.numeric(sub$logMeasurementValue) 
    sub <- sub[!is.na(sub$logMeasurementValue),]
@@ -114,7 +114,7 @@ for(i in 1:length(sp)){
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |
                                data$ageValue >= age &
-                               !(data$measurementMethod %in% method) &
+                               #!(data$measurementMethod %in% method) &
                                data$normality != "non-log.normal") #only for log normal data
   
    sub$logMeasurementValue <- as.numeric(sub$logMeasurementValue) 
@@ -133,24 +133,24 @@ for(i in 1:length(sp)){
                   data$measurementType == trait] <- mean(sub$logMeasurementValue)-sigma*sd(sub$measurementValue) #calculate lower limit as mean - sigma*sd
   
   data$lowerLimitMethod[data$scientificName == sp[i] &
-                        data$measurementType == trait] <- "log sd, non-estimated values, no outliers" #label method
+                        data$measurementType == trait] <- "log sd" #label method
   
   data$upperLimitMethod[data$scientificName == sp[i] &
-                        data$measurementType == trait] <- "log sd, non-estimated values, no outliers" #label method
+                        data$measurementType == trait] <- "log sd" #label method
 }
                                                                                                                 
 for(i in 1:length(sp)){
   sub <- data[data$scientificName == sp[i] & 
               data$measurementType == trait &
               !(data$measurementStatus %in% status) &
-              data$lowerLimitMethod == "log sd, non-estimated values, no outliers",] #only use for those that use the log method
+              data$lowerLimitMethod == "log sd",] #only use for those that use the log method
   
   for(j in 1:nrow(sub)){
     if(isTRUE(sub$measurementValue[j] <= sub$lowerLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "juvenile.log.sd"
+      data$measurementStatus[data$index == sub$index[j]] <- "possible juvenile"
     }
     else if(isTRUE(sub$measurementValue[j] >= sub$upperLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "outlier.log.sd"
+      data$measurementStatus[data$index == sub$index[j]] <- "outlier"
     }
     else{
       data$measurementStatus[data$index == sub$index[j]] <- "possible adult, possibly good"
