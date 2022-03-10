@@ -8,7 +8,7 @@ quantiles.flag <- function(
   quant,
   steps = 5, #steps for sequence (e.g., 5, 2.5)
   n.limit, #minimum sample size for creating quantiles
-  method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
+  #method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
   status = c("outlier", "too few records") #data we don't want to include in the test
   )
   {
@@ -24,6 +24,12 @@ sp <- unique(data$scientificName)
     data$lowerLimit <- ""
    }
   
+  #create new columns if they don't currently exist
+  if(!(isTRUE(data$upperLimit))){
+    data$upperLimitMethod <- ""
+    data$lowerLimitMethod <- ""
+  }
+  
 percent <- seq(0, 100, steps*10)
 index <- length(percent)
 q <- data.frame(precent,index)
@@ -33,8 +39,8 @@ for(i in 1:length(sp)){
                                data$measurementType == trait &
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == "adult" |
-                               data$ageValue >= age &
-                               !(data$measurementMethod %in% method))
+                               #!(data$measurementMethod %in% method) &
+                               data$ageValue >= age)
   
   sub$measurmeentValue <- as.numeric(sub$measurementValue) 
    sub <- !is.na(sub)
@@ -47,6 +53,12 @@ for(i in 1:length(sp)){
   
   data$lowerLimit[data$scientificName == sp[i] &
                    data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == quant]]]
+  
+  data$lowerLimitMethod[data$scientificName == sp[i] &
+                      data$measurementType == trait] <- "quantile" #label method
+  
+  data$upperLimitMethod[data$scientificName == sp[i] &
+                        data$measurementType == trait] <- "quantile" #label method
 }
 
 data$measurementStatus[data$sample.size < n.limit] <- "too few records"
@@ -58,10 +70,10 @@ for(i in 1:length(sp)){
                       !(data$measurementStatus %in% status))
   for(j in 1:nrow(sub)){
     if(isTRUE(sub$measurementValue[j] <= sub$lowerLimit[1])){ 
-      data$measurementStatus[data$index == sub$index[j]] <- "juvenile.quant"
+      data$measurementStatus[data$index == sub$index[j]] <- "juvenile"
     }
     else if(isTRUE(sub$measurementValue[j] >= sub$upperLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "outlier.quant"
+      data$measurementStatus[data$index == sub$index[j]] <- "outlier"
     }
     else{
       data$measurementStatus[data$index == sub$index[j]] <- "possible adult, possibly good"
