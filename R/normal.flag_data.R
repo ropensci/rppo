@@ -7,7 +7,7 @@ normal.flag <- function(
   age, #in lieu of lifeStage, ageValues to incldue
   sigma, #value for how many standard deviations from the mean to calculate upper and lower limits
   n.limit = 3, #minimum number of samples wanted to test for normality (must be greater than 3); default is three
-  method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
+  #method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
   status = c("outlier", "too few records"), #data we don't want to include in the test
   trait #trait of interest
   )
@@ -28,8 +28,8 @@ sub <- subset(data, subset = data$scientificName == sp[i] &
                              data$measurementType == trait &
                              !(data$measurementStatus %in% status) &
                              data$lifeStage == stage |
-                             data$ageValue >= age &
-                             !(data$measurementMethod %in% method))
+                             #!(data$measurementMethod %in% method) &
+                             data$ageValue >= age)
   
 sub$measurmeentValue <- as.numeric(sub$measurementValue) 
 sub <- sub[!is.na(sub$measurementValue),] #removing NA values
@@ -47,7 +47,7 @@ for(i in 1:length(sp)){
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |
                                data$ageValue >= age &
-                               !(data$measurementMethod %in% method &
+                               #!(data$measurementMethod %in% method &
                                data$normality != "log normal"))
  
    sub$measurmeentValue <- as.numeric(sub$measurementValue) 
@@ -106,7 +106,7 @@ for(i in 1:length(sp)){
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |
                                data$ageValue >= age &
-                               !(data$measurementMethod %in% method) &
+                               #!(data$measurementMethod %in% method) &
                                data$normality != "non-normal") #only for normal data
   
    sub$measurementValue <- as.numeric(sub$measurementValue) 
@@ -125,24 +125,24 @@ for(i in 1:length(sp)){
                   data$measurementType == trait] <- mean(sub$measurementValue) - sigma*sd(sub$measurementValue) #calculate lower limit as mean - sigma*sd
 
 data$lowerLimitMethod[data$scientificName == sp[i] &
-                      data$measurementType == trait] <- "sd, non-estimated values, no outliers" #label method
+                      data$measurementType == trait] <- "sd" #label method
   
   data$upperLimitMethod[data$scientificName == sp[i] &
-                        data$measurementType == trait] <- "sd, non-estimated values, no outliers" #label method
+                        data$measurementType == trait] <- "sd" #label method
 }
  
 for(i in 1:length(sp)){
   sub <- data[data$scientificName == sp[i] & 
               data$measurementType == trait &
-              !(data$measurementStatus %in% status) &
-              data$lowerLimitMethod == "sd, non-estimated values, no outliers",] #only use for those that use the raw values
+              #!(data$measurementStatus %in% status) &
+              data$lowerLimitMethod == "sd",] #only use for those that use the raw values
   
   for(j in 1:nrow(sub)){
     if(isTRUE(sub$measurementValue[j] <= sub$lowerLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "juvenile.sd"
+      data$measurementStatus[data$index == sub$index[j]] <- "juvenile"
     }
     else if(isTRUE(sub$measurementValue[j] >= sub$upperLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "outlier.sd"
+      data$measurementStatus[data$index == sub$index[j]] <- "outlier"
     }
     else{
       data$measurementStatus[data$index == sub$index[j]] <- "possible adult, possibly good"
