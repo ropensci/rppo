@@ -41,22 +41,15 @@ r <- futres_data(fromYear = 2000, toYear = 2010, limit=2)
 # query all data from futres
 r_all <- futres_data()
 
-#> sending request for data ...
-# TODO: change request syntax and print
-
 # view the data returned
 print(r$data)
-# TODO: change display result
 
 # view the number of possible records returned
 print(r$number_possible)
-#> [1] 7251
 
 # return a data frame of traits
 traits <- futres_traits()
-#> sending request for traits ...
 
-# TODO: grab output
 # print the 2nd present term returned
 print(traits[2,])
 
