@@ -38,7 +38,7 @@ started with rfutres. We recommend visiting the futres man pages in the R enviro
 # limited to 2 records
 r <- futres_data(fromYear = 2000, toYear = 2010, limit=2)
 
-# query all data from futres
+# query all data from futres (try this only if you are willing to wait for the entire set to load)
 r_all <- futres_data()
 
 # view the data returned
