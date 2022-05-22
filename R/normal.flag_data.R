@@ -47,7 +47,6 @@ for(i in 1:length(sp)){
                                !(data$measurementStatus %in% status) &
                                data$lifeStage == stage |
                                data$ageValue >= age &
-                               #!(data$measurementMethod %in% method &
                                data$normality != "log normal"))
  
    sub$measurmeentValue <- as.numeric(sub$measurementValue) 
