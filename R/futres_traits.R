@@ -30,7 +30,7 @@
 futres_traits <- function() {
 
   # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/futresapi/v2/fovt/"
+  base_url <- "https://biscicol.org/futresapi/v2/fovt/"
 
   results <- httr::GET(base_url)
   if (results$status_code == 200) {
