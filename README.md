@@ -44,6 +44,12 @@ print(r$data)
 # view the number of possible records returned
 print(r$number_possible)
 
+# print the download citation
+print(r$citation)
+
+# print the download readme
+print(r$readme)
+
 # return a data frame of traits
 traits <- futres_traits()
 
