@@ -1,11 +1,11 @@
-```
+```r
 #setwd(".")
 library("devtools")
 # if you don't have devtools, you can install with install.packages("devtools" first
 devtools::install_github("futres/rfutres")
 library(rfutres)
 
-#get data
+# extract cougar (Puma concolor) data
 x <- futres_data(scientificName = "Puma concolor")
 cougar <- x$data
 
