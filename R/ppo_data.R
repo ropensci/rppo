@@ -26,6 +26,8 @@
 #' @param eventRemarks (character) return data from the specified eventRemarks
 #' @param limit (integer) limit returned data to a specified number of records
 #' @param timeLimit (integer) set the limit of the amount of time to wait for a response
+#' @param keepData (logical) whether to keep (TRUE) or delete (FALSE; default)
+#' the downloaded data (~/ppo_download/).
 #'
 #' @details
 #' The ppo_data function returns a list containing the following information:
