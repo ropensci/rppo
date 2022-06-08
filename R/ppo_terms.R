@@ -12,6 +12,11 @@
 #' determining the proper term to query on.  The URI field contains a link to
 #' the term itself which is useful for determining superclass and subclass
 #' relationships for each term.
+#' Some of these terms will not return any results when using
+#' \code{\link{ppo_data}}.
+#' To have only the ones that will return results, use \code{\link{ppo_get_terms}}
+#' or check rppo:::ppo_filters$mapped_traits which contains both present
+#' and absent terms.
 
 #' For more information on the PPO ontology itself, we suggest loading the PPO
 #' \url{https://github.com/PlantPhenoOntology/ppo} with
@@ -35,44 +40,27 @@
 # Fetch phenological terms (stages) from the PPO using the plantphenology.org
 # "ppo" service
 ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 4) {
-  
-  # set the base_url for making calls
-  base_url <- "https://www.plantphenology.org/api/v2/ppo/"
-  main_args <-  Filter(Negate(is.null), (as.list(c(present,absent))))
+  # args check
+  assert(present, "logical")
+  assert(absent, "logical")
+  assert(timeLimit, c("numeric", "integer"))
+
+  # set the queryURL for making calls
+  queryURL <- "https://biscicol.org/api/v1/ppo/"
 
   # structure base URL so we can call present and absent functions
   if (present && absent) {
-    base_url <- paste(base_url, 'all/', sep='')
+    queryURL <- paste(queryURL, 'all/', sep='')
   } else if (present) {
-    base_url <- paste(base_url, 'present/', sep='')
+    queryURL <- paste(queryURL, 'present/', sep='')
   } else if (absent) {
-    base_url <- paste(base_url, 'absent/', sep='')
+    queryURL <- paste(queryURL, 'absent/', sep='')
   } else {
     stop("specify at least one parameter to return results")
   }
-  
-  results = tryCatch({      
-      results <- httr::GET(base_url, httr::timeout(timeLimit))      
-  }, error = function(e) {      
-      return(NULL)
-  })
-  # first check if we found anything at the addressed we searched for
-  if (is.null(results)) {
-      message(paste("The server is not responding.  If the problem persists contact the author.  You may also try increasing the timeLimit parameter."))
-      return(NULL)
-  } else {
-    if ( results$status_code == 200) {
-          message ("sending request for terms ...")
-          response <- httr::content(results, "text")
-          jsonFile <- jsonlite::fromJSON(response,simplifyVector= FALSE)
-          df <- data.frame(do.call("rbind",jsonFile))
-          return(df)
-    } else {
-          message(paste("The server encountered an issue processing your
-               request and returned status code = ",results$status_code,
-               ". If the problem persists contact the author."))
-        return(NULL)
-    }
+  results <- get_url(queryURL = queryURL, timeLimit = timeLimit)
+  if(results$status_code == 200){
+    jsonlite::fromJSON(httr::content(results, "text"), simplifyVector = TRUE)
   }
-
 }
+
