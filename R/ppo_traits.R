@@ -16,6 +16,8 @@
 #'         Else, a list of data.frames for each event id.
 #'         IF flatten_all is TRUE, the list is flatten to a data.frame
 #' @export
+#' @importFrom data.table rbindlist
+#' @importFrom jsonlite read_json
 #'
 #' @examples
 #' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
@@ -27,11 +29,11 @@ ppo_traits <- function(x, sorted = TRUE, flatten_traits = TRUE, flatten_all = FA
         "http://www.usanpn.org/npn_portal/observations/getObservationById.json?request_src=PPO&observation_id=",
         id), simplifyVector = T
     )
-    if(sorted)
-      x <- ppo_sort_traits(x, flatten_traits, flatten_all)
+    if (sorted)
+      x <- ppo_traits_sort(x, flatten_traits, flatten_all)
     x
   })
-  if(flatten_all)
+  if (flatten_all)
     as.data.frame(data.table::rbindlist(out))
   else
     structure(out, sorted = sorted, flatten_traits = flatten_traits, flatten_all = flatten_all)
@@ -53,17 +55,19 @@ ppo_traits <- function(x, sorted = TRUE, flatten_traits = TRUE, flatten_all = FA
 #'         }
 #'         IF flatten_all is TRUE, the list is flatten to a data.frame
 #' @export
+#' @importFrom data.table rbindlist
+#' @importFrom reshape2 melt
 #'
 #' @examples
 #' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
 #' r1_traits <- ppo_traits(r1,  sort = FALSE)
 #' r1_traits <- ppo_traits_sort(r1_traits)
 ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
-  if(attr(x, "sorted")) return(x)
-  if(is.list(x) && ! is.data.frame(x)) {
+  if (attr(x, "sorted")) return(x)
+  if (is.list(x) && !is.data.frame(x)) {
     out <- lapply(x, ppo_traits_sort, flatten_traits = flatten_traits,
                   flatten_all = flatten_all)
-    if(flatten_all)
+    if (flatten_all)
       out <- as.data.frame(data.table::rbindlist(out))
   } else {
     meta <- c(grep("^obs|^sub|^update|^individual|^data", names(x), value = TRUE),
@@ -90,7 +94,7 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
       qa = as.list(x[c(grep("^qa", names(x)))]),
       other = as.list(x[names(x) %in% c("species_functional_type", "species_category", "lifecycle_duration", "growth_habit", "numcycles", "daylength")])
     )
-    if(flatten_traits){
+    if (flatten_traits) {
       traits <- reshape2::melt(traits)[c(3:1)]
       colnames(traits) <- c("category", "name", "value")
     }
@@ -102,7 +106,7 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
       taxonomy = taxonomy,
       traits = traits
     )
-    if(flatten_all)
+    if (flatten_all)
       out <- do.call(cbind.data.frame, out)
   }
   structure(out, sorted = TRUE, flatten_traits = flatten_traits, flatten_all = flatten_all)
@@ -114,7 +118,7 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
 #' @param x              (object) A list or data.frame as returned from link(rppo)[ppo_traits]
 #' @param flatten_all    (logical) Should the output list be melted in a data.frame. Default : FALSE
 #'
-#' @return @return A list for each event id containing a list
+#' @return A list for each event id containing a list
 #'         with the following elements:
 #'         \itemize{
 #'          \item {`metadata`: A data frame containing metadata}
@@ -123,27 +127,29 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
 #'         }
 #'         IF flatten_all is TRUE, the list is flatten to a data.frame
 #' @export
+#' @importFrom data.table rbindlist
+#' @importFrom reshape2 melt
 #'
 #' @examples
 #' r1_traits <- ppo_traits(r1,  sort = FALSE, flatten_traits = FALSE)
 #' r1_traits <- ppo_traits_flatten(r1_traits, flatten_all = TRUE)
 ppo_traits_flatten <- function(x, flatten_all = FALSE){
-  if(is.data.frame(x))
+  if (is.data.frame(x))
     x <- list(x)
   out <- lapply(x, function(y){
-    if(is.data.frame(y)){
+    if (is.data.frame(y)) {
       y <- ppo_traits_sort(y, flatten_traits = TRUE)
-    }else if(!is.data.frame(y$traits)){
+    } else if (!is.data.frame(y$traits)) {
       y$traits <- reshape2::melt(y$traits)[c(3:1)]
       colnames(y$traits) <- c("category", "name", "value")
-      # if(y$traits$name[1] == y$traits$name[2])
+      # if (y$traits$name[1] == y$traits$name[2])
     }
     rownames(y$metadata) <- rownames(y$taxonomy) <- rownames(y$traits) <- NULL
-    if(flatten_all)
+    if (flatten_all)
       y <- do.call(cbind.data.frame, y)
     y
   })
-  if(flatten_all)
+  if (flatten_all)
     out <- as.data.frame(data.table::rbindlist(out))
   structure(out, sorted = TRUE, flatten_traits = TRUE, flatten_all = flatten_all)
 }

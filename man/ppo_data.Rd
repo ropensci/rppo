@@ -5,6 +5,7 @@
 \title{Access Data From the Global Plant Phenology Data Portal}
 \usage{
 ppo_data(
+  scientificName = NULL,
   genus = NULL,
   specificEpithet = NULL,
   termID = NULL,
@@ -13,17 +14,24 @@ ppo_data(
   fromDay = NULL,
   toDay = NULL,
   bbox = NULL,
+  subSource = NULL,
+  status = NULL,
+  mapped_traits = NULL,
+  eventRemarks = NULL,
   limit = NULL,
-  timeLimit = 60
+  timeLimit = 60,
+  keepData = FALSE
 )
 }
 \arguments{
-\item{genus}{(string) a plant genus name}
+\item{scientificName}{(character) A plant species scientific name.}
 
-\item{specificEpithet}{(string) a plant specific epithet}
+\item{genus}{(character) A plant genus name. See details.}
 
-\item{termID}{(string) A single termID from the plant phenology ontology.
-See the \code{\link{ppo_terms}} function for more information.}
+\item{specificEpithet}{(character) A plant specific epithet}
+
+\item{termID}{(character) A single termID from the plant phenology ontology.
+See details.}
 
 \item{fromYear}{(integer) return data from the specified year}
 
@@ -33,18 +41,29 @@ See the \code{\link{ppo_terms}} function for more information.}
 
 \item{toDay}{(integer) return data up to and including the specified day}
 
-\item{bbox}{(string) return data within a bounding box. Format is
+\item{bbox}{(character) return data within a bounding box. Format is
 \code{lat,long,lat,long} and is structured as a string.  Use this website:
 http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on
 bottom left to csv and be sure to switch the order from
 long, lat, long, lat to lat, long, lat, long).}
 
+\item{subSource}{(character) return data from the specified sub-source.
+See details.}
+
+\item{status}{(character) Either "present" or "absent". Return data with the
+specified status.}
+
+\item{mapped_traits}{(character) return data from the specified traits. See
+details}
+
+\item{eventRemarks}{(character) return data from the specified eventRemarks}
+
 \item{limit}{(integer) limit returned data to a specified number of records}
 
-\item{timeLimit}{(integer) set the limit ofthe amount of time to wait for a response}
+\item{timeLimit}{(integer) set the limit of the amount of time to wait for a response}
 }
 \value{
-Return value containing a list with the following components:
+A list with the following elements:
 \itemize{
  \item {`data`: A data frame containing data}
  \item {`readme`: A string with information about the return package}
@@ -60,17 +79,25 @@ Access data from the global plant phenology data portal
 \details{
 The ppo_data function returns a list containing the following information:
 a readme file, citation information, a data frame with data, an integer with
-the number of records returned and a status code.  The function is called with
+the number of records returned and a status code. The function is called with
 parameters that correspond to values contained in the data itself which act
-as a filter on the returned record set.
+as a filter on the returned record set. For a list of available mapped_traits,
+termID, subSource and subSource see the \code{\link{ppo_filters}} dataset. For mapped_traits and
+termID, the \code{\link{ppo_get_terms}} function will return a data.frame with present,
+absent or both terms and traits information. The \code{\link{ppo_terms}} will
+do the same but will use the API to get the lastest data. However, some of
+the traits/termID may not return any results from this function.
+See their documentation for more details.
 }
 \examples{
 
-r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
+r1 <- ppo_data(genus = c("Quercus", "Pinus"), termID='obo:PPO_0002313',
+limit=10, timeLimit = 4)
+head(r1$data)
 
-r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10, timeLimit = 4)
-
-my_data_frame <- r2$data
+r2 <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=10,
+timeLimit = 4)
+head(r2$data)
 }
 \keyword{data}
 \keyword{download}

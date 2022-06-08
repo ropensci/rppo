@@ -16,12 +16,13 @@ Description: Search plant phenology data aggregated from several sources and ava
 Depends: R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Imports:
     jsonlite,
     readr,
-    plyr,
-    httr
+    httr,
+    data.table,
+    reshape2
 Suggests: 
     testthat,
     rmarkdown,
@@ -29,3 +30,4 @@ Suggests:
     knitr,
     covr
 VignetteBuilder: knitr
+LazyData: true
