@@ -4,18 +4,25 @@ The futres_data function returns a list containing the following information: a 
 
 Below are examples of querying data with different filters in order to return a record set appropriate for various research questions. 
 
+Be sure to load the following libaries:
+ggplot
+dplyr
+
 ## Place
 
 The 'country' argument allows users to specify record sets from specific countries. 
 
 ```r
-deer.country <- futres_data(genus = "Odocoileus", specificEpithet = "virginianus", country = "United States")
+deer <- futres_data(scientificName = "Odocoileus virginianus")
+deer.df <- deer$data
+unique(deer.df$country)
+deer.usa <- deer.df[deer.df$country == "USA",]
 
-ggplot(deer.country) +
-geom_density(aes(x = measurementType == "mass", fill = "state"))
+ggplot(deer.usa) +
+  geom_density(aes(x = measurementType == "body mass", fill = "locality"))
 
-deer.states <- deer.country %>%
-group_by(state)
+deer.locality <- deer.usa %>%
+group_by(locality)
 
 ```
 
@@ -26,14 +33,10 @@ The 'fromYear' and 'toYear' arguments allow users to specify a custom time range
 ```r
 deer.recent <- futres_data(genus = "Odocoileus", specificEpithet = "virginianus", fromYear = 2000, toYear = 2021)
 
-ggplot(deer.recent) +
-geom_density(aes(x = measurementType == "mass", fill = "sex"))
+deer.recent.df <- deer.recent$data
 
-deer.old <- futres_data(genus = "Odocoileus", specificEpithet = "virginianus", culturalPeriod = "Mayan")
-
-ggplot(deer.old) +
-geom_density(aes(x = measurementType == "mass", fill = "state"))
-
+ggplot(deer.recent.df) +
+geom_density(aes(x = measurementType == "body mass", fill = "sex"))
 ```
 
 ## Between Species
@@ -41,11 +44,12 @@ geom_density(aes(x = measurementType == "mass", fill = "state"))
 Here we investigate a singular trait amomgst multuple species in an order.  
 
 ```r
-artiodactyla <- futres_data(order = "Artiodactlidae")
+squirrel <- futres_data(genus = "Otospermophilus")
+squirrel.df <- squirrel$data
+unique(squirrel.df$scientificName)
 
-ggplot(artiodactyla) +
-geom_density(aes(x = measurementType == "mass", fill = "binomial"))
-
+ggplot(squirrel.df) +
+  geom_density(aes(x = measurementType == "body mass", fill = "scientificName"))
 ```
 
 ## Across Traits
@@ -53,11 +57,11 @@ geom_density(aes(x = measurementType == "mass", fill = "binomial"))
 Here we demonstrate a means of exploring trait relationships within a custom record set using futres_data().
 
 ```r
-deer <- futres_data(genus = "Odocoileus", specificEpithet = "virginianus")
+deer <- futres_data(scientificName = "Odocoileus virginianus")
+deer.df <- deer$data
 
-ggplot(deer) +
-geom_smooth(aes(x = measurementType == "total length", y = measurementType == "mass") +
-geom_point(aes(measurementType == "total length", measurementType == "mass")
-
+ggplot(deer.df) +
+geom_smooth(aes(x = measurementType == "total length", y = measurementType == "body mass")) +
+geom_point(aes(measurementType == "total length", measurementType == "body mass"))
 ```
 
