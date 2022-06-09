@@ -38,6 +38,9 @@ started with rfutres. We recommend visiting the futres man pages in the R enviro
 # limited to 2 records
 r <- futres_data(fromYear = 2000, toYear = 2010, limit=2)
 
+# bounding box search
+r <- futres_data(bbox="37,-120,38,-119", limit=2)
+
 # view the data returned
 print(r$data)
 
