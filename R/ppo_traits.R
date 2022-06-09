@@ -60,15 +60,19 @@ ppo_traits <- function(x, sorted = TRUE, flatten_traits = TRUE, flatten_all = FA
 #'
 #' @examples
 #' r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
-#' r1_traits <- ppo_traits(r1,  sort = FALSE)
+#' r1_traits <- ppo_traits(r1,  sorted = FALSE)
 #' r1_traits <- ppo_traits_sort(r1_traits)
 ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
-  if (attr(x, "sorted")) return(x)
+  if ("sorted" %in% names(attributes(x)) && attr(x, "sorted")) return(x)
   if (is.list(x) && !is.data.frame(x)) {
     out <- lapply(x, ppo_traits_sort, flatten_traits = flatten_traits,
                   flatten_all = flatten_all)
     if (flatten_all)
       out <- as.data.frame(data.table::rbindlist(out))
+      attributes(out)$sorted <- TRUE
+      attributes(out)$flatten_traits <- flatten_traits
+      attributes(out)$flatten_all <- flatten_all
+      out
   } else {
     meta <- c(grep("^obs|^sub|^update|^individual|^data", names(x), value = TRUE),
               "site_id", "site_name", "latitude", "longitude", "elevation_in_meters", "state",
@@ -108,8 +112,8 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
     )
     if (flatten_all)
       out <- do.call(cbind.data.frame, out)
+    out
   }
-  structure(out, sorted = TRUE, flatten_traits = flatten_traits, flatten_all = flatten_all)
 }
 
 #' Turn the traits element or the entire list returned by [pp_traits()]
@@ -131,18 +135,18 @@ ppo_traits_sort <- function(x, flatten_traits = TRUE, flatten_all = FALSE){
 #' @importFrom reshape2 melt
 #'
 #' @examples
-#' r1_traits <- ppo_traits(r1,  sort = FALSE, flatten_traits = FALSE)
+#' r1 <- ppo_data(genus = "Quercus", termID = 'obo:PPO_0002313', limit = 10, timeLimit = 4)
+#' r1_traits <- ppo_traits(r1, sorted = FALSE, flatten_traits = FALSE)
 #' r1_traits <- ppo_traits_flatten(r1_traits, flatten_all = TRUE)
 ppo_traits_flatten <- function(x, flatten_all = FALSE){
   if (is.data.frame(x))
     x <- list(x)
   out <- lapply(x, function(y){
     if (is.data.frame(y)) {
-      y <- ppo_traits_sort(y, flatten_traits = TRUE)
+      y <- ppo_traits_sort(y)
     } else if (!is.data.frame(y$traits)) {
       y$traits <- reshape2::melt(y$traits)[c(3:1)]
       colnames(y$traits) <- c("category", "name", "value")
-      # if (y$traits$name[1] == y$traits$name[2])
     }
     rownames(y$metadata) <- rownames(y$taxonomy) <- rownames(y$traits) <- NULL
     if (flatten_all)
@@ -151,5 +155,10 @@ ppo_traits_flatten <- function(x, flatten_all = FALSE){
   })
   if (flatten_all)
     out <- as.data.frame(data.table::rbindlist(out))
-  structure(out, sorted = TRUE, flatten_traits = TRUE, flatten_all = flatten_all)
+
+  attributes(out)$sorted <- TRUE
+  attributes(out)$flatten_traits <- TRUE
+  attributes(out)$flatten_all <- flatten_all
+  out
 }
+

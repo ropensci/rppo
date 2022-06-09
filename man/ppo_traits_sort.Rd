@@ -29,6 +29,6 @@ Title
 }
 \examples{
 r1 <- ppo_data(genus = "Quercus", termID='obo:PPO_0002313', limit=10, timeLimit = 4)
-r1_traits <- ppo_traits(r1,  sort = FALSE)
+r1_traits <- ppo_traits(r1,  sorted = FALSE)
 r1_traits <- ppo_traits_sort(r1_traits)
 }

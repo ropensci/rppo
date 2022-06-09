@@ -50,16 +50,16 @@ ppo_terms <- function(present=FALSE, absent=FALSE, timeLimit = 4) {
 
   # structure base URL so we can call present and absent functions
   if (present && absent) {
-    queryURL <- paste(queryURL, 'all/', sep='')
+    queryURL <- paste(queryURL, 'all/', sep = '')
   } else if (present) {
-    queryURL <- paste(queryURL, 'present/', sep='')
+    queryURL <- paste(queryURL, 'present/', sep = '')
   } else if (absent) {
-    queryURL <- paste(queryURL, 'absent/', sep='')
+    queryURL <- paste(queryURL, 'absent/', sep = '')
   } else {
     stop("specify at least one parameter to return results")
   }
   results <- get_url(queryURL = queryURL, timeLimit = timeLimit)
-  if(results$status_code == 200){
+  if (length(results) && results$status_code == 200) {
     jsonlite::fromJSON(httr::content(results, "text"), simplifyVector = TRUE)
   }
 }

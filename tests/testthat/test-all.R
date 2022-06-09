@@ -1,4 +1,3 @@
-
 context("Test PPO Data Fetching")
 
 test_that("Check that no results returns status code = 204", {
@@ -7,12 +6,12 @@ test_that("Check that no results returns status code = 204", {
     genus = "ImpossibleGenusName",
     fromYear = 1979,
     toYear = 2017,
-    limit=10,
-    bbox="37,-120,38,-119")
+    limit = 10,
+    bbox = "37,-120,38,-119")
 
   if (is.null(response)) {
     message("unable to run tests while server is not responding")
-  } else {  
+  } else {
     expect_true(response$status_code == 204)
   }
 })
@@ -23,8 +22,8 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
     genus = "Quercus",
     fromYear = 1979,
     toYear = 2017,
-    limit=10,
-    bbox="38,-119,37,-120", timeLimit = 5)
+    limit = 10,
+    bbox = "38,-119,37,-120", timeLimit = 5)
 
   if (is.null(response)) {
     message("unable to run tests while server is not responding")
@@ -33,9 +32,9 @@ test_that("Check that PPO data is returned correctly from ppo_data function", {
 	  expect_true(length(response) == 5)
 
 	  # Check data types on response
-	  expect_is(response$data, "data.frame")
-	  expect_is(response$readme, "character")
-	  expect_is(response$citation, "character")
+    expect_s3_class(response$data, "data.frame")
+    expect_s3_class(response$readme, c("character", "ppo_text"))
+    expect_s3_class(response$citation, c("character", "ppo_text"))
 
 	  # check that the number of rows returned in data frame is 10
 	  expect_true(nrow(response$data) == 10)
@@ -57,7 +56,7 @@ test_that("Check that PPO term fetching works", {
 
   presentResponse <- ppo_terms(present = TRUE, timeLimit = 3)
   absentResponse <- ppo_terms(absent = TRUE, timeLimit = 3)
-  allResponse <- ppo_terms(absent = TRUE, present=TRUE, timeLimit = 3)
+  allResponse <- ppo_terms(absent = TRUE, present = TRUE, timeLimit = 3)
 
   if (is.null(presentResponse) || is.null(absentResponse) || is.null(allResponse)) {
         message("unable to run tests while server is not responding")

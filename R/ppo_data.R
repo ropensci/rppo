@@ -82,7 +82,7 @@ ppo_data <- function(
     status = NULL,
     mapped_traits = NULL,
     eventRemarks = NULL,
-    limit = NULL,
+    limit = 100000L,
     timeLimit = 60,
     keepData = FALSE) {
 
@@ -118,7 +118,7 @@ ppo_data <- function(
   }
   # for some reason multiple epiphet doesn't work with multiple genus but does
   # with multipule scientificNames
-  if (length(genus)>1 && length(specificEpithet)>1) {
+  if (length(genus) > 1 && length(specificEpithet) > 1) {
     if (!length(scientificName)) {
       params$scientificName <- params$genus
       params$genus  <- NULL
@@ -133,7 +133,7 @@ ppo_data <- function(
 
   results <- get_url(queryURL, timeLimit)
 
-  process_response(results, keepData = keepData)
+  process_response(results = results, keepData = keepData)
 }
 
 make_queryURL <- function(params, limit = 100000L) {
@@ -189,7 +189,7 @@ make_queryURL <- function(params, limit = 100000L) {
 }
 
 process_response <- function(results, keepData = FALSE) {
-  if (results$status_code != 200)
+  if (!length(results) && results$status_code != 200)
       list(
         "data" = NULL,
         "readme" = NULL,
@@ -201,16 +201,18 @@ process_response <- function(results, keepData = FALSE) {
 
     # save file to disk
     writeBin(httr::content(results, "raw"), tf)
-    unzip(tf, exdir = "./ppo_download")
+    unzip(tf, exdir = "~/ppo_download")
 
     # data.csv contains all data as comma separated values
-    ppo <- utils::read.csv('ppo_download/data.csv', header = TRUE)
+    ppo <- utils::read.csv('~/ppo_download/data.csv', header = TRUE)
 
     # README.txt contains information about the query and the # of results
-    readme <- readr::read_file('ppo_download/README.txt')
+    readme <- readr::read_file('~/ppo_download/README.txt')
+    class(readme) <- append(class(readme), "ppo_text")
 
     # citation_and_data_use_policies.txt contains citation information
-    citation <- readr::read_file('ppo_download/citation_and_data_use_policies.txt')
+    citation <- readr::read_file('~/ppo_download/citation_and_data_use_policies.txt')
+    class(citation) <- append(class(citation), "ppo_text")
 
     # grab the number of possible from the readme file
     numPossible <- gsub("^.*possible = |\ntotal results returned.*$|,",
@@ -220,8 +222,8 @@ process_response <- function(results, keepData = FALSE) {
 
     list(
       "data" = ppo,
-      "readme" = structure(readme, class = "ppo_text"),
-      "citation" = structure(citation, class = "ppo_text"),
+      "readme" = readme,
+      "citation" = citation,
       "number_possible" = as.integer(numPossible),
       "status_code" = results$status_code)
   }

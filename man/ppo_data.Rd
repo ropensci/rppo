@@ -18,7 +18,7 @@ ppo_data(
   status = NULL,
   mapped_traits = NULL,
   eventRemarks = NULL,
-  limit = NULL,
+  limit = 100000L,
   timeLimit = 60,
   keepData = FALSE
 )
@@ -61,6 +61,9 @@ details}
 \item{limit}{(integer) limit returned data to a specified number of records}
 
 \item{timeLimit}{(integer) set the limit of the amount of time to wait for a response}
+
+\item{keepData}{(logical) whether to keep (TRUE) or delete (FALSE; default)
+the downloaded data (~/ppo_download/).}
 }
 \value{
 A list with the following elements:

@@ -13,7 +13,7 @@ ppo_traits_flatten(x, flatten_all = FALSE)
 \item{flatten_all}{(logical) Should the output list be melted in a data.frame. Default : FALSE}
 }
 \value{
-@return A list for each event id containing a list
+A list for each event id containing a list
         with the following elements:
         \itemize{
          \item {`metadata`: A data frame containing metadata}
@@ -27,6 +27,7 @@ Turn the traits element or the entire list returned by [pp_traits()]
 into a data.frame.
 }
 \examples{
-r1_traits <- ppo_traits(r1,  sort = FALSE, flatten_traits = FALSE)
+r1 <- ppo_data(genus = "Quercus", termID = 'obo:PPO_0002313', limit = 10, timeLimit = 4)
+r1_traits <- ppo_traits(r1, sorted = FALSE, flatten_traits = FALSE)
 r1_traits <- ppo_traits_flatten(r1_traits, flatten_all = TRUE)
 }
