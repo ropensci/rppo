@@ -8,11 +8,12 @@ library(rfutres)
 ## extract data based off lat/log using bbox 
 # bbox: west, south, east, north
 NW.cougar <- futres_data(scientificName = "Puma concolor",
-                         bbox = c(125, 42, 111,46))
+                         bbox = "42, -125, 46, -111")
+NW.cougar.df <- NW.cougar$data
+length(unique(NW.cougar.df$individualID)) #number of unique individuals in dataset
+nrow(NW.cougar.df) #number may differ from number of individuals if there are multiple measurements per individual
 
-## extract locality
-cougar <- futres_data(scientificName = "Puma concolor", bbox)
-
+## new data set to then extract lat and long, or locality
 cougar.df <- cougar$data
 
 ## lat/long
