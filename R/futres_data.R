@@ -80,6 +80,10 @@ futres_data <- function(genus = NULL,
         scientificName,
         bbox,
         limit
+        #minimumChronometricAge,
+        #maximumChronometricAge,
+        #culturalOccupationPeriod,
+        #trait [select from ontology terms]
       )
     )
   }
