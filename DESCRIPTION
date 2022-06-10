@@ -1,10 +1,33 @@
 Package: rppo
-Title: R functions to access Plant Phenology Ontology annotated datasets
-Version: 0.1
-Authors@R: person("John", "Deck", email = "jdeck88@gmail.com", role = c("aut", "cre"))
-Description: Access data from the Plant Phenology Ontology data store.
-Depends: R (>= 3.4.2)
-License: What license is it under?
+Title: Access the Global Plant Phenology Data Portal
+URL: https://docs.ropensci.org/rppo/, https://github.com/ropensci/rppo/
+BugReports: https://github.com/ropensci/rppo/issues 
+Version: 1.0.2
+Authors@R: c(
+    person("John","Deck", email = "jdeck88@gmail.com", role = c("aut", "cre")), 
+    person("Brian","Stucky", email = "stuckyb@flmnh.ufl.edu", role = "aut"),
+    person("Ramona","Walls", email = "rwalls@cyverse.org", role = "aut"),
+    person("Kjell", "Bolmgren", email = "Kjell.Bolmgren@slu.se", role = "aut"),
+    person("Ellen", "Denny", email = "ellen@usanpn.org", role = "aut"),
+    person("Robert","Guralnick", email = "rguralnick@flmnh.ufl.edu", role = "aut")
+  )
+Maintainer: John Deck <jdeck88@gmail.com>
+Description: Search plant phenology data aggregated from several sources and available on the Global Plant Phenology Data Portal. 
+Depends: R (>= 3.4.0)
+License: GPL-2
 Encoding: UTF-8
+RoxygenNote: 7.2.0
+Imports:
+    jsonlite,
+    readr,
+    httr,
+    data.table,
+    reshape2
+Suggests: 
+    testthat,
+    rmarkdown,
+    markdown,
+    knitr,
+    covr
+VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 6.0.1.9000

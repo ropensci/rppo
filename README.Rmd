@@ -1,0 +1,83 @@
+---
+output: github_document
+always_allow_html: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# rppo
+[![Build Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo)
+[![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
+[![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/onboarding/issues/207)
+
+
+
+The global plant phenology data portal, or PPO data portal, is an aggregation of 
+plant phenological observations from [USA-NPN](https://www.usanpn.org/usa-national-phenology-network), [NEON](https://www.neonscience.org/), and [PEP725](http://www.pep725.eu/) representing 
+20 million phenological observations from across North America and Europe.  The PPO data portal utilizes the [Plant
+Phenology Ontology](https://github.com/PlantPhenoOntology/ppo/) (PPO) to align phenological
+terms and measurements from the various databases. The rppo R package enables programmatic access to all data contained in the PPO data portal incuding selected classes contained in the PPO itself.  
+
+For information on how data is assembled for the PPO data portal, visit the 
+[ppo-data-pipeline git repository](https://github.com/biocodellc/ppo-data-pipeline).
+
+## Installation
+
+The production version of rppo is accessible on CRAN:
+```{r}
+install.packages("rppo")  
+library(rppo)
+```
+
+You can install the development version of rppo from github with:
+
+```{r gh-installation, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("ropensci/rppo")
+library(rppo)
+```
+
+## Examples
+
+Following are a couple of brief examples to illustrate how to get started with rppo.  We recommend visiting the [rppo vignette](http://htmlpreview.github.io/?https:/x/github.com/ropensci/rppo/blob/master/vignettes/rppo-vignette.html) for a more complete set of examples on using the rppo package, as well as viewing man pages for rppo functions in the R environment, using `?ppo_data` and `?ppo_terms`.  
+
+```{r examples}
+# query all results from day 1 through 100 in a particular bounding box, 
+# limited to 2 records
+r <- ppo_data(fromDay = 1, toDay = 100, bbox="37,-120,38,-119", limit=2, timeLimit=5)
+
+# view the data returned
+print(r$data)
+
+# view the number of possible records returned
+print(r$number_possible)
+
+# return a data frame of present
+presentTerms <- ppo_terms(present = TRUE, timeLimit=3)
+
+# print the 2nd present term returned
+print(presentTerms[2,])
+```
+
+## Citation
+To cite the 'rppo' R package in publications use:
+
+```
+   'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
+   https://github.com/ropensci/rppo
+```
+
+## Code of Conduct
+View our [code of conduct](CONDUCT.md)
+
+[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
