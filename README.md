@@ -39,7 +39,7 @@ started with rfutres. We recommend visiting the futres man pages in the R enviro
 r <- futres_data(fromYear = 2000, toYear = 2010, limit=2)
 
 # bounding box search
-# south, east, north, west
+# lat, lng, lat, lng  (any two corners of box)
 r <- futres_data(bbox="37,-120,38,-119", limit=2)
 
 # view the data returned
