@@ -21,5 +21,9 @@ range(cougar.df$decimalLatitude, na.rm = TRUE)
 range(cougar.df$decimalLongitude, na.rm = TRUE)
 
 ## locality
-unique(cougar.df$locality)
+#get dataset that has locality
+deer <- futres_data(scientificName = "Odocoileus virginianus")
+deer.df <- deer$data
+
+unique(deer.df$locality)
 ```
