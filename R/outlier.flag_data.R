@@ -5,7 +5,7 @@ outlier.flag <- function(
   data, #a dataframe, assumed to be in FuTRES format
   trait, #measurementType of interest
   stage = NULL, 
-  scientificName = NULL,
+  sp = NULL,
   #assume trait is under "measurementType" and an FOVT term
   sample.limit = NULL #limit for number of samples for testing outliers, defaults to 10
   #assumes dataset is already filtered by lifeStage and ageValue
@@ -26,14 +26,17 @@ outlier.flag <- function(
   for(i in 1:length(sp)){
     trim <- subset(data, subset = data[, "scientificName"] == sp[i] &
                                   data[, "measurementType"] == trait)
-    if(!isTRUE(is.null(lifeStage))){
+    if(!isTRUE(is.null(stage))){
       trim <- subset(trim, subset = trim[, "lifeStage"] == stage)
     }
     
     sub <- subset(trim, select = "measurementValue")
     
-    sub[, "measurmentValue"] <- as.numeric(sub[, "measurementValue"]) 
-    sub <- !is.na(sub)
+    #make numeric
+    sub[, "measurementValue"] <- as.numeric(sub[, "measurementValue"]) 
+  
+    #remove NAs
+    sub  <- na.omit(sub)
     
     if(isTRUE(is.null(sample.limit))){
       n.limit = 10
