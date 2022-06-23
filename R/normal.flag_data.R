@@ -119,13 +119,13 @@ normal.flag <- function(
       next
     }
   }
+  
 #create new columns if they don't currently exist
 ##if don't have one of these columns, likely don't have any
   if(!(isTRUE(colnames(data) %in% "upperLimit"))){
     data[,"upperLimit"] <- ""
     data[,"lowerLimit"] <- ""
-    data[,"upperLimitMethod"] <- ""
-    data[,"lowerLimitMethod"] <- ""
+    data[,"limitMethod"] <- ""
   }
 ##if don't have one of these columns, likely don't have any
   if(!(isTRUE(colnames(data) %in% "meanValue"))){
@@ -177,23 +177,18 @@ normal.flag <- function(
                    data[, "normality"] != "non-normal"] <- mean(sub$measurementValue) - sigma*sd(sub$measurementValue) #calculate lower limit as mean - sigma*sd
   
     ##label method
-    data$lowerLimitMethod[data[, "scientificName"] == sp[i] &
-                          data[, "measurementType"] == trait &
-                          !(data[, "measurementStatus"] %in% status) &
-                          data[, "normality"] != "non-normal"] <- "sd"
+    data$limitMethod[data[, "scientificName"] == sp[i] &
+                     data[, "measurementType"] == trait &
+                     !(data[, "measurementStatus"] %in% status) &
+                     data[, "normality"] != "non-normal"] <- "sd"
   
-    ##label method
-    data$upperLimitMethod[data[, "scientificName"] == sp[i] &
-                          data[, "measurementType"] == trait &
-                          !(data[, "measurementStatus"] %in% status) &
-                          data[, "normality"] != "non-normal"] <- "sd"
   }
 #create new dataset to label the measurementStatus now accounting for method
   for(i in 1:length(sp)){
     #create a dataframe of just the measurements of the select trait for a species
     sub <- subset(data, subset = data[, "scientificName"] == sp[i] &
                                  data[, "measurementType"] == trait &
-                                 data$lowerLimitMethod == "sd") #should be same as upperLimitMethod
+                                 data$limitMethod == "sd")
   
     #if they have lifeStage not null, trim the dataset more
     if(!isTRUE(is.null(stage))){
