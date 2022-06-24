@@ -14,6 +14,9 @@ cougar.df <- cougar$data
 
 wildcat = cougar.df[cougar.df$scientificName == "Puma concolor",]
 
+##outlier detection
+wildcat = cougar.df[cougar.df$scientificName == "Puma concolor",]
+
 wildcat.flag <- outlier.flag(data = wildcat,
                              trait = "body mass")
 nrow(wildcat[wildcat$measurementType == "body mass",]) #should have good values and maybe some "outliers"
@@ -26,4 +29,25 @@ nrow(wildcat[wildcat$measurementType == "body mass" &
              wildcat$lifeStage == "adult",]) #should be "too few records"
 unique(wildcat.flag.adults$measurementStatus[wildcat.flag.adults$measurementType == "body mass"])
 
-```
+##normality test & flag outliers
+wildcat.norm <- normal.flag(data = wildcat, 
+                            trait = "body mass", 
+                            sigma = 3)
+
+unique(wildcat.norm$normality)
+
+wildcat.trim <- wildcat[wildcat$measurementValue > 4000 &
+                        wildcat$measurementValue < 10000,]
+
+wildcat.norm <- normal.flag(data = wildcat.trim,
+                            trait = "body mass",
+                            sigma = 3)
+
+unique(wildcat.norm$normality)
+unique(wildcat.norm$measurementStatus)
+
+##quantiles test & flag outliers
+
+wildcat.quant <- quant.flag(data = wildcat, 
+                            trait = "body mass")
+unique(wildcat.quant$measurementStatus)```
