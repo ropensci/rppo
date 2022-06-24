@@ -6,7 +6,7 @@ quantiles.flag <- function(
     sample.min = NULL, #minimum number of samples wanted to test for normality (e.g., must be greater than 3); default is 3
     #sample.min is also for the number of unique records
     #method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
-    #quant = NULL, #default is 5%
+    quant = NULL, #default is 5%
     steps = NULL, #steps for sequence (e.g., 5, 2.5), default is .5
     taxa = NULL, #by default does all the species in the dataset
     status = c("outlier", "too few records"), #data we don't want to include in the test; assumes you've already done the "outlier.flag()"
@@ -14,7 +14,6 @@ quantiles.flag <- function(
     )
   {
  
-  
   #create column to record sample size
   if(!isTRUE(colnames(data) %in% "sample.size")){
     data[, "sample.size"] <- ""
@@ -50,12 +49,12 @@ quantiles.flag <- function(
     steps = steps
   }
   
-  # if(isTRUE(is.null(quant))){
-  #   quant = 5 
-  # }
-  # else{
-  #   quant = quant
-  # }
+  if(isTRUE(is.null(quant))){
+    quant = 5 
+  }
+  else{
+    quant = quant
+  }
   
   data[,"index"] <- rownames(data)
   
@@ -71,57 +70,57 @@ quantiles.flag <- function(
   index <- length(percent)
   q <- data.frame(precent,index)
  
-for(i in 1:length(sp)){
-  sub <- subset(data, subset = data=[, "scientificName"] == sp[i] &
-                               data[, "measurementType"] == trait &
-                               !(data[, "measurementStatus"] %in% status))
+  for(i in 1:length(sp)){
+    sub <- subset(data, subset = data[, "scientificName"] == sp[i] &
+                                 data[, "measurementType"] == trait &
+                                 !(data[, "measurementStatus"] %in% status))
   
-  #if they have lifeStage not null, trim the dataset more
-  if(!isTRUE(is.null(stage))){
-    sub <- subset(sub, subset = sub[, "lifeStage"] == stage)
-  }
+    #if they have lifeStage not null, trim the dataset more
+    if(!isTRUE(is.null(stage))){
+      sub <- subset(sub, subset = sub[, "lifeStage"] == stage)
+    }
   
-  #make numeric
-  sub[, "measurementValue"] <- as.numeric(sub[, "measurementValue"]) 
+    #make numeric
+    sub[, "measurementValue"] <- as.numeric(sub[, "measurementValue"]) 
   
-  #remove NAs from measurementValue
-  sub <- sub[!is.na("measurementValue"),]
+    #remove NAs from measurementValue
+    sub <- sub[!is.na("measurementValue"),]
   
-  #calculate sample size for records being included in normality test
-  data$sample.size[data$scientificName == sp[i] &
+    #calculate sample size for records being included in normality test
+    data$sample.size[data$scientificName == sp[i] &
                      data$measurementType == trait] <- as.numeric(nrow(sub))
   
-  #calculate upper quantile limit
-  data$upperLimit[data$scientificName == sp[i] &
-                   data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == quant]]]
+    #calculate upper quantile limit
+    data$upperLimit[data$scientificName == sp[i] &
+                    data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == (100-quant)]]]
   
-  #calculate lower quantile limit
-  data$lowerLimit[data$scientificName == sp[i] &
-                   data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == quant]]]
+    #calculate lower quantile limit
+    data$lowerLimit[data$scientificName == sp[i] &
+                    data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == quant]]]
   
-  #specify method
-  data$limitMethod[data$scientificName == sp[i] &
-                   data$measurementType == trait] <- "quantile" #label method
-}
-
-data$measurementStatus[data$sample.size < n.limit] <- "too few records"
-data$index <- rownames(data)
-
-for(i in 1:length(sp)){
-  sub <- subset(data, data$scientificName == sp[i] &
-                      data$measurementType == trait &
-                      !(data$measurementStatus %in% status))
-  for(j in 1:nrow(sub)){
-    if(isTRUE(sub$measurementValue[j] <= sub$lowerLimit[1])){ 
-      data$measurementStatus[data$index == sub$index[j]] <- "juvenile"
-    }
-    else if(isTRUE(sub$measurementValue[j] >= sub$upperLimit[1])){
-      data$measurementStatus[data$index == sub$index[j]] <- "outlier"
-    }
-    else{
-      data$measurementStatus[data$index == sub$index[j]] <- "possible adult, possibly good"
-    }
+    #specify method
+    data$limitMethod[data[, "scientificName"] == sp[i] &
+                    data[, "measurementType"] == trait] <- "quantile" #label method
   }
-} 
-return(data)
+
+  data$measurementStatus[data$sample.size < n.limit] <- "too few records"
+
+  for(i in 1:length(sp)){
+    sub <- subset(data, data[, "scientificName"] == sp[i] &
+                        data[, "measurementType"] == trait &
+                        !(data[, "measurementStatus"] %in% status))
+    for(j in 1:nrow(sub)){
+      if(isTRUE(sub$measurementValue[j] < sub$lowerLimit[1])){ 
+        data$measurementStatus[data$index == sub$index[j]] <- "possible juvenile"
+      }
+      else if(isTRUE(sub$measurementValue[j] > sub$upperLimit[1])){
+        data$measurementStatus[data$index == sub$index[j]] <- "outlier"
+      }
+      else{
+        data$measurementStatus[data$index == sub$index[j]] <- "possible adult, possibly good"
+      }
+    }
+  } 
+
+  return(data)
 }
