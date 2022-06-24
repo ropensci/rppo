@@ -1,13 +1,13 @@
 #create limits for non-normal and non-log.normal data
 
-quantiles.flag <- function(
+quant.flag <- function(
     data, #dataset to be added
     stage = NULL, #lifeStage to include
     sample.min = NULL, #minimum number of samples wanted to test for normality (e.g., must be greater than 3); default is 3
     #sample.min is also for the number of unique records
     #method = c("Extracted with Traiter ; estimated value", "Extracted with Traiter ; estimated value; inferred value"), #data we don't want to include in the test; can change it just showing the default
     quant = NULL, #default is 5%
-    steps = NULL, #steps for sequence (e.g., 5, 2.5), default is .5
+    steps = NULL, #steps for sequence (e.g., 5, 2.5), default is .05
     taxa = NULL, #by default does all the species in the dataset
     status = c("outlier", "too few records"), #data we don't want to include in the test; assumes you've already done the "outlier.flag()"
     trait #trait of interest
@@ -43,7 +43,7 @@ quantiles.flag <- function(
   }
   
   if(isTRUE(is.null(steps))){
-    steps = .5
+    steps = .05
   }
   else{
     steps = steps
@@ -66,9 +66,12 @@ quantiles.flag <- function(
     data[,"limitMethod"] <- ""
   }
 
-  percent <- seq(0, 100, steps)
-  index <- length(percent)
-  q <- data.frame(precent,index)
+  percent <- seq(0, 1, steps)
+  index <- seq(1, length(percent), 1)
+  #q <- data.frame(percent,index)
+  
+  lower.quant.index = 2 #this will always be 2, because 1 = 0
+  upper.quant.index = length(index)-1 #this will be 1 less than the length of index, length of index = 100%
  
   for(i in 1:length(sp)){
     sub <- subset(data, subset = data[, "scientificName"] == sp[i] &
@@ -87,23 +90,30 @@ quantiles.flag <- function(
     sub <- sub[!is.na("measurementValue"),]
   
     #calculate sample size for records being included in normality test
-    data$sample.size[data$scientificName == sp[i] &
-                     data$measurementType == trait] <- as.numeric(nrow(sub))
+    data$sample.size[data[, "scientificName"] == sp[i] &
+                     data[, "measurementType"] == trait] <- as.numeric(nrow(sub))
+    
+    data[, "sample.size"] <- as.numeric(data[, "sample.size"])
   
     #calculate upper quantile limit
-    data$upperLimit[data$scientificName == sp[i] &
-                    data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == (100-quant)]]]
+    data$upperLimit[data[, "scientificName"] == sp[i] &
+                    data[, "measurementType"] == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[upper.quant.index]]
   
+    data[, "upperLimit"] <- as.numeric(data[, "upperLimit"])
+    
     #calculate lower quantile limit
-    data$lowerLimit[data$scientificName == sp[i] &
-                    data$measurementType == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[q$index[q$percent == quant]]]
+    data$lowerLimit[data[, "scientificName"] == sp[i] &
+                    data[, "measurementType"] == trait] <- quantile(sub$measurementValue, probs = seq(0,1,steps))[[lower.quant.index]]
   
+    data[, "lowerLimit"] <- as.numeric(data[, "lowerLimit"])
+    
     #specify method
     data$limitMethod[data[, "scientificName"] == sp[i] &
-                    data[, "measurementType"] == trait] <- "quantile" #label method
+                     data[, "measurementType"] == trait] <- "quantile" #label method
   }
 
-  data$measurementStatus[data$sample.size < n.limit] <- "too few records"
+  data$measurementStatus[data[, "sample.size"] < n.limit &
+                         data[, "measurementType" == trait]] <- "too few records"
 
   for(i in 1:length(sp)){
     sub <- subset(data, data[, "scientificName"] == sp[i] &
