@@ -29,6 +29,11 @@ extracted from the Plant Phenology Ontology and are useful in
 determining the proper term to query on.  The URI field contains a link to
 the term itself which is useful for determining superclass and subclass
 relationships for each term.
+Some of these terms will not return any results when using
+\code{\link{ppo_data}}.
+To have only the ones that will return results, use \code{\link{ppo_get_terms}}
+or check rppo:::ppo_filters$mapped_traits which contains both present
+and absent terms.
 For more information on the PPO ontology itself, we suggest loading the PPO
 \url{https://github.com/PlantPhenoOntology/ppo} with
 protege \url{https://protege.stanford.edu/}
