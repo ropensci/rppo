@@ -45,6 +45,8 @@ Authors:
   \item Ramona Walls \email{rwalls@cyverse.org}
   \item Kjell Bolmgren \email{Kjell.Bolmgren@slu.se}
   \item Ellen Denny \email{ellen@usanpn.org}
+  \item Dubois Salix \email{salixdubois@gmail.com}
+  \item Ellen Denny \email{ellen@usanpn.org}
   \item Robert Guralnick \email{rguralnick@flmnh.ufl.edu}
 }
 

@@ -1,4 +1,4 @@
-# rppo 1.0.2
+# rppo 2.0
 ## New Features
- * updated release to gracefully check on server status
+ * updated server end-point. implemented a host of code fixes.
 

@@ -99,7 +99,7 @@ To cite the ‘rppo’ R package in publications
 use:
 
 ``` 
-   'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Robert Guralnick' (2018). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 1.0
+   'John Deck, Brian Stucky, Ramona Walls, Kjell Bolmgren, Ellen Denny, Salix Dubois, Robert Guralnick' (2022). rppo: An interface to the Plant Phenology Ontology and associated data store.  R package version 2.0
    https://github.com/ropensci/rppo
 ```
 
