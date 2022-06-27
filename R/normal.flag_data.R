@@ -88,12 +88,12 @@ normal.flag <- function(
       x <- sample(sub$measurementValue[sub$measurementType == trait], 
                   5000, replace = FALSE, prob = NULL)
       normal <- shapiro.test(x) #normality test
-      if(isTRUE(normal[[2]] < 0.05)){ #if significantly different, then non-normal
+      if(isTRUE(normail[[2]] < 0.05)){ #if significantly different, then non-normal
         data$normality[data$measurementType == trait & 
                        data$scientificName == sp[i] &
                        !(data[, "measurementStatus"] %in% status)] <- "non-normal"
       }
-      else if(isTRUE(normal[[2]] >= 0.05)){ #if not significantly different, then non-normal
+      else if(isTRUE(normail[[2]] >= 0.05)){ #if not significantly different, then non-normal
         data$normality[data$measurementType == trait & 
                        data$scientificName == sp[i] &
                        !(data[, "measurementStatus"] %in% status)] <- "normal"
@@ -103,13 +103,13 @@ normal.flag <- function(
     else if(isTRUE(length(sub$measurementValue[sub$measurementType == trait]) <= 5000 &
                    length(sub$measurementValue[sub$measurementType == trait]) >= n.limit & 
                    length(unique(sub$measurementValue[sub$measurementType == trait])) >= n.limit)){
-      normal.trait <- shapiro.test(sub$measurementValue[sub$measurementType == trait]) #normality test
-      if(isTRUE(normal.trait[[2]] < 0.05)){ #if significantly different, then not normal
+      normail <- shapiro.test(sub$measurementValue[sub$measurementType == trait]) #normality test
+      if(isTRUE(normail[[2]] < 0.05)){ #if significantly different, then not normal
         data$normality[data$scientificName == sp[i] &
                        data$measurementType == trait & 
                        !(data[, "measurementStatus"] %in% status)] <- "non-normal"
       }
-      else if(isTRUE(normal.trait[[2]] >= 0.05)){ #if not significantly different, then normal
+      else if(isTRUE(normail[[2]] >= 0.05)){ #if not significantly different, then normal
         data$normality[data$scientificName == sp[i] &
                      data$measurementType == trait & 
                      !(data[, "measurementStatus"] %in% status)] <- "normal"
