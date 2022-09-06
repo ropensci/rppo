@@ -36,12 +36,6 @@
 #'       \item{ObjectProperty_termID2}{the term for a third object propriety in the definition; useful to filter for similar terms}
 #'     }
 #'   }
-#'   \item{genus}{A data set with 1 row and 2 variable:
-#'     \itemize{
-#'       \item{genus}{the genus name}
-#'       \item{nObs}{the number of obeservations}
-#'     }
-#'   }
 #'   ...
 #' }
 #' @source \url{https://www.ontobee.org}

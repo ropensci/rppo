@@ -24,7 +24,7 @@
 #'
 #' @param present (boolean) If TRUE then return all "present" phenological stages
 #' @param absent (boolean) IF TRUE then return all "absent" phenological stages.
-#' @param timeLimit (integer) set the limit ofthe amount of time to wait for a response
+#' @param timeLimit (integer) set the limit of the amount of time to wait for a response
 #' @return data.frame
 #' @export
 #' @keywords trait lookup
