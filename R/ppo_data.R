@@ -163,8 +163,8 @@ make_queryURL <- function(params, limit = 100000L) {
         q,' ','termID',':"',value,'"', sep = "")
     else if (key == "bbox") {
       coord <- as.numeric(strsplit(value, ",")[[1]])
-      lats <- sort(coord[1:3])
-      lngs <- sort(coord[2:4])
+      lats <- sort(coord[c(1, 3)])
+      lngs <- sort(coord[c(2, 4)])
       q <- paste0(q,
                   " latitude:>=", lats[1],
                   " AND  latitude:<=", lats[2],
