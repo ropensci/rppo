@@ -219,7 +219,7 @@ process_response <- function(results, keepData = FALSE) {
     numPossible <- gsub("^.*possible = |\ntotal results returned.*$|,",
                         "\\1", readme)
     unlink(tf)
-    if (!keepData) unlink("ppo_download/", recursive = TRUE)
+    if (!keepData) unlink("~/ppo_download/", recursive = TRUE)
 
     list(
       "data" = ppo,
