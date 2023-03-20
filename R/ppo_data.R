@@ -127,7 +127,7 @@ ppo_data <- function(
               Try specifying genus in scientificName if that's the case.")
     }
   }
-  params$source <- "USA-NPN"
+  # params$source <- "USA-NPN"
 
   queryURL <- make_queryURL(params = params, limit = limit)
 
