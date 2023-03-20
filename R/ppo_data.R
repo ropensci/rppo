@@ -28,7 +28,9 @@
 #' @param timeLimit (integer) set the limit of the amount of time to wait for a response
 #' @param keepData (logical) whether to keep (TRUE) or delete (FALSE; default)
 #' the downloaded data (~/ppo_download/).
-#'
+#' @param source (character) return data from specified source. Options include
+#' ("PEP725", "IMAGE_SCORING", "HERBARIUM" and "USA-NPN"). Set to NULL to not
+#' apply this filter.
 #' @details
 #' The ppo_data function returns a list containing the following information:
 #' a readme file, citation information, a data frame with data, an integer with
@@ -84,7 +86,8 @@ ppo_data <- function(
     eventRemarks = NULL,
     limit = 100000L,
     timeLimit = 60,
-    keepData = FALSE) {
+    keepData = FALSE,
+    source = "USA-NPN") {
 
   # check arguments
   limit <- assert(limit, c("integer", "numeric", "character"))
@@ -105,6 +108,7 @@ ppo_data <- function(
     fromDay = assert(fromDay, c("integer", "numeric", "character")),
     toDay = assert(toDay, c("integer", "numeric", "character")),
     bbox = assert(bbox, "character"),
+    source = assert(source, "character"),
     subSource = assert(subSource, "character"),
     status = assert(status, "character"),
     eventRemarks = assert(eventRemarks, "character"),
@@ -127,7 +131,6 @@ ppo_data <- function(
               Try specifying genus in scientificName if that's the case.")
     }
   }
-  # params$source <- "USA-NPN"
 
   queryURL <- make_queryURL(params = params, limit = limit)
 
