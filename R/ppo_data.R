@@ -17,6 +17,7 @@
 #' http://boundingbox.klokantech.com/ to quickly grab a bbox (set format on
 #' bottom left to csv and be sure to switch the order from
 #' long, lat, long, lat to lat, long, lat, long).
+#' @param source (character) return data from specified source. See details.
 #' @param subSource (character) return data from the specified sub-source.
 #' See details.
 #' @param status (character) Either "present" or "absent". Return data with the
@@ -28,16 +29,13 @@
 #' @param timeLimit (integer) set the limit of the amount of time to wait for a response
 #' @param keepData (logical) whether to keep (TRUE) or delete (FALSE; default)
 #' the downloaded data (~/ppo_download/).
-#' @param source (character) return data from specified source. Options include
-#' ("PEP725", "IMAGE_SCORING", "HERBARIUM" and "USA-NPN"). Set to NULL to not
-#' apply this filter.
 #' @details
 #' The ppo_data function returns a list containing the following information:
 #' a readme file, citation information, a data frame with data, an integer with
 #' the number of records returned and a status code. The function is called with
 #' parameters that correspond to values contained in the data itself which act
 #' as a filter on the returned record set. For a list of available mapped_traits,
-#' termID, subSource and subSource see the \code{\link{ppo_filters}} dataset. For mapped_traits and
+#' termID, Source and subSource see the \code{\link{ppo_filters}} dataset. For mapped_traits and
 #' termID, the \code{\link{ppo_get_terms}} function will return a data.frame with present,
 #' absent or both terms and traits information. The \code{\link{ppo_terms}} will
 #' do the same but will use the API to get the lastest data. However, some of
@@ -80,14 +78,14 @@ ppo_data <- function(
     fromDay = NULL,
     toDay = NULL,
     bbox = NULL,
+    source = NULL,
     subSource = NULL,
     status = NULL,
     mapped_traits = NULL,
     eventRemarks = NULL,
     limit = 100000L,
     timeLimit = 60,
-    keepData = FALSE,
-    source = "USA-NPN") {
+    keepData = FALSE) {
 
   # check arguments
   limit <- assert(limit, c("integer", "numeric", "character"))
