@@ -199,7 +199,7 @@ process_response <- function(results, keepData = FALSE) {
   else {
     tf <- tempfile()
 
-    # save file to disk
+    # Save file to disk
     writeBin(httr::content(results, "raw"), tf)
     unzip(tf, exdir = "~/ppo_download")
 
