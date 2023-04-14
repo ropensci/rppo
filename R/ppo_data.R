@@ -131,7 +131,6 @@ ppo_data <- function(
   }
 
   queryURL <- make_queryURL(params = params, limit = limit)
-
   results <- get_url(queryURL, timeLimit)
 
   process_response(results = results, keepData = keepData)
@@ -190,7 +189,7 @@ make_queryURL <- function(params, limit = 100000L) {
 }
 
 process_response <- function(results, keepData = FALSE) {
-  if (!length(results) && results$status_code != 200)
+  if (!length(results) || results$status_code != 200)
       list(
         "data" = NULL,
         "readme" = NULL,
