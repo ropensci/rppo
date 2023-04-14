@@ -11,7 +11,7 @@ ppo_terms(present = FALSE, absent = FALSE, timeLimit = 4)
 
 \item{absent}{(boolean) IF TRUE then return all "absent" phenological stages.}
 
-\item{timeLimit}{(integer) set the limit ofthe amount of time to wait for a response}
+\item{timeLimit}{(integer) set the limit of the amount of time to wait for a response}
 }
 \value{
 data.frame
