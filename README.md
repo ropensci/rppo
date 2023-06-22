@@ -3,8 +3,6 @@
 
 # rppo
 
-[![Build
-Status](https://travis-ci.org/ropensci/rppo.svg?branch=master)](https://travis-ci.org/ropensci/rppo)
 [![codecov.io](https://codecov.io/github/r-lib/covr/coverage.svg?branch=master)](https://codecov.io/github/r-lib/covr?branch=master)
 [![](https://badges.ropensci.org/207_status.svg)](https://github.com/ropensci/software-review/issues/207)
 [![R-CMD-check](https://github.com/ropensci/rppo/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rppo/actions)
