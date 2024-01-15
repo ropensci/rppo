@@ -26,7 +26,7 @@ ppo_traits <- function(x, sorted = TRUE, flatten_traits = TRUE, flatten_all = FA
   out <- lapply(gsub("^.*/([0-9]*)$", "\\1", x$data$eventId[1:2]), function(id){
     x <- jsonlite::read_json(
       paste0(
-        "http://www.usanpn.org/npn_portal/observations/getObservationById.json?request_src=PPO&observation_id=",
+        "http://services.usanpn.org/npn_portal/observations/getObservationById.json?request_src=PPO&observation_id=",
         id), simplifyVector = T
     )
     if (sorted)
